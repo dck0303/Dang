@@ -1,0 +1,11 @@
+INDEX VERSION 1.131
+C:\semi\dangdang\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3351946753.index
+\dangdang\src
+C:\semi\dangdang\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\97838162.index
+\dangdang\src
+C:\semi\dangdang\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\262208945.index
+\dangdang\src
+C:\semi\dangdang\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1065009455.index
+\dangdang\src
+C:\semi\dangdang\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3526354959.index
+\dangdang\src
