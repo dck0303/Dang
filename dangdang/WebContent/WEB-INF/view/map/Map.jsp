@@ -11,7 +11,7 @@
 		<title>댕댕최고</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="resources/css/main.css" />
+		<link rel="stylesheet" href="resources/css/common.css" />
 		<noscript><link rel="stylesheet" href="resources/css/noscript.css" /></noscript>
 	</head>
 	<body class="landing is-preload">
@@ -39,20 +39,11 @@
 						</nav>
 					</header>
 
-				<!-- Banner -->
 					<section id="banner">
-						<div class="inner">
-							<h2>댕댕아 놀면 뭐하니?</h2>
-							<p>내 반려견이 유치원에서<br />
-							재밌게 놀고 있는지 궁금하시다면 ?<br />
-							Please join with us !</p>
-							
-						</div>
 						<a href="#one" class="more scrolly">Login</a>
 					</section>
 
-				<!-- One -->
-					<section id="one" class="wrapper style1 special">
+					<!-- <section id="one" class="wrapper style1 special">
 						<div class="inner">
 							<header class="major">
 								<h2>Arcu aliquet vel lobortis ata nisl<br />
@@ -62,21 +53,45 @@
 							</header>
 						
 						</div>
-					</section>
+					</section> -->
+					
+					<pre>
+					d
+					d
+					d
+					d
+					d
+					d
+					d
+					d
+					
+					d
+					d
+					d
+					d
+					d
+					d
+					d
+					d
+					d
+					d
+					d
+					d
+					dd
+					d
+					d
+					
+					d
+					d
+					d
+					dd
+					d
+					</pre>
 
 				
 				<!-- Footer -->
 					<footer id="footer">
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-							<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-						</ul>
-						<ul class="copyright">
-							<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
+						
 					</footer>
 
 			</div>

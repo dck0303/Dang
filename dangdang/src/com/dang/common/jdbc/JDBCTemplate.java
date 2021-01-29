@@ -35,10 +35,10 @@ public class JDBCTemplate {
 
 	//Connection 객체를 만들 메서드
 	public Connection getConnection() {
-		String url = "jdbc:oracle:thin:@pclassDB_medium?TNS_ADMIN=/Users/miyoung/06_oracle/Wallet_pclassDB";
-
+	    String url = "jdbc:oracle:thin:@psuny1031_medium?TNS_ADMIN=C:/CODE/wallet/Wallet_psuny1031";
+				//String url = "jdbc:oracle:thin:@psuny1031_medium?TNS_ADMIN=/Users/miyoung/07_semi_wallet/Wallet_psuny1031";								
 		String user = "ADMIN";
-		String password = "1*aL201210380";
+		String password = "Park10031212*";
 		
 		Properties info = new Properties();     
 	    info.put(OracleConnection.CONNECTION_PROPERTY_USER_NAME, user);
