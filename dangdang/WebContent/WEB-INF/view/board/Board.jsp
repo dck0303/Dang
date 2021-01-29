@@ -31,7 +31,7 @@
 						<div id="menu">
 							<ul>
 								<li><a href="/main.do">Home</a></li>
-								<li><a href="/mypage.do">마이페이지</a></li>
+								<li><a href="generic.html">마이페이지</a></li>
 								<li><a href="/map.do">유치원 찾기</a></li>
 								<li><a href="#">캘린더</a></li>
 							</ul>
