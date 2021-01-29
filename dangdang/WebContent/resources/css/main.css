@@ -23,7 +23,9 @@ section, summary, time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;}
+	vertical-align: baseline;
+	text-decoration: none;
+	}
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -87,7 +89,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #2e3842;
+		background:#FFF8DC;
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -102,7 +104,7 @@ input, select, textarea {
 		}
 
 	body, input, select, textarea {
-		color: #fff;
+		color: #8B4513;
 		font-family: "Open Sans", Helvetica, sans-serif;
 		font-size: 15pt;
 		font-weight: 400;
@@ -155,7 +157,7 @@ input, select, textarea {
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		color: #fff;
+		color : #8B4513;
 		font-weight: 800;
 		letter-spacing: 0.225em;
 		line-height: 1em;
@@ -401,7 +403,7 @@ input, select, textarea {
 		}
 
 		.wrapper.style1 {
-			background-color: #21b2a6;
+			background-color: #ffffff;
 			color: #c8ece9;
 		}
 
@@ -446,7 +448,7 @@ input, select, textarea {
 			.wrapper.style1 input[type="email"],
 			.wrapper.style1 select,
 			.wrapper.style1 textarea {
-				background-color: rgba(255, 255, 255, 0.075);
+				background-color:#000000;
 			}
 
 			.wrapper.style1 select {
@@ -578,27 +580,9 @@ input, select, textarea {
 
 /* Page Wrapper + Menu */
 
-	#page-wrapper {
-		-moz-transition: opacity 0.5s ease;
-		-webkit-transition: opacity 0.5s ease;
-		-ms-transition: opacity 0.5s ease;
-		transition: opacity 0.5s ease;
-		opacity: 1;
-		padding-top: 3em;
-	}
+	
 
-		#page-wrapper:before {
-			background: rgba(0, 0, 0, 0);
-			content: '';
-			display: block;
-			display: none;
-			height: 100%;
-			left: 0;
-			position: fixed;
-			top: 0;
-			width: 100%;
-			z-index: 10001;
-		}
+		
 
 	#menu {
 		-moz-transform: translateX(20em);
@@ -704,7 +688,7 @@ input, select, textarea {
 		-webkit-transition: background-color 0.2s ease;
 		-ms-transition: background-color 0.2s ease;
 		transition: background-color 0.2s ease;
-		background: #2e3842;
+		background: #FFF8DC;
 		height: 3em;
 		left: 0;
 		line-height: 3em;
@@ -763,7 +747,7 @@ input, select, textarea {
 
 					#header nav > ul > li > a {
 						border: 0;
-						color: #fff;
+						color: #000000;
 						display: block;
 						font-size: 0.8em;
 						letter-spacing: 0.225em;
@@ -777,7 +761,7 @@ input, select, textarea {
 						}
 
 							#header nav > ul > li > a.menuToggle:after {
-								background-image: url("images/bars.svg");
+								background-image: url("images/bars.png");
 								background-position: right center;
 								background-repeat: no-repeat;
 								content: '';
@@ -811,13 +795,9 @@ input, select, textarea {
 						margin-left: 0;
 					}
 
-		#header.alt {
-			background: transparent;
-		}
-
+		
 			#header.alt h1 {
-				pointer-events: none;
-				opacity: 0;
+				opacity: 100;
 			}
 
 /* Banner */
@@ -869,7 +849,7 @@ input, select, textarea {
 				-webkit-transition-delay: 0.25s;
 				-ms-transition-delay: 0.25s;
 				transition-delay: 0.25s;
-				background: #fff;
+				background: #8B4513;
 				content: '';
 				display: block;
 				height: 2px;
@@ -928,7 +908,7 @@ input, select, textarea {
 		}
 
 			#banner .more:after {
-				background-image: url("images/arrow.svg");
+				background-image: url("images/arrow.png");
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: contain;
@@ -953,7 +933,7 @@ input, select, textarea {
 			-ms-transition-delay: 1.25s;
 			transition-delay: 1.25s;
 			content: '';
-			background: #2e3842;
+			background: #FFF8DC;
 			display: block;
 			width: 100%;
 			height: 100%;
@@ -1098,18 +1078,15 @@ input, select, textarea {
 
 /* Landing */
 
-/* 	body.landing #page-wrapper {
-		background-image: -moz-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../../images/banner.jpg");
-		background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../../images/banner.jpg");
-		background-image: -ms-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../../images/banner.jpg");
-		background-image: linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../../images/banner.jpg");
+	body.landing #page-wrapper {
+		
 		background-attachment: fixed;
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-size: cover;
 		padding-top: 0;
 	}
- */
+
 	body.landing #footer {
 		background-color: rgba(29, 36, 42, 0.9);
 	}
@@ -1124,3 +1101,5 @@ input, select, textarea {
 	body.is-mobile.landing #footer {
 		background-color: #1d242a;
 	}
+	
+	
