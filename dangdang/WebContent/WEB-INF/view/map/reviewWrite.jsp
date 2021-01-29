@@ -7,12 +7,12 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="/resources/css/main.css" />
-	<link rel="stylesheet" href="/resources/css/map.css" />
+	<link rel="stylesheet" href="/resources/css/review.css" />
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<!-- <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> -->
 	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
+		<link rel="stylesheet" href="/resources/css/noscript.css" />
 	</noscript>
 </head>
 <body class="is-preload">
@@ -51,31 +51,26 @@
 	<!-- Main -->
 
 		<div class="board">
-			<div id="mapWrap">
-				<!--검색어를 검색 할 곳-->
-				<div id="search">
-					<div id="searchBox">
-						<input type="search" id="searchInput">
-						<i class="fas fa-search"></i>
-					</div>
-					<div id="line"></div>
-				</div>
-
-				<!-- 지도를 표시할 div 입니다 -->
-				<div id="map"></div>
-				<script type="text/javascript"
-					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=df05d9d53d8d4a2d40f65a23b163b044"></script>
-				<script>
-					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-						mapOption = {
-							center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-							level: 3 // 지도의 확대 레벨
-						};
-
-					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-					var map = new kakao.maps.Map(mapContainer, mapOption); 
-				</script>
-			</div>
+			 <div class="content">
+                <div class="desc_board">
+                    <form action="${context}/board/upload.do" method="post"
+                        enctype="multipart/form-data">
+                        <div>
+                            <div class="tit_board">
+                                제목 : <input id = "titleInput" type="text" name="title" required="required"/>
+                                <!--multiple : 여러개 파일 선택을 허용하는 속성-->
+                                파일 : <input type="file" name="files" id="contract_file" multiple />
+                            </div>
+                            <div class="text">
+                                <textarea id="board-content" class="board-content" name="content"> </textarea>
+                            </div>
+                            <div class="btn_section">
+                                <button>전송</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 		</div>
 		
 		

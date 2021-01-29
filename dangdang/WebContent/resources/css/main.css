@@ -86,9 +86,6 @@ html {
 	box-sizing: inherit;
 }
 
-body {
-	background: #FFF8DC;
-}
 
 body.is-preload *, body.is-preload *:before, body.is-preload *:after {
 	-moz-animation: none !important;
@@ -919,18 +916,18 @@ body.is-preload #banner:after {
 .board {
 	background-color: white;
 	color: black;
-	min-height: 1000px;
-	margin-top: 100px;
+	/* min-height: 100vh; */
+	margin-top: 80px;
 }
 
 /* Footer */
 #footer {
-	padding: 6em 0 4em 0;
+	padding: 3em 0 3em 0;
 	background-color: rgb(135, 131, 130);
 	text-align: center;
 }
 
-#footer .icons {
+/* #footer .icons {
 	font-size: 1.25em;
 }
 
@@ -971,7 +968,7 @@ body.is-preload #banner:after {
 
 #footer .copyright li a:hover {
 	color: #fff;
-}
+} */
 
 @media screen and (max-width: 480px) {
 	#footer .copyright li {

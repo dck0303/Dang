@@ -1,4 +1,4 @@
-package com.dang.boardcontroller;
+package com.dang.board.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

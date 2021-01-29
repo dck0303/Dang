@@ -6,14 +6,15 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/resources/css/main.css" />
-	<link rel="stylesheet" href="/resources/css/map.css" />
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<!-- <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> -->
-	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
-	</noscript>
+<link rel="stylesheet" href="/resources/css/main.css" />
+<link rel="stylesheet" href="/resources/css/infrm.css" />
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<!-- <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> -->
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+	rel="stylesheet">
+<noscript>
+	<link rel="stylesheet" href="resources/css/noscript.css" />
+</noscript>
 </head>
 <body class="is-preload">
 
@@ -47,46 +48,38 @@
 
 
 
-
-	<!-- Main -->
+		<!-- Main -->
 
 		<div class="board">
-			<div id="mapWrap">
-				<!--검색어를 검색 할 곳-->
-				<div id="search">
-					<div id="searchBox">
-						<input type="search" id="searchInput">
-						<i class="fas fa-search"></i>
+			<div id="storeWrap">
+				<div id="photo"></div>
+				<div id="wrap"></div>
+				<div id="storeInfrm">
+					<div id="InfrmList">
+						<div id="name">바우리움 유치원</div>
+						<div id="review">방문자리뷰</div>
+						<div id="kakaoIcon">
+							<i class="fas fa-map-signs"></i> <i class="fas fa-road"></i>
+						</div>
+						<div id="kakao" class="list">
+							<a>길찾기</a><a>로드뷰</a>
+						</div>
+						<div id="reservation">
+							<button id="rsv_btn">예약</button>
+						</div>
+						<div id="notice" class="list">알림</div>
+						<div id="tell" class="list">10120301203103210</div>
+						<div id="address" class="list">경기도성남ㅇㄴ밍ㄹ민ㅇ린린이</div>
+						<div id="operateTime" class="list">매일 ㅇㅁㄴㄹㄴㅁㅇㄹㄴㄹ</div>
+						<div id="services" class="list">#ㄻㄴㅇㄹ#ㅇㄹㄴㅇ#ㄹㄴㅇ</div>
+
 					</div>
-					<div id="line"></div>
 				</div>
-
-				<!-- 지도를 표시할 div 입니다 -->
-				<div id="map"></div>
-				<script type="text/javascript"
-					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=df05d9d53d8d4a2d40f65a23b163b044"></script>
-				<script>
-					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-						mapOption = {
-							center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-							level: 3 // 지도의 확대 레벨
-						};
-
-					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-					var map = new kakao.maps.Map(mapContainer, mapOption); 
-				</script>
 			</div>
 		</div>
-		
-		
-		
 		<!-- Footer -->
-		<footer id="footer">
-		
-		</footer>
-
+		<footer id="footer"> </footer>
 	</div>
-
 	<!-- Scripts -->
 	<script src="/resources/js/jquery.min.js"></script>
 	<script src="/resources/js/jquery.scrollex.min.js"></script>
