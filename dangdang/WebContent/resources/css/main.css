@@ -732,6 +732,7 @@ body.is-preload #banner:after {
 .board { /* 기본틀 */
 	background-color: white;
 	color: black;
+<<<<<<< HEAD
 	min-height: 1000px;
 	margin-top: 80px;
 }
@@ -796,18 +797,20 @@ body.is-preload #banner:after {
 	margin : auto;
 	color : white;
 	font-size: 1.5vw;
+	margin-top: 80px;
+
 }
 
 
 
 /* Footer */
 #footer {
-	padding: 6em 0 4em 0;
+	padding: 3em 0 3em 0;
 	background-color: rgb(135, 131, 130);
 	text-align: center;
 }
 
-#footer .icons {
+/* #footer .icons {
 	font-size: 1.25em;
 }
 
@@ -848,7 +851,7 @@ body.is-preload #banner:after {
 
 #footer .copyright li a:hover {
 	color: #fff;
-}
+} */
 
 @media screen and (max-width: 480px) {
 	#footer .copyright li {

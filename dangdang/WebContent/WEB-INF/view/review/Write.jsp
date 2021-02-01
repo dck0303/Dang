@@ -7,12 +7,12 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="/resources/css/main.css" />
-	<link rel="stylesheet" href="/resources/css/map.css" />
+	<link rel="stylesheet" href="/resources/css/write.css" />
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<!-- <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> -->
 	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
+		<link rel="stylesheet" href="/resources/css/noscript.css" />
 	</noscript>
 </head>
 <body class="is-preload">
@@ -48,70 +48,31 @@
 
 
 
-
 	<!-- Main -->
 
 		<div class="board">
-			<div id="mapWrap">
-				<!--검색어를 검색 할 곳-->
-				<div id="search">
-					<div id="searchBox">
-						<input type="search" id="searchInput">
-						<i class="fas fa-search"></i>
-					</div>
-					<div id="line"></div>
-					
-					<div id = "infrmWrap">
-					
-					<div class = "infrmBox">
-						<div class = "infrm">
-							<p>fsadfsd</p>
-							<p>asdfsd</p>
-							<p>asfdasdfasd</p>
-						</div>
-						<div class = "photo"></div>
-					</div>
-					
-					<div class = "infrmBox">
-						<div class = "infrm">
-							<p>fsadfsd</p>
-							<p>asdfsd</p>
-							<p>asfdasdfasd</p>
-						</div>
-						<div class = "photo"></div>
-					</div>
-					
-					<div class = "infrmBox">
-						<div class = "infrm">
-							<p>fsadfsd</p>
-							<p>asdfsd</p>
-							<p>asfdasdfasd</p>
-						</div>
-						<div class = "photo"></div>
-					</div>
-					
-					</div>
-				</div>
+		
+			<div class="reviewWrap">
+				<form action="${context}/review/upload.do" method="post" enctype="multipart/form-data">
 
-				<!-- 지도를 표시할 div 입니다 -->
-				<div id="map"></div>
-				<script type="text/javascript"
-					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=df05d9d53d8d4a2d40f65a23b163b044"></script>
-				<script>
-					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-						mapOption = {
-							center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-							level: 3 // 지도의 확대 레벨
-						};
+					<div class="formWrap">
 
-					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-					var map = new kakao.maps.Map(mapContainer, mapOption); 
-				</script>
+						<input id="titleInput" type="text" name="title" required="required" placeholder="제목을 입력해주세요." />
+						<!--multiple : 여러개 파일 선택을 허용하는 속성-->
+						<input id="file" type="file" name="files" multiple />
+						<textarea id="content" class="board-content" name="content"> </textarea>
+						<div id="btnWrap">
+							<button id="reviewList" class = "btn">목록</button>
+							<button id="submit" class = "btn">등록</button>
+						</div>
+					</div>
+				</form>
 			</div>
+			
 		</div>
 		
 		
-
+		
 		<!-- Footer -->
 		<footer id="footer">
 		
