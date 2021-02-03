@@ -54,7 +54,7 @@
 
 		<div class="board">
 		
-		 <div id = "kinderWrap"><p id= "kinder">${kindergarten.kgName}</p></div>
+		 <div id = "kinderWrap"><p id= "kinder">${kindergarten.kgName}</p></div><a href = "/review/write.do?kgName=${kindergarten.kgName}">후기 등록</a>
 		<c:choose>
 			<c:when test="${empty reviewList}">
 				<div id = "noReviewBox">등록된 후기가 없습니다 <a href = "/review/write.do?kgName=${kindergarten.kgName}">후기 등록</a></div>
@@ -66,13 +66,18 @@
 							<div class="wrap">
 								<div class="user data">${review.userName}</div>
 								<div class="title data">${review.title}</div>
-								<div class="date data">2${review.regDate}</div>
+								<div class="date data">${review.regDate}</div>
 								<div class="contentWrap">
 									<textarea
 										class="content" readonly="readonly">${review.content}</textarea>
 								</div>
 							</div>
-							<div class="photo"></div>
+							<c:if test="${!empty fileList}">
+							<c:forEach var="file" items = "${fileList}">
+							<div class="photo"><img id ="img" src="/${file.savePath}${file.renameFileName}">
+							</div>
+							</c:forEach> 
+							</c:if>
 						</div>			
 					</div>	
 				</c:forEach> 

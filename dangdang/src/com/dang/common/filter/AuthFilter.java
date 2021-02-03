@@ -60,13 +60,26 @@ public class AuthFilter implements Filter {
 					if (session.getAttribute("user") == null) {
 						throw new ToAlertException(ErrorCode.AUTH03);
 					}
-
+					break;
 				case "upload.do":
 					if (session.getAttribute("user") == null) {
 						throw new ToAlertException(ErrorCode.AUTH03);
 					}
 				}
-				break;
+				break;	
+				case "review":
+					switch (uriArr[2]) {
+					case "write.do":
+						if (session.getAttribute("userMember") == null) {
+							throw new ToAlertException(ErrorCode.AUTH04);
+						}
+						break;
+					case "upload.do":
+						if (session.getAttribute("userMember") == null) {
+							throw new ToAlertException(ErrorCode.AUTH04);
+						}
+					}
+					break;
 			}
 		}
 
