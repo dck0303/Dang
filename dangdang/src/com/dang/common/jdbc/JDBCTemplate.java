@@ -70,7 +70,6 @@ public class JDBCTemplate {
 	public void commit(Connection conn) {
 		try {
 			conn.commit();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

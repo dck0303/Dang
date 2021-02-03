@@ -69,13 +69,14 @@ public class MapController extends HttpServlet {
 
 		Kindergarten kindergarten = mapService.selectkgName(kgName);
 		Service service = mapService.selectService(kgName);
+		
 		System.out.println(kindergarten);
 		System.out.println(service);
 
 		request.removeAttribute("kindergarten");
 		request.setAttribute("kindergarten", kindergarten);
-								
 		request.setAttribute("service", service);
+		
 		request.getRequestDispatcher("/WEB-INF/view/map/Infrm.jsp").forward(request, response);
 	}
 	
