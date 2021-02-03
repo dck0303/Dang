@@ -15,6 +15,7 @@ import com.dang.common.code.ErrorCode;
 import com.dang.common.exception.ToAlertException;
 import com.dang.map.model.service.MapService;
 import com.dang.map.model.vo.Kindergarten;
+import com.dang.map.model.vo.Service;
 
 @WebServlet("/map/*")
 public class MapController extends HttpServlet {
@@ -40,9 +41,6 @@ public class MapController extends HttpServlet {
 		case "infrm.do":
 			infrm(request, response);
 			break;
-		case "infrmimpl.do":
-			infrmimpl(request, response);
-			break;
 		default:
 			throw new ToAlertException(ErrorCode.CD_404);
 
@@ -57,29 +55,11 @@ public class MapController extends HttpServlet {
 
 	private void map(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		List<Kindergarten> map = mapService.selectKindergarten();
+		List<Kindergarten> mapList = mapService.selectKindergarten();
 
-		request.setAttribute("mapList", map);
+		request.setAttribute("mapList", mapList);
 
 		request.getRequestDispatcher("/WEB-INF/view/map/Map.jsp").forward(request, response);
-	}
-
-	private void infrmimpl(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String kgName = request.getParameter("kgName");
-		System.out.println("비동기 통신으로 넘어온 값 " + kgName);
-
-		Kindergarten kindergarten = mapService.selectMapkgName(kgName);
-
-		System.out.println(kindergarten);
-
-		request.setAttribute("kindergarten", kindergarten);
-
-//		request.setAttribute("url","/map/infrm.do");
-//		request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
-
-		request.getRequestDispatcher("/WEB-INF/view/map/Infrm.jsp").forward(request, response);
-
 	}
 
 	private void infrm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,13 +67,19 @@ public class MapController extends HttpServlet {
 		String kgName = request.getParameter("kgName");
 		System.out.println("비동기 통신으로 넘어온 값 " + kgName);
 
-		Kindergarten kindergarten = mapService.selectMapkgName(kgName);
-
+		Kindergarten kindergarten = mapService.selectkgName(kgName);
+		Service service = mapService.selectService(kgName);
+		
 		System.out.println(kindergarten);
+		System.out.println(service);
 
+		request.removeAttribute("kindergarten");
 		request.setAttribute("kindergarten", kindergarten);
-
+		request.setAttribute("service", service);
+		
 		request.getRequestDispatcher("/WEB-INF/view/map/Infrm.jsp").forward(request, response);
 	}
+	
+
 
 }

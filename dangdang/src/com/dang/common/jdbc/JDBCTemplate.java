@@ -43,7 +43,6 @@ public class JDBCTemplate {
 		Properties info = new Properties();     
 	    info.put(OracleConnection.CONNECTION_PROPERTY_USER_NAME, user);
 	    info.put(OracleConnection.CONNECTION_PROPERTY_PASSWORD, password);          
-	    info.put(OracleConnection.CONNECTION_PROPERTY_DEFAULT_ROW_PREFETCH, "20"); 
 		
 		Connection conn = null;
 		
@@ -71,9 +70,7 @@ public class JDBCTemplate {
 	public void commit(Connection conn) {
 		try {
 			conn.commit();
-
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -82,7 +79,6 @@ public class JDBCTemplate {
 		try {
 			conn.rollback();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -93,7 +89,7 @@ public class JDBCTemplate {
 			// 예외처리 필요
 			// rset이 null이 아니고 rset이 닫히지 않을때만 실행
 			// 아니면 닫힌거니까 아무것도 안해줘도 됨
-			if (rset != null && rset.isClosed()) {
+			if (rset != null && !rset.isClosed()) {
 
 				rset.close();
 			}
@@ -107,22 +103,20 @@ public class JDBCTemplate {
 	public void close(Statement stmt) {
 
 		try {
-			if (stmt != null && stmt.isClosed()) {
+			if (stmt != null && !stmt.isClosed()) {
 				stmt.close();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public void close(Connection conn) {
 		try {
-			if (conn != null && conn.isClosed()) {
+			if (conn != null && !conn.isClosed()) {
 				conn.close();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -130,19 +124,18 @@ public class JDBCTemplate {
 	public void close(ResultSet rset, Statement stmt, Connection conn) {
 		try {
 
-			if (rset != null && rset.isClosed()) {
+			if (rset != null && !rset.isClosed()) {
 
 				rset.close();
 			}
-			if (stmt != null && stmt.isClosed()) {
+			if (stmt != null && !stmt.isClosed()) {
 				stmt.close();
 			}
 
-			if (conn != null && conn.isClosed()) {
+			if (conn != null && !conn.isClosed()) {
 				conn.close();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -151,16 +144,15 @@ public class JDBCTemplate {
 	public void close(ResultSet rset, Statement stmt) {
 		try {
 
-			if (rset != null && rset.isClosed()) {
+			if (rset != null && !rset.isClosed()) {
 
 				rset.close();
 			}
-			if (stmt != null && stmt.isClosed()) {
+			if (stmt != null && !stmt.isClosed()) {
 				stmt.close();
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -169,15 +161,14 @@ public class JDBCTemplate {
 	public void close(Statement stmt, Connection conn) {
 		try {
 
-			if (stmt != null && stmt.isClosed()) {
+			if (stmt != null && !stmt.isClosed()) {
 				stmt.close();
 			}
 
-			if (conn != null && conn.isClosed()) {
+			if (conn != null && !conn.isClosed()) {
 				conn.close();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

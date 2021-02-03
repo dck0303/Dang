@@ -8,10 +8,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.print.attribute.standard.Severity;
+
 import com.dang.common.code.ErrorCode;
 import com.dang.common.exception.DataAccessException;
 import com.dang.common.jdbc.JDBCTemplate;
 import com.dang.map.model.vo.Kindergarten;
+import com.dang.map.model.vo.Service;
 
 public class MapDao {
 
@@ -64,6 +67,7 @@ public class MapDao {
 		// 페이징 처리를 위한 sql / 인라인뷰, rownum 사용
 		String query = "select * from (select rownum rn, KG_ADDRESS, KG_CLASS_NAME, KG_IDX, KG_LAG,KG_LAT,KG_NAME,KG_NOTICE,KG_OPERATE_TIME,KG_TELL from"
 				+ "(select * from KINDERGARDEN order by KG_IDX asc)) where rn between ? and ?";
+		System.out.println(startRow + ":" + endRow);
 
 		List<Kindergarten> list = null;
 
@@ -93,7 +97,6 @@ public class MapDao {
 					kindergarten.setKgOperateTime(rset.getString("KG_TELL"));
 					kindergarten.setKgLat(rset.getString("kg_lat"));
 					kindergarten.setKgLag(rset.getString("kg_lag"));
-
 					list.add(kindergarten); // list에 0번 인덱스부터 board 객체의 참조값을 저장
 				} while (rset.next());
 			}
@@ -104,19 +107,20 @@ public class MapDao {
 		}
 		return list; // list 반환
 	}
-	
-	public int selectCount(Connection conn){
+
+	public int selectCountPage(Connection conn) {
+
 		int count = 0;
 
 		PreparedStatement pstm = null;
 
 		ResultSet rset = null;
-		
+
 		String query = "select count(*) from KINDERGARDEN";
 		try {
 			pstm = conn.prepareStatement(query);
 			rset = pstm.executeQuery();
-			if(rset.next()){
+			if (rset.next()) {
 				count = rset.getInt(1);
 			}
 		} catch (Exception e) {
@@ -127,11 +131,11 @@ public class MapDao {
 
 		return count; // 총 레코드 수 리턴
 	}
-	
-	public Kindergarten selectMapkgName(Connection conn, String kgName) {
+
+	public Kindergarten selectkgName(Connection conn, String kgName) {
 
 		Kindergarten kindergarten = null;
-		PreparedStatement pstm = null; 
+		PreparedStatement pstm = null;
 		ResultSet rset = null;
 
 		try {
@@ -169,5 +173,112 @@ public class MapDao {
 
 	}
 
+	public List<Kindergarten> selectSearchKindergarten(Connection conn, int startRow, int endRow, String keyword) {
+
+		List<Kindergarten> list = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+
+		try {
+			String query = "select * from (select rownum rn, KG_ADDRESS, KG_CLASS_NAME, KG_IDX, KG_LAG,KG_LAT,KG_NAME,KG_NOTICE,KG_OPERATE_TIME,KG_TELL from (select * from KINDERGARDEN where KG_NAME like ? order by KG_IDX asc)) where rn between ? and ?";
+			pstm = conn.prepareStatement(query);
+			String setKeyword = "%" + keyword + "%";
+			pstm.setString(1, setKeyword);
+			pstm.setInt(2, startRow);
+			pstm.setInt(3, endRow);
+
+			rset = pstm.executeQuery();
+
+			if (rset.next()) { // 데이터베이스에 데이터가 있으면 실행
+				list = new ArrayList<>(); // list 객체 생성
+				do {
+					// 반복할 때마다 ExboardDTO 객체를 생성 및 데이터 저장
+					Kindergarten kindergarten = new Kindergarten();
+					kindergarten.setKgName(rset.getString("kg_name"));
+					kindergarten.setKgAddress(rset.getString("KG_ADDRESS"));
+					kindergarten.setKgClassName(rset.getString("KG_CLASS_NAME"));
+					kindergarten.setKgNotice(rset.getString("KG_NOTICE"));
+					kindergarten.setKgOperateTime(rset.getString("KG_OPERATE_TIME"));
+					kindergarten.setKgOperateTime(rset.getString("KG_TELL"));
+					kindergarten.setKgLat(rset.getString("kg_lat"));
+					kindergarten.setKgLag(rset.getString("kg_lag"));
+					list.add(kindergarten); // list에 0번 인덱스부터 board 객체의 참조값을 저장
+				} while (rset.next());
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(ErrorCode.SM01, e);
+		} finally {
+			jdt.close(rset, pstm);
+		}
+
+		return list;
+
+	}
+
+	public int selectSearchCount(Connection conn, String keyword) {
+
+		int count = 0;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+
+		try {
+			String query = "select count(*) from KINDERGARDEN where KG_NAME like ? ";
+
+			pstm = conn.prepareStatement(query);
+			String setKeyword = "%" + keyword + "%";
+			pstm.setString(1, setKeyword);
+
+			rset = pstm.executeQuery();
+
+			if (rset.next()) {
+				count = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(ErrorCode.SM01, e);
+		} finally {
+			jdt.close(rset, pstm);
+		}
+
+		return count;
+
+	}
+
+	public Service selectService(Connection conn, String kgName) {
+
+		Service service = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+
+		try {
+			System.out.println("이름" + kgName);
+			String query = "select * from services where KG_NAME = ? ";
+			System.out.println(query);
+			pstm = conn.prepareStatement(query);
+
+			pstm.setString(1, kgName);
+
+			rset = pstm.executeQuery();
+
+			if (rset.next()) {
+				service = new Service();
+				service.setKgName(rset.getString("KG_NAME"));
+				service.setSvIdx(rset.getInt("SV_IDX"));
+				service.setIsKg(rset.getInt("IS_KG"));
+				service.setIsCafe(rset.getInt("IS_CAFE"));
+				service.setIsHotel(rset.getInt("IS_HOTEL"));
+				service.setIsMedic(rset.getInt("IS_MEDIC"));
+				service.setIsPickup(rset.getInt("IS_PICKUP"));
+				service.setIsSpa(rset.getInt("IS_SPA"));
+				service.setIsAcademy(rset.getInt("IS_ACADEMY"));
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(ErrorCode.SM01, e);
+		} finally {
+			jdt.close(rset, pstm);
+		}
+
+		return service;
+
+	}
 
 }
