@@ -120,7 +120,7 @@
 			
 							<div class="infrmBox">
 								<div class="infrm">
-									<p><a href = "/map/infrm.do?kgName=<%=kindergarten.getKgName()%>"><%=kindergarten.getKgName()%></a></p>
+									<p><a  class = "kgNameA" href = "/map/infrm.do?kgName=<%=kindergarten.getKgName()%>"><%=kindergarten.getKgName()%></a></p>
 									<p><%=kindergarten.getKgAddress()%></p>
 									<p><%=kindergarten.getKgOperateTime()%></p>
 								</div>
@@ -140,7 +140,7 @@
 			%>
 						<div class="infrmBox">
 							<div class="infrm">
-								<p><a href = "/map/infrm.do?kgName=<%=kindergarten.getKgName()%>"><%=kindergarten.getKgName()%></a></p>
+								<p><a class = "kgNameA" href = "/map/infrm.do?kgName=<%=kindergarten.getKgName()%>"><%=kindergarten.getKgName()%></a></p>
 								<p><%=kindergarten.getKgAddress()%></p>
 								<p><%=kindergarten.getKgOperateTime()%></p>
 							</div>

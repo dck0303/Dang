@@ -12,26 +12,27 @@
 }
 
 #noReviewBox{
-	width: 50%;
+    width: 50%;
     height: 20vw;
-	text-align :center;
-    margin: auto;
-  	
-    background-image: url("/resources/images/absence.jpg");
+
+    margin: 3% 25% 0 25%;
+    background-image: url(/resources/images/absence.jpg);
     background-size: cover;
-    background-position:center;
+    background-position: center;
 }
+
 #kinder {
 	position: relative;
     top: 15px;
 	margin-bottom: 0;
 }
+
 #reviewWrite{
-    color:black;
+   	color: #4169E1;
 	font-size: 1vw;
     position: relative;
     margin-bottom: 0;
-    left: 55.9%;
+    left: 57.5%;
     top: 9px;
 }
 .reviewWrap {
@@ -105,7 +106,7 @@
 }
 
 .photo {
-	background-color: dodgerblue;
+	
 	width: 50%;
 	height: 70%;
 	margin: 8% 5% 0 0;
@@ -127,9 +128,6 @@
 .board {
     min-height: 70vh;
     margin-top: 15vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 /*푸터*/

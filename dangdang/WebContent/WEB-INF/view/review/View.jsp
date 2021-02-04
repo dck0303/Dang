@@ -61,10 +61,10 @@
 
 		<div class="board">
 		
-		 <div id = "kinderWrap"><p id= "kinder">${kindergarten.kgName}</p></div><a id ="reviewWrite" href = "/review/write.do?kgName=${kindergarten.kgName}">[후기 등록]</a>
+		 <div id = "kinderWrap"><p id= "kinder">${kindergarten.kgName}</p></div><a id ="reviewWrite" href = "/review/write.do?kgName=${kindergarten.kgName}">후기 등록</a>
 		<c:choose>
 			<c:when test="${empty reviewList}">
-				<div id = "noReviewBox">등록된 후기가 없습니다</div>
+				<div id = "noReviewBox"></div>
 			</c:when>
 		<c:otherwise>
 		<c:forEach var="review" items = "${reviewList}" varStatus="status">

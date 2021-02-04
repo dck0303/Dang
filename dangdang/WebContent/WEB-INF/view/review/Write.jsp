@@ -11,7 +11,16 @@
 	<link rel="stylesheet" href="/resources/css/write.css" />
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<!-- <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> -->
-	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">	
+	    <style>
+        #star_grade a{
+           text-decoration: none;
+           color: gray;
+       }
+       #star_grade a.on{
+           color: red;
+       }
+   </style>
 	<noscript>
 		<link rel="stylesheet" href="/resources/css/noscript.css" />
 	</noscript>
@@ -58,7 +67,7 @@
 						<input id="titleInput" type="text" name="title" required="required" placeholder="제목을 입력해주세요." maxlength="10"/>
 						<!--multiple : 여러개 파일 선택을 허용하는 속성-->
 						<input id = "file" type='file' name='files' accept='image/jpg,image/jpeg,image/gif,image/png' onChange="chk(this)">
-						<textarea id="content" class="board-content" name="content"></textarea>
+						<textarea id="content" class="board-content" name="content" required="required"></textarea>
 						<div id="btnWrap">
 							<button class = "btn">등록</button>
 						</div>
@@ -77,7 +86,8 @@
 
 	</div>
 	<script>
-	let check = true;
+	let check = false;
+	let file = document.querySelector('#file');
 	
 	function chk(obj) {
 	    if (/(\.gif|\.jpg|\.jpeg|\.png)$/i.test(obj.value) == false) {
@@ -87,7 +97,8 @@
 	    }else{
 	        check = true;
 	    }
-	}   
+	}
+		
 	    document.querySelector('#writeForm').addEventListener('submit',(e) => {
 		    if (!check) {
 	    	console.dir(check)
@@ -101,6 +112,9 @@
 
 	
 	</script>
+	
+
+
 	<!-- Scripts -->
 	<script src="/resources/js/jquery.min.js"></script>
 	<script src="/resources/js/jquery.scrollex.min.js"></script>
