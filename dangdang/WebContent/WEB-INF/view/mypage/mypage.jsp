@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../resources/css/main.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
 </head>
 <body class="is-preload">
 
@@ -30,10 +31,13 @@
 								<c:choose>
 									<c:when test ="${sessionScope.schoolMember != null}"><li><a href="/school/schoolpage.do">마이페이지</a></li></c:when>
 									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/userpage.do">마이페이지</a></li></c:when>
-									<c:otherwise><li><a href= "#" onclick="mypageError(); return false">마이페이지</a></li></c:otherwise>
 								</c:choose>
-								<li><a href="/map.do">유치원 찾기</a></li>
+								<li><a href="map/map.do">유치원 찾기</a></li>
 								<li><a href="#">캘린더</a></li>
+								<c:choose>
+									<c:when test ="${sessionScope.schoolMember != null}"><li><a href="/school/logout.do">로그아웃</a></li></c:when>
+									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/logout.do">로그아웃</a></li></c:when>
+								</c:choose>
 								
 							</ul>
 						</div></li>
@@ -50,15 +54,29 @@
 
 		<!-- Main -->
 		<section class="user_board">
-			<div class="user_mypage">
+			<div class="member_mypage">
 				<div id="mypage_profile">
 					<div>
-						<a href="/user/userprofile.do">마이프로필 설정</a>
+						<c:choose>
+							<c:when test ="${sessionScope.schoolMember != null}"><a href="/school/schoolprofile.do">프로필설정</a></c:when>
+							<c:when test ="${sessionScope.userMember != null}"><a href="/user/userprofile.do">프로필설정</a></c:when>
+						</c:choose>
 					</div>
 					<div>
-						<div id ="profile_photo"></div>
-						<div>
-							<h2>${sessionScope.userMember.nickname}</h2>
+						<c:choose>
+							<c:when test ="${sessionScope.schoolMember != null}"><a id ="profile_photo" href="/school/schoolprofile.do"></a></c:when>
+							<c:when test ="${sessionScope.userMember != null}"><a id ="profile_photo" href="/user/userprofile.do"></a></c:when>
+						</c:choose>
+						<div class="profile_name_board">
+							<c:choose>
+								<c:when test ="${sessionScope.schoolMember != null}">
+									<a href="/school/schoolprofile.do" class="profile_name">${sessionScope.schoolMember.kgName}</a>
+								</c:when>
+								<c:when test ="${sessionScope.userMember != null}" >
+									<a href="/user/userprofile.do"  class="profile_name">${sessionScope.userMember.nickname}</a>
+								</c:when>
+							</c:choose>
+							
 						</div>
 					</div>
 				</div>
