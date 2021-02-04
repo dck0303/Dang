@@ -49,25 +49,18 @@
 			</nav>
 		</header>
 
-
-
-
-
-
-
-
 	<!-- Main -->
 
 		<div class="board">
 			<div class="reviewWrap">
-				<form action="${context}/review/upload.do?kgName=${kgName}" method="post" enctype="multipart/form-data">
+				<form id = "writeForm" action="${context}/review/upload.do?kgName=${kgName}" method="post" enctype="multipart/form-data">
 					<div class="formWrap">
 						<input id="titleInput" type="text" name="title" required="required" placeholder="제목을 입력해주세요." maxlength="10"/>
 						<!--multiple : 여러개 파일 선택을 허용하는 속성-->
-						<input id="file" type="file" name="files" multiple />
-						<textarea id="content" class="board-content" name="content"> </textarea>
+						<input id = "file" type='file' name='files' accept='image/jpg,image/jpeg,image/gif,image/png' onChange="chk(this)">
+						<textarea id="content" class="board-content" name="content"></textarea>
 						<div id="btnWrap">
-							<button id="submit" class = "btn">등록</button>
+							<button class = "btn">등록</button>
 						</div>
 					</div>
 				</form>
@@ -83,7 +76,31 @@
 		</footer>
 
 	</div>
+	<script>
+	let check = true;
+	
+	function chk(obj) {
+	    if (/(\.gif|\.jpg|\.jpeg|\.png)$/i.test(obj.value) == false) {
+	        alert("이미지 형식의 파일을 선택하십시오");
+	        check = false;
+	        return;
+	    }else{
+	        check = true;
+	    }
+	}   
+	    document.querySelector('#writeForm').addEventListener('submit',(e) => {
+		    if (!check) {
+	    	console.dir(check)
+		         e.preventDefault();
+		          alert("이미지 형식의 파일을 선택하십시오");
+			      return;
+			}
+	    });
+	
 
+
+	
+	</script>
 	<!-- Scripts -->
 	<script src="/resources/js/jquery.min.js"></script>
 	<script src="/resources/js/jquery.scrollex.min.js"></script>

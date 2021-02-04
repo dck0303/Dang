@@ -26,7 +26,14 @@
     top: 15px;
 	margin-bottom: 0;
 }
-
+#reviewWrite{
+    color:black;
+	font-size: 1vw;
+    position: relative;
+    margin-bottom: 0;
+    left: 55.9%;
+    top: 9px;
+}
 .reviewWrap {
 	width: 100%;
 	height: 100%;
@@ -101,10 +108,16 @@
 	background-color: dodgerblue;
 	width: 50%;
 	height: 70%;
-	margin: 11% 5% 0 0;
+	margin: 8% 5% 0 0;
 	
 }
 
+#img{
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+}
 /*헤더*/
 #header {
 	height: 15vh;
