@@ -65,9 +65,6 @@
 									<li><br><h3>주소</h3>
 										<textarea rows = "5" cols = "20" style = "resize: none" id="kgAddress" name="kgAddress">${sessionScope.schoolMember.kgAddress}</textarea>
 									</li>
-									<li><br><h3>학급명</h3>
-										<input type ="text" value="${sessionScope.schoolMember.kgClassName}" id="kgClassName" name="kgClassName">
-									</li>
 									<li><br><h3>전화번호</h3>
 										<input type ="text" value="${sessionScope.schoolMember.kgTell}" id="kgTell" name="kgTell">
 									</li>
@@ -95,12 +92,12 @@
 						<form action="${context}/school/profileservice.do" method="post" id="school_service_form">
 							<fieldset id="sort_school_service">
 								<h3>제공서비스</h3><br>
-						 		<label for ="isKg"><input type = "checkbox" id = "isKg" name ="service"  value = "isKg"> 유치원</label>
-								<label for = "isCafe"><input type = "checkbox" id = "isCafe"  name ="service" value = "isCafe"> 카페</label>
-								<label for = "isHotel"> <input type = "checkbox" id = "isHotel"  name ="service" value = "isHotel"> 호텔</label>
-								<label for ="isPickup"><input type = "checkbox" id = "isPickup"  name ="service" value = "isPickup"> 픽업서비스</label>
-								<label for = "isMedic"><input type = "checkbox" id = "isMedic"  name ="service" value = "isMedic"> 메니컬센터</label>
-								<label for = "isAcademy"><input type = "checkbox" id = "isAcademy"  name ="service" value = "isAcademy"> 아카데미</label>
+						 		<label for ="isKg"><input type = "checkbox" id = "isKg" name ="service1"  value = "isKg"> 유치원</label>
+								<label for = "isCafe"><input type = "checkbox" id = "isCafe"  name ="service2" value = "isCafe"> 카페</label>
+								<label for = "isHotel"> <input type = "checkbox" id = "isHotel"  name ="service3" value = "isHotel"> 호텔</label>
+								<label for ="isPickup"><input type = "checkbox" id = "isPickup"  name ="service4" value = "isPickup"> 픽업서비스</label>
+								<label for = "isMedic"><input type = "checkbox" id = "isMedic"  name ="service5" value = "isMedic"> 메니컬센터</label>
+								<label for = "isAcademy"><input type = "checkbox" id = "isAcademy"  name ="service6" value = "isAcademy"> 아카데미</label>
 								<label for = "isSpa"><input type = "checkbox" id = "isSpa"  name ="service" value = "isSpa"> 스파</label>
 						 		<button id="school_modify_btn">제공 서비스 수정</button>
 							</fieldset>

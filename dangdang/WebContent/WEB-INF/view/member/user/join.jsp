@@ -82,11 +82,6 @@
 							<td><input type="text" name="kinder" size=28% placeholder ="등록 유치원 있는 경우만 입력"></td>
 							<!--  <button type="button" onclick="kgCheck()">search</button></td>-->
 						<tr>
-						<tr><td>학급명</td></tr>
-						<tr>
-							<td><input type="text" name="classname" size=28% placeholder ="등록 유치원 있는 경우만 입력"></td>
-							<!-- <button type="button" onclick="classCheck()">search</button>-->
-						<tr>
 						<tr><td>이메일</td></tr>
 						<tr>
 							<td><input type="email" name="email" size=28% placeholder ="사용중인 이메일을 입력하세요" required></td>

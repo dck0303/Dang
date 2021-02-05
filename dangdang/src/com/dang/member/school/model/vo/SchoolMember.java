@@ -6,7 +6,6 @@ public class SchoolMember {
 	private String kgIdx;
 	private String kgId;
 	private String kgPw;
-	private String kgClassName;
 	private String kgAddress;
 	private String kgTell;
 	private String kgOperateTime;
@@ -42,12 +41,7 @@ public class SchoolMember {
 	public void setKgPw(String kgPw) {
 		this.kgPw = kgPw;
 	}
-	public String getKgClassName() {
-		return kgClassName;
-	}
-	public void setKgClassName(String kgClassName) {
-		this.kgClassName = kgClassName;
-	}
+	
 	public String getKgAddress() {
 		return kgAddress;
 	}
@@ -96,7 +90,7 @@ public class SchoolMember {
 	@Override
 	public String toString() {
 		return "SchoolMember [kgName=" + kgName + ", kgIdx=" + kgIdx + ", kgId=" + kgId + ", kgPw=" + kgPw
-				+ ", kgClassName=" + kgClassName + ", kgAddress=" + kgAddress + ", kgTell=" + kgTell
+				+  ", kgAddress=" + kgAddress + ", kgTell=" + kgTell
 				+ ", kgOperateTime=" + kgOperateTime + ", kgNotice=" + kgNotice + ", kgLat=" + kgLat + ", kgLag="
 				+ kgLag + ", kgGrade=" + kgGrade + "]";
 	}
