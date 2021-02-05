@@ -34,7 +34,6 @@ public class MapController extends HttpServlet {
 		System.out.println(Arrays.toString(uriArr));
 
 		switch (uriArr[uriArr.length - 1]) {
-
 		case "map.do":
 			map(request, response);
 			break;

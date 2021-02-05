@@ -120,7 +120,7 @@
 			
 							<div class="infrmBox">
 								<div class="infrm">
-									<p><a href = "/map/infrm.do?kgName=<%=kindergarten.getKgName()%>"><%=kindergarten.getKgName()%></a></p>
+									<p><a  class = "kgNameA" href = "/map/infrm.do?kgName=<%=kindergarten.getKgName()%>"><%=kindergarten.getKgName()%></a></p>
 									<p><%=kindergarten.getKgAddress()%></p>
 									<p><%=kindergarten.getKgOperateTime()%></p>
 								</div>
@@ -140,7 +140,7 @@
 			%>
 						<div class="infrmBox">
 							<div class="infrm">
-								<p><a href = "/map/infrm.do?kgName=<%=kindergarten.getKgName()%>"><%=kindergarten.getKgName()%></a></p>
+								<p><a class = "kgNameA" href = "/map/infrm.do?kgName=<%=kindergarten.getKgName()%>"><%=kindergarten.getKgName()%></a></p>
 								<p><%=kindergarten.getKgAddress()%></p>
 								<p><%=kindergarten.getKgOperateTime()%></p>
 							</div>
@@ -244,12 +244,7 @@
 				<script type="text/javascript"
 					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=df05d9d53d8d4a2d40f65a23b163b044"></script>   
 			</div>
-		</div>
-		
-		
-		
-		
-	
+		</div>		
 		
 		<script>
         let coords = {};

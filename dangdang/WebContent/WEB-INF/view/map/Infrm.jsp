@@ -61,10 +61,14 @@
 
 		<div class="board">
 			<div id="storeWrap">
-				<div id="photo"></div>
+			
+				<div id="photo"><img id ="img" src="/file"></div>
+				
 				<div id="wrap"></div>
+				
 				<div id="storeInfrm">
-					<div id="InfrmList">
+				
+					<div id="InfrmList"> 
 						<div id="name">${kindergarten.getKgName()}</div>
 						<div id="review"><a href = "/review/view.do?kgName=${kindergarten.getKgName()}">방문자리뷰</a></div>
 						<div id="kakaoIcon">     
@@ -74,7 +78,7 @@
 							 <i class="fas fa-road"></i></a>
 						</div>
 						<div id="reservation">
-							<button id="rsv_btn">예약</button>
+							<button id="rsv_btn"><a href = "/reservation/reservation.do?kgName=${kindergarten.getKgName()}">예약</a></button>
 						</div>
 						<div id="notice" class="list"><span class = "noticeSpan">알림 </span>${kindergarten.getKgNotice()}</div>
 						<div id="address" class="list">${kindergarten.getKgAddress()}</div>
@@ -104,7 +108,20 @@
 						</c:if> 
 						</div>
 					</div>
+					
+					
+					<div id ="photoWrap">
+				<%--<c:forEach var="" items="">
+						<div class = "photo">
+						
+						
+						
+						</div>
+					</c:forEach>--%>
+					</div>					
+					
 				</div>
+				
 			</div>
 		</div>
 		<!-- Footer -->
