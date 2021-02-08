@@ -10,6 +10,8 @@ import com.dang.common.exception.DataAccessException;
 import com.dang.common.jdbc.JDBCTemplate;
 import com.dang.member.school.model.vo.SchoolMember;
 
+import oracle.jdbc.proxy.annotation.Pre;
+
 public class SchoolDao {
 	
 	
@@ -57,6 +59,44 @@ public class SchoolDao {
 		}
 
 		return schoolMember; 
+		
+	}
+	
+	
+	
+	public SchoolMember selectSchoolByName(Connection conn, String schoolName, String scholPhone) {
+		SchoolMember schoolMember = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		
+		String query = "select * from kindergarden where kg_name = ? and kg_tell = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, schoolName);
+			pstm.setString(2, scholPhone);
+			
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				schoolMember = new SchoolMember();
+				schoolMember.setKgName(rset.getString("kg_name"));
+				schoolMember.setKgId(rset.getString("kg_id"));
+				schoolMember.setKgPw(rset.getString("kg_pw"));
+				schoolMember.setKgAddress(rset.getString("kg_address"));
+				schoolMember.setKgTell(rset.getString("kg_tell"));
+				schoolMember.setKgOperateTime(rset.getString("kg_operate_time"));
+				schoolMember.setKgNotice(rset.getString("kg_notice"));
+				schoolMember.setKgGrade(rset.getString("kg_grade"));
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			jdt.close(rset, pstm);;
+		}
+		
+		return schoolMember;
 		
 	}
 	

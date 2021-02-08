@@ -2,6 +2,7 @@ package com.dang.member.user.model.service;
 
 import java.sql.Connection;
 
+import com.dang.common.exception.DataAccessException;
 import com.dang.common.jdbc.JDBCTemplate;
 import com.dang.member.user.model.dao.UserDao;
 import com.dang.member.user.model.vo.UserMember;
@@ -59,7 +60,6 @@ public class UserService {
 			UserMember res = null;
 			
 			try {
-				
 				res = userDao.selectUserByName(conn, userName, phoneNumber);
 			} finally {
 				jdt.close(conn);
@@ -68,13 +68,16 @@ public class UserService {
 		}
 	
 		
-		
+		//insert문에는 commit 과 rollback !
 		public int insertuserMember(UserMember userMember) {
 			Connection conn = jdt.getConnection();
 			int res = 0;
 			
 			try{
 				res = userDao.insertuserMember(conn, userMember);
+				jdt.commit(conn);
+			}catch(DataAccessException e){
+				jdt.rollback(conn);
 			}finally {
 				jdt.close(conn);
 			}

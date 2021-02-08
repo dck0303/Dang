@@ -111,7 +111,7 @@ public class UserDao {
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
 		
-		String query = "select * from member where user_id = ? and phone_number = ?";
+		String query = "select * from member where user_name = ? and phone_number = ?";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -169,8 +169,10 @@ public class UserDao {
 			
 		} catch (SQLException e) {
 			throw new DataAccessException(ErrorCode.IM01, e);
+	
 		} finally {
-			jdt.close(pstm);
+			jdt.commit(conn);
+			
 		}
 		return res;
 		

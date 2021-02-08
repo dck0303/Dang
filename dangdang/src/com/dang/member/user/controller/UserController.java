@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private UserService userService = new UserService();
+    Gson gson = new Gson();
    
     public UserController() {
         super();
@@ -86,8 +87,7 @@ public class UserController extends HttpServlet {
 		//login.jsp 상에서 fetch를 통해 body에 data로 저장해놓았기 때문에 그 값을 불러오면 된다.
 		String data = request.getParameter("data");
 		
-		//자바라이브러리 GSON 객체 생성
-		Gson gson = new Gson();
+		//자바라이브러리 GSON 객체 생성 -> 전역으로 올림
 		
 		// Json object인 data를 gson으로 map 클래스 객체로 변환!
 		Map parsedLoginData = gson.fromJson(data, Map.class);
@@ -100,8 +100,8 @@ public class UserController extends HttpServlet {
 		UserMember userMember = userService.memberAuthenticate(userId, userPw);
 	
 		if(userMember != null) {
-			request.getSession().setAttribute("userMember" , userMember);
-			response.getWriter().print("success"); //회원정보가 있을 경우 해당 내용을 session에 저장.
+			request.getSession().setAttribute("userMember" , userMember); //회원정보가 있을 경우 해당 내용을 session에 저장.
+			response.getWriter().print("success"); 
 		}else {
 			response.getWriter().print("fail");
 		}
@@ -207,6 +207,23 @@ protected void idCheck(HttpServletRequest request, HttpServletResponse response)
 	
 	protected void findUserIdImpl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String userInfo = request.getParameter("userinfo");
+		
+		
+		Map findIdMap = gson.fromJson(userInfo, Map.class);
+		
+		String userName = (String) findIdMap.get("username");
+		String phoneNumber = (String) findIdMap.get("phone");
+		
+		
+		//검색결과를 객체로 만들어 service단에 넘겨주기
+		UserMember userMember = userService.selectUserByName(userName, phoneNumber);
+
+		if(userMember != null) {
+			response.getWriter().print(userMember.getUserId());
+		}else {
+			response.getWriter().print("fail");
+		}
 		
 		
 	}

@@ -22,10 +22,11 @@ import com.google.gson.Gson;
 public class SchoolController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       private SchoolService schoolService = new SchoolService();
+  	  Gson gson = new Gson();
    
     public SchoolController() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
 	/**
@@ -77,7 +78,7 @@ public class SchoolController extends HttpServlet {
 		String data = request.getParameter("data");
 		
 		
-		Gson gson = new Gson(); //자바라이브러리 GSON 객체 생성
+		//Gson gson = new Gson(); //자바라이브러리 GSON 객체 생성 -> 전역변수로 올림
 		Map parsedLoginData = gson.fromJson(data, Map.class); // Json object인 data를 gson으로 map 클래스 객체로 변환!
 		
 		String schoolId = (String) parsedLoginData.get("id");//map객체의 id라는 key 값의 value 불러오기
@@ -136,8 +137,20 @@ public class SchoolController extends HttpServlet {
 	
 	protected void findSchoolIdImpl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String schoolInfo = request.getParameter("userinfo");
 		
-	
+		Map findIdMap = gson.fromJson(schoolInfo, Map.class);
+		
+		String schoolName = (String)findIdMap.get("username");
+		String schoolTell = (String)findIdMap.get("phone");
+		
+		SchoolMember schoolMember = schoolService.selectSchoolByName(schoolName, schoolTell);
+		
+		if(schoolMember != null) {
+			response.getWriter().print(schoolMember.getKgId());
+		}else {
+			response.getWriter().print("fail");
+		}
 	}
 	
 	protected void findSchoolPwImpl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

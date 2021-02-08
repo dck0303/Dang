@@ -92,7 +92,7 @@
 						<div id="kg_form">
 						<fieldset class="info_form">
 							<legend>유치원정보</legend>
-							<h2 id="kg_info">${sessionScope.userMember.kgName}<br>[${sessionScope.userMember.className}] </h2>
+							<h2 id="kg_info">${sessionScope.userMember.kgName}</h2>
 						</fieldset>
 						</div>
 					</div>

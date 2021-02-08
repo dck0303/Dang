@@ -41,6 +41,22 @@ public class SchoolService {
 		
 	}
 	
+	public SchoolMember selectSchoolByName(String schoolName, String schoolPhone) {
+		
+		Connection conn = jdt.getConnection();
+		SchoolMember res = null;
+		
+		try {
+			res = schoolDao.selectSchoolByName(conn, schoolName, schoolPhone);
+		} finally {
+			jdt.close(conn);
+		}
+		
+		return res;
+		
+		
+	}
+	
 	
 	
 	
