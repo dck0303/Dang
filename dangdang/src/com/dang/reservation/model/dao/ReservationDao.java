@@ -125,7 +125,7 @@ public class ReservationDao {
 		return count; // 총 레코드 수 리턴
 	}
 
-	public UserMember selectUser(Connection conn, String userId) {
+	public UserMember selectUserMember(Connection conn, String userId) {
 
 		UserMember userMember = null;
 		PreparedStatement pstm = null;

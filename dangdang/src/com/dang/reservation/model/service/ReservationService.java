@@ -1,7 +1,6 @@
 package com.dang.reservation.model.service;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,12 +66,12 @@ public class ReservationService {
 
 	}
 
-	public UserMember selectUser(String userId) {
+	public UserMember selectUserMember(String userId) {
 		Connection conn = jdt.getConnection();
 
 		UserMember userMember;
 		try {
-			userMember = reservationDao.selectUser(conn, userId);
+			userMember = reservationDao.selectUserMember(conn, userId);
 		} finally {
 			jdt.close(conn);
 		}
@@ -80,9 +79,8 @@ public class ReservationService {
 
 	}
 
-	public int ReservationEmail(UserMember userMember, String date, String KgName) {
+	public void ReservationEmail(UserMember userMember, String date, String KgName) {
 
-		int res = 0;
 		
 		String subject = "유치원 예약을 확인해주세요";
 		String htmlText = "<h1>고객님이 신청하신 예약이 승인이 완료되었습니다.</h1>";
@@ -111,9 +109,6 @@ public class ReservationService {
 
 		new MailSender().sendEmail(subject, htmlText, to);
 		
-		res = 1;
-		
-		return res;
 	}
 	
 	public int updateReservation(String rsIdx) {

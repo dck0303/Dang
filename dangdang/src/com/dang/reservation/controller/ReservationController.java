@@ -51,9 +51,6 @@ public class ReservationController extends HttpServlet {
 		case "approved.do":
 			approved(request, response);
 			break;
-		case "approvedimpl.do":
-			approvedimpl(request, response);
-			break;
 		default:
 			throw new ToAlertException(ErrorCode.CD_404);
 		}
@@ -127,7 +124,9 @@ public class ReservationController extends HttpServlet {
 		SchoolMember schoolMember = (SchoolMember) session.getAttribute("schoolMember");
 
 		Service service = mapService.selectService(schoolMember.getKgName());
+		String kgName = schoolMember.getKgName();
 		request.setAttribute("service", service);
+		request.setAttribute("kgName", kgName);
 
 		request.getRequestDispatcher("/WEB-INF/view/reservation/mngngRsrvt.jsp").forward(request, response);
 	}
@@ -135,6 +134,23 @@ public class ReservationController extends HttpServlet {
 	private void calendar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		HttpSession session = request.getSession();
+		SchoolMember schoolMember = (SchoolMember) session.getAttribute("schoolMember");
+		System.out.println(schoolMember);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		request.getRequestDispatcher("/WEB-INF/view/reservation/calendar.jsp").forward(request, response);
 
 	}
@@ -143,33 +159,25 @@ public class ReservationController extends HttpServlet {
 			throws ServletException, IOException {
 
 		String userId = request.getParameter("userId");
-		System.out.println(userId);
 
 		String date = request.getParameter("date");
-		System.out.println(date);
 
 		String kgName = request.getParameter("kgName");
-		System.out.println(kgName);
 
 		String rsIdx = request.getParameter("rsIdx");
-		System.out.println(rsIdx);
 
-		UserMember userMember = reservationService.selectUser(userId);
-		
-		
-		int res = reservationService.ReservationEmail(userMember, date, kgName);
+		System.out
+				.println("userId : " + userId + " / date : " + date + " / kgName : " + kgName + " / rsIdx : " + rsIdx);
+		UserMember userMember = reservationService.selectUserMember(userId);
 
-		
-		if (res > 0) {
-			response.getWriter().print("success");
-			reservationService.updateReservation(rsIdx);	
-		}
-	
+		System.out.println("userMember : " + userMember);
 
-	}
+		reservationService.ReservationEmail(userMember, date, kgName);
 
-	private void approvedimpl(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+		response.getWriter().print("success");
+
+		reservationService.updateReservation(rsIdx);
 
 	}
+
 }

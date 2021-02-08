@@ -106,9 +106,9 @@
 		<div id = "count">TOTAL : <%=count%></div>
 		<table id = "table" align="center">
 			<tr  align="center" style="background-color: #f3f3f3;">
-				<td class = "infrm" width="5%">예약번호</td>
-				<td class = "infrm" width="5%">ID</td>
-				<td class = "infrm" width="5%">이름</td>
+				<td class = "infrm" width="7%">예약번호</td>
+				<td class = "infrm" width="7%">ID</td>
+				<td class = "infrm" width="7%">이름</td>
 				<td class = "infrm" width="10%">휴대폰번호</td>
 				<td class = "infrm" width="10%">강아지 종</td>
 				<td class = "infrm" width="10%">강아지 나이</td>
@@ -135,9 +135,9 @@
 				<td><%=reservation.getDogAge()%></td>
 				<%if(reservation.getPickup() != null) {%>
 		 				<%if (reservation.getPickup().equals("0")){ %>
-						<td>픽업 희망</td>
+						<td>희망</td>
 						<%}else {%>
-						<td>픽업 비 희망</td>
+						<td>비희망</td>
 						<%} %> 
 				<%} %> 
 					<td class = "date"><%=reservation.getRegDate()%></td>
@@ -145,7 +145,7 @@
 					<%if (reservation.getIsApproved().equals("1")){ %>
 					<td><button class= "approvedBtn">승인</button></td>
 					<%}else {%>
-					<td><div class= "approvedBtn">승인 완료</div></td>
+					<td><div class= "approvedBtn">승인완료</div></td>
 				<%} %>
 			</tr>
 			<%
@@ -235,7 +235,7 @@
 	          fetch("/reservation/approved.do",{	
 	              method : "post",
 	              headers : headerObj,
-	              body : "userId="+userId+"&date="+date+"&kgName=${service.getKgName()}"+"&rsIdx="+rsIdx
+	              body : "userId="+userId+"&rsIdx="+rsIdx+"&date="+date+"&kgName=${kgName}"
 	              
 	           }).then(response => {
 	               if(response.ok){
@@ -245,7 +245,7 @@
 	            })
 	            .then((msg) => {
 	               if(msg == 'success'){
-						alert('확인 메일을 보냈습니다.')
+						alert('예약 승인 메일을 보냈습니다.')
 	               }
 	            }).catch(error=>{
 					alert('메일 보내기에 실패하였습니다.')
