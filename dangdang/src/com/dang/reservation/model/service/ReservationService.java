@@ -1,18 +1,20 @@
 package com.dang.reservation.model.service;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.dang.common.code.ConfigCode;
 import com.dang.common.exception.DataAccessException;
 import com.dang.common.exception.ToAlertException;
 import com.dang.common.jdbc.JDBCTemplate;
-import com.dang.common.util.file.FileUtil;
-import com.dang.common.util.file.FileVo;
-import com.dang.map.model.vo.Kindergarten;
+import com.dang.common.mail.MailSender;
+import com.dang.common.util.http.HttpUtils;
+import com.dang.member.user.model.vo.UserMember;
 import com.dang.reservation.model.dao.ReservationDao;
 import com.dang.reservation.model.vo.Reservation;
-import com.dang.review.model.vo.Review;
 
 public class ReservationService {
 
@@ -57,11 +59,76 @@ public class ReservationService {
 
 		int count;
 		try {
-			count = reservationDao.selectCountPage(conn,kgName);
+			count = reservationDao.selectCountPage(conn, kgName);
 		} finally {
 			jdt.close(conn);
 		}
 		return count;
+
+	}
+
+	public UserMember selectUser(String userId) {
+		Connection conn = jdt.getConnection();
+
+		UserMember userMember;
+		try {
+			userMember = reservationDao.selectUser(conn, userId);
+		} finally {
+			jdt.close(conn);
+		}
+		return userMember;
+
+	}
+
+	public int ReservationEmail(UserMember userMember, String date, String KgName) {
+
+		int res = 0;
+		
+		String subject = "유치원 예약을 확인해주세요";
+		String htmlText = "<h1>고객님이 신청하신 예약이 승인이 완료되었습니다.</h1>";
+		HttpUtils http = new HttpUtils();
+		Map<String, String> headers = new HashMap<String, String>();
+
+		// 우리서버의 url
+		String url = ConfigCode.DOMAIN + "/mail";
+
+		// header 저장
+		headers.put("Content-Type", "application/x-www-form-urlencoded");
+
+		// 파라미터 저장
+		Map<String, String> params = new HashMap<String, String>();
+
+		params.put("template", "reservation");
+		params.put("userId", userMember.getUserId());
+		params.put("date", date);
+		params.put("KgName", KgName);
+
+		htmlText = http.post(url, http.urlEncodedForm(params), headers);
+
+		// body에 넣어서 전송
+		// 네이버 메일이면 네이버 메일 도메인 뒤로 붙여서 우리 도메인 뒤로 붙게해줘야함
+		String to = userMember.getEmail();
+
+		new MailSender().sendEmail(subject, htmlText, to);
+		
+		res = 1;
+		
+		return res;
+	}
+	
+	public int updateReservation(String rsIdx) {
+		Connection conn = jdt.getConnection();
+		int res = 0;
+		try {
+			res = reservationDao.updateReservation(conn, rsIdx);
+			jdt.commit(conn);
+		} catch (DataAccessException e) {
+			jdt.rollback(conn);
+			throw new ToAlertException(e.error);
+		} finally {
+			jdt.close(conn);
+		}
+		return res;
 
 	}
 

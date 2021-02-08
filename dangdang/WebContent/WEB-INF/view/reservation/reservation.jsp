@@ -72,7 +72,7 @@
 						<input type="hidden" name = "kgName" value="${kindergarten.getKgName()}">
 						<label>요청사항 : <textarea id = "requestedTerm" required="required" maxlength="20" name = "requestedTerm"></textarea></label>
 						<c:if test="${service.getIsPickup() == 0}">
-						<label id = "pickWrap">픽업서비스 : <div id = "pickBox">신청 <input type="radio" value="0" name="pickup"> 신청 안함<input type="radio" value="1" name="pickUp"></div></label>
+						<label id = "pickWrap">픽업서비스 : <div id = "pickBox">신청 <input type="radio" value="0" name="pickup"> 신청 안함<input type="radio" value="1" name="pickup"></div></label>
 						</c:if>
 						<button id = "formBtn">신청하기</button>
 						</form>
