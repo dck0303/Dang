@@ -153,7 +153,6 @@ body, input, select, textarea {
 	
 	#dangmark{
 		width: 70px;
-		height:70px;
 	
 	}
 	
@@ -953,7 +952,7 @@ body.is-mobile.landing .user_profile{
 
 #dangmark{
 	width: 100px;
-	height: 100px;
+	height: 100%;
 	background-size: cover;
 	background-position: center;
 	background-image: url("/resources/css/images/dang.png");
