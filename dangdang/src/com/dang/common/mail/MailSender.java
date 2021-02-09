@@ -54,7 +54,7 @@ public class MailSender {
 	    //1. 네이버 smtp 서버를 사용하기 위해 인증정보
 	      //   네이버 id, pw
 	      PasswordAuthentication pa 
-	      = new PasswordAuthentication("suny10312@naver.com","park1003*");
+	      = new PasswordAuthentication("qkraldud5020@naver.com","1*al2238520");
 	      
 	      //2. 사용할 smtp 서버 정보를 작성
 	      // smtp 서버이름, 포트, tls 통신 가능여부, 사용자 인증 여부

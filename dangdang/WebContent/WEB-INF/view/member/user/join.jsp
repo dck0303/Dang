@@ -171,6 +171,7 @@
 					idCheckFlg = true;
 					idCheck.innerHTML = '사용 가능한 아이디 입니다.';
 				} else {
+					idCheckFlg = false;
 					idCheck.innerHTML = '사용 불가능한 아이디 입니다.';
 				}				
 			  }).catch(error => {
@@ -201,23 +202,26 @@
 		         e.preventDefault();
 		         pw_confirm.innerHTML = '비밀번호는 숫자,영문자,특수문자 조합의 8글자 이상이어야 합니다.';
 		         pw.value = '';
+		      } else {
+		    	  
+		    	  let firstPw =  pw.value;
+				  let secondPw = checkpw.value;
+				  //비밀번호 double check 메소드
+				  if(firstPw != secondPw){
+					
+						document.querySelector("#pw_confirm").innerHTML = '비밀번호가 맞지 않습니다.';
+						checkpw.value= ""; //pw의 value값 비워주기
+						e.preventDefault(); //데이터전송 막기
+					} else {
+						document.querySelector("#pw_confirm").innerHTML = '비밀번호가 확인되었습니다.';
+					}
+			   
 		      }
 		      
-		      let firstPw =  pw.value;
-			  let secondPw = checkpw.value;
-			  
-			  if(firstPw != secondPw){
-				
-					document.querySelector("#pw_confirm").innerHTML = '비밀번호가 맞지 않습니다.';
-					pw.value= "";
-					e.preventDefault(); //데이터전송 막기
-				} else {
-					document.querySelector("#pw_confirm").innerHTML = '비밀번호가 확인되었습니다.';
-				}
+		
 		   }); 
 
-	
-	
+	   
 
 
 	

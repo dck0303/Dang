@@ -667,11 +667,11 @@ body.is-menu-visible #menu {
 	-moz-transition: -moz-transform 0.75s ease, opacity 0.75s ease;
 	-webkit-transition: -webkit-transform 0.75s ease, opacity 0.75s ease;
 	-ms-transition: -ms-transform 0.75s ease, opacity 0.75s ease;
-	transition: transform 0.75s ease, opacity 0.75s ease;
-	-moz-transition-delay: 1.8s;
-	-webkit-transition-delay:1.8s;
-	-ms-transition-delay:1.8s;
-	transition-delay: 1.8s;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+	-moz-transition-delay: 1s;
+	-webkit-transition-delay:1s;
+	-ms-transition-delay:1s;
+	transition-delay: 1s;
 	-moz-transform: translateY(0);
 	-webkit-transform: translateY(0);
 	-ms-transform: translateY(0);
@@ -1036,13 +1036,13 @@ body.is-mobile.landing .user_profile{
 
 .member_mypage{
 	margin: auto;
-	width: 80vw;
-    height: 70vh;
+	width: 100%;
+    height: 100%;
 	background-color: white;
 	display: flex;
 	justify-content: space-around;
 	font-size: 1.3vw;
-	border: solid 1px;
+	
 
 }
 
@@ -1051,13 +1051,14 @@ body.is-mobile.landing .user_profile{
 	margin-left: 1vw;
 	margin-right: 1vw;
 	margin-bottom:1px;
+	margin-top: 1vw;
 	color: black;
 }
 
 #mypage_profile{
     width: 60%;
     height: 50%;
-    margin-top: 6%;
+   	margin-top: 10%;
     display: flex;
     text-align: center;
     justify-content: center;
@@ -1235,8 +1236,8 @@ body.is-mobile.landing .user_profile{
 }
 
 .info_form{
-	width: 35vw;
-    height: 70vh;
+	width: 60vh;
+    height: 80vh;
     border: solid 1px;
     border-radius: 3%;
     display: flex;
@@ -1247,6 +1248,7 @@ body.is-mobile.landing .user_profile{
 #modify_form{
 	display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 #kg_form{
@@ -1257,14 +1259,14 @@ body.is-mobile.landing .user_profile{
 }
 
 #personal_info {
-	width: 50%;
+	width: 80%;
 	margin:auto;
 
 }
 
 @media screen and (max-width: 736px) {
 	#personal_info {
-		width: 60%;
+		width: 90%;
 
 	}
 }
@@ -1334,7 +1336,7 @@ body.is-mobile.landing .user_profile{
 
 
 .school_info_form{
-	width: 70vw;
+	width: 75vw;
 	height: 120vh;
     border: solid 1px;
     border-radius: 3%;
@@ -1524,7 +1526,6 @@ body.is-mobile.landing .user_profile{
 
 #personal_photo *{
 	display: flex;
-	flex-direction: column;
 	margin: auto;
 }
 
@@ -1641,3 +1642,20 @@ body.is-mobile.landing .user_profile{
     font-family: 'Gamja Flower';
 }
 
+.fas{
+	cursor: pointer;
+	color: grey;
+}
+
+
+.school_info{
+	margin-left: 10px;
+}
+
+#withdraw_btn{
+	margin-right: 45px;
+}
+
+#sort_school_service span{
+	display: contents;
+}

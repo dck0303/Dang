@@ -1,6 +1,7 @@
 package com.dang.member.user.model.service;
 
 import java.sql.Connection;
+import java.sql.Date;
 
 import com.dang.common.exception.DataAccessException;
 import com.dang.common.jdbc.JDBCTemplate;
@@ -83,9 +84,43 @@ public class UserService {
 			}
 			return res;
 		}
+		
+		
+		public int withdrawUser(String userId) {
+			Connection conn = jdt.getConnection();
+			int res = 0;
+			
+			try {
+				res = userDao.withdrawUser(conn, userId);
+				jdt.commit(conn);
+			}catch(DataAccessException e) {
+				jdt.rollback(conn);
+			}finally {
+				jdt.close(conn);
+			}
+			return res;
+		}
 	
 	
-	
+		public int modifyUserInfo(String userId, String userPw, String userName, String userNick, String userEmail, Date userBirth, String userPhone) {
+			
+			Connection conn = jdt.getConnection();
+			int res = 0;
+			
+			try {
+			
+			res = userDao.modifyUserInfo(conn, userId, userPw, userName, userNick, userEmail, userBirth, userPhone);
+			jdt.commit(conn);
+			
+			}catch(DataAccessException e){
+				jdt.rollback(conn);
+			}finally {
+				jdt.close(conn);
+			}
+			System.out.println(res);
+			return res;
+			
+		}
 	
 	
 	

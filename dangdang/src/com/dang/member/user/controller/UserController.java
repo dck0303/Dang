@@ -60,6 +60,10 @@ public class UserController extends HttpServlet {
 			break;
 		case "finduserpw.do" : findUserPwImpl(request, response);
 			break;
+		case "withdraw.do" : withdrawUser(request, response);
+			break;
+		case "modifyinfo.do" : modifyUserInfo(request, response);
+		
 		
 		
 		
@@ -98,20 +102,29 @@ public class UserController extends HttpServlet {
 	
 		//schoolDao -> schoolService을 거치며 schoolMember의 객체가 반환된다.
 		UserMember userMember = userService.memberAuthenticate(userId, userPw);
-	
+
+		
 		if(userMember != null) {
-			request.getSession().setAttribute("userMember" , userMember); //회원정보가 있을 경우 해당 내용을 session에 저장.
-			response.getWriter().print("success"); 
+			if(userMember.getIsleave() != 1) {
+				request.getSession().setAttribute("userMember" , userMember); //회원정보가 있을 경우 해당 내용을 session에 저장.
+				request.setAttribute("alertMsg", "'댕댕아 놀면 뭐하니?'에 오신걸 환영합니다.");
+				response.getWriter().print("success"); 
+					
+			}else if(userMember.getIsleave() == 1){
+				response.getWriter().print("withdraw");
+				
+			}
 		}else {
 			response.getWriter().print("fail");
 		}
+	
 		
 	}
 	
 	protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.getSession().removeAttribute("userMember"); //session에 저장된 정보 삭제 후 메인으로 이동
-		request.getRequestDispatcher("/WEB-INF/view/main/main.jsp").forward(request, response);
+		request.getRequestDispatcher("/main.do").forward(request, response);
 		
 		
 	}
@@ -154,9 +167,11 @@ public class UserController extends HttpServlet {
 		int res = userService.insertuserMember(userMember);
 		
 		if(res > 0) {
-			response.getWriter().println("success");
+			request.setAttribute("alertMsg", "회원가입을 축하합니다."); //alertMsg 설정해주기
+			request.setAttribute("url", "/user/login.do"); // url 설정해주기
+			request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
 		} else {
-			response.getWriter().println("fail");
+			request.setAttribute("alertMsg", "회원가입에 실패하였습니다.");
 			
 		}
 	}
@@ -233,6 +248,68 @@ protected void idCheck(HttpServletRequest request, HttpServletResponse response)
 	
 		
 		
+	}
+	
+	
+	protected void withdrawUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int res = 0;
+		String deleteUser = request.getParameter("deleteUser");
+		
+		
+		Map deleteUserMap = gson.fromJson(deleteUser, Map.class);
+		String userId = (String) deleteUserMap.get("userId");
+		
+		
+		res = userService.withdrawUser(userId);
+		if(res > 0) {
+			response.getWriter().print("success");
+			request.getSession().removeAttribute("userMember"); //session에 저장된 정보 삭제
+		} else {
+			response.getWriter().print("fail");
+			
+		}
+		
+	}
+	
+	
+	protected void modifyUserInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int res = 0;
+		String modifyInfo = request.getParameter("modifyinfo");
+		Map modifyInfoMap = gson.fromJson(modifyInfo, Map.class);
+		String userId = (String) modifyInfoMap.get("userId");
+		String userPw = (String) modifyInfoMap.get("userPw");
+		String userName = (String) modifyInfoMap.get("userName");
+		String userNick = (String) modifyInfoMap.get("userNick");
+		String userEmail =(String) modifyInfoMap.get("userEmail");
+		String birthday = (String) modifyInfoMap.get("userBirth");
+		java.sql.Date userBirth = java.sql.Date.valueOf(birthday);
+		String userPhone = (String) modifyInfoMap.get("userPhone");
+		String kgName = (String) modifyInfoMap.get("userKg");
+		
+		res = userService.modifyUserInfo(userId, userPw, userName, userNick, userEmail, userBirth, userPhone);
+
+		
+		
+		if(res > 0) {
+			UserMember userMember = new UserMember();
+			userMember.setUserId(userId);
+			userMember.setPassword(userPw);
+			userMember.setUserName(userName);
+			userMember.setNickname(userNick);
+			userMember.setEmail(userEmail);
+			userMember.setBirth(userBirth);
+			userMember.setPhoneNumber(userPhone);
+			userMember.setKgName(kgName);
+			request.getSession().setAttribute("userMember", userMember);
+			response.getWriter().print("success");
+			
+			
+		} else {
+			response.getWriter().print("fail");
+			
+		}
 	}
 	
 
