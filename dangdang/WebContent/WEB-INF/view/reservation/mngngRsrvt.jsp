@@ -266,6 +266,10 @@
 
 	for(let i = 0; i < del.length; i++ ){
 		del[i].addEventListener('click',(e)=> {
+		let	result = confirm('정말 삭제하시겠습니까?')
+		
+		if (result) {
+		//삭제를 눌렀을때
 		let dleRsIdx = dleArr.item(i).innerText
 		console.dir(dleRsIdx)
 		
@@ -291,7 +295,9 @@
 					alert('삭제 실패하였습니다.')
 	            })
 	          
-
+		}else{
+			//삭제 취소를 눌렀을때
+		}
 			}) 
 		
 		}
