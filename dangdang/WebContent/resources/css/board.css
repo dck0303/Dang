@@ -1,4 +1,4 @@
-/* boardList  */
+ /* boardList  */
 .board {
   margin: 7% 20% 7% 20%;
 }
@@ -255,5 +255,36 @@ a {
 	background: #8b4513;
 	border-radius: 150px;
 	color: white;
-	font-size: 12pt;
+	font-size: 14pt;
+}
+
+/* ListBoard1 수정 */
+table {
+	border-collapse: collapse;
+}
+
+.boardList {
+	width: 100%;
+}
+
+.boardList tr {
+	border-bottom: 1px solid #999;
+}
+
+.boardList th,
+.boardList td {
+	padding: 10px;
+	font-size: 14pt;
+}
+
+.boardList td {
+	text-align: center;
+}
+
+.boardList .title{
+	text-align: left;
+}
+
+.boardList .title:hover {
+	text-decoration: underline;
 }

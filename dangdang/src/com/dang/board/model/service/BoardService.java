@@ -1,6 +1,7 @@
 package com.dang.board.model.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +18,20 @@ public class BoardService {
 		
 	}
 	
-	public ArrayList<Board> addBoard() {
+	public ArrayList<Board> addBoard(Board board) {
 		Connection conn = jdt.getConnection();
-		ArrayList<Board> boardList;
+		ArrayList<Board> boardList = boardDao.listBoard(conn);
 		try {
-			boardList = boardDao.addBoard(conn);
-		} finally {
+			boardList = boardDao.addBoard(conn, board);
+		}finally {
 			jdt.close(conn);
 		}
 		return boardList;
 	}
 	
-	public List<Board> listBoard(){
+	public ArrayList<Board> listBoard(){
 		Connection conn = jdt.getConnection();
-		List<Board> boardList = new ArrayList<>();
+		ArrayList<Board> boardList = new ArrayList<>();
 		try {
 			boardList = boardDao.listBoard(conn);
 		} finally {
@@ -39,26 +40,22 @@ public class BoardService {
 		return boardList;
 	}
 	
-	public List<Board> modifyBoard(){
+	public int modifyBoard(String bdIdx) throws SQLException{
 		Connection conn = jdt.getConnection();
-		List<Board> boardList;
+		int res = 0;
 		try {
-			boardList = boardDao.modifyBoard(conn);
+			res = boardDao.modifyBoard(conn, bdIdx);
+			jdt.commit(conn);
 		} finally {
 			jdt.close(conn);
 		}
-		return boardList;
+		return res;
 	}
 	
-	public List<Board> viewBoard(){
+	public Board viewBoard(String bdIdx){
 		Connection conn = jdt.getConnection();
-		List<Board> boardList;
-		try {
-			boardList = boardDao.viewBoard(conn);
-		} finally {
-			jdt.close(conn);
-		}
-		return boardList;
+		Board board = boardDao.viewBoard(conn, bdIdx);
+		return board;
 	}
 
 }

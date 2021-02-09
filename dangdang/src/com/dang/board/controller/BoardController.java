@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import com.dang.board.model.service.BoardService;
 import com.dang.common.code.ConfigCode;
+import com.dang.common.code.ErrorCode;
+import com.dang.common.exception.ToAlertException;
 import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
 import com.oreilly.servlet.multipart.ParamPart;
@@ -40,9 +42,9 @@ public class BoardController extends HttpServlet {
 		case "listboard2.do": listBoard2(request, response);
 			break;
 		default:
-			break;
+			throw new ToAlertException(ErrorCode.CD_404);
 		}
-		request.getRequestDispatcher("/WEB-INF/view/album/kindergarten/AlbumAdd.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/main/main.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

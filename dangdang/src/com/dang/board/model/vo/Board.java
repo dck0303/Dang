@@ -9,6 +9,7 @@ public class Board {
 	private String title;
 	private Date regDate;
 	private String content;
+	
 	public int getBdIdx() {
 		return bdIdx;
 	}

@@ -5,14 +5,19 @@
 <head>
 <meta charset="UTF-8">
 <title>알림 게시판 (업주)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="${context}/resources/css/main.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <!-- <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> -->
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+	rel="stylesheet">
 <link rel="stylesheet" href="${context}/resources/css/board.css" />
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+	rel="stylesheet">
 <noscript>
 	<link rel="stylesheet" href="assets/css/noscript.css" />
 </noscript>
@@ -47,55 +52,34 @@
 		<!-- Main -->
 		<section class="board">
 			<div class="boardList-wrap">
-				<div class="boardList">
-					<div class="boardList-head">
-						<div class="bd_no_idx">번호</div>
-						<div class="title">제목</div>
-						<div class="kg_name">글쓴이</div>
-						<div class="reg_date">작성일</div>
-					</div>
-					<div class="boardList-body">
-						<div class="item">
-							<div class="bd_no_idx">5</div>
-							<div class="title"><a href ="#">댕댕스쿨 5</a></div>
-							<div class="kg_name">OO유치원</div>
-							<div class="reg_date">2021-02-04</div>
-						</div>
-						<div class="item">
-							<div class="bd_no_idx">4</div>
-							<div class="title"><a href ="#">댕댕스쿨 4</a></div>
-							<div class="kg_name">OO유치원</div>
-							<div class="reg_date">2021-02-04</div>
-						</div>
-						<div class="item">
-							<div class="bd_no_idx">3</div>
-							<div class="title"><a href ="#">댕댕스쿨 3</a></div>
-							<div class="kg_name">OO유치원</div>
-							<div class="reg_date">2021-02-04</div>
-						</div>
-						<div class="item">
-							<div class="bd_no_idx">2</div>
-							<div class="title"><a href ="#">댕댕스쿨 2</a></div>
-							<div class="kg_name">OO유치원</div>
-							<div class="reg_date">2021-02-04</div>
-						</div>
-						<div class="item">
-							<div class="bd_no_idx">1</div>
-							<div class="title"><a href ="#">댕댕스쿨 1</a></div>
-							<div class="kg_name">OO유치원</div>
-							<div class="reg_date">2021-02-04</div>
-						</div>
-					</div>
-				</div>
+				<table class="boardList">
+					<h2 style="text-align: center; color: #8b4513;">알림장</h2>
+						<thead class="boardList-head">
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>글쓴이</th>
+								<th>작성일</th>
+							</tr>
+						</thead>
+						<tbody class="boardList-body">
+							<tr>
+								<td>1</td>
+								<td class="title"><a href="#">댕스쿨 알림장</a></td>
+								<td>업주</td>
+								<td>2021-02-08</td>
+							</tr>
+						</tbody>
+				</table>
 			</div>
-			
+
 			<div class="paging">
-				<a href="#" class="bt first">처음페이지</a>
-				<a href="#" class="bt prev">이전 페이지</a>
-				<a href="#" class="num on">1</a>
-				<a href="#" class="bt next">다음 페이지</a>
-				<a href="#" class="bt last">마지막 페이지</a>
-				<a href ="#" class="writing_box">글쓰기</a>
+				<a href="#" class="bt first">처음페이지</a> 
+				<a href="#" class="bt prev">이전 페이지</a> 
+				<a href="#" class="num on">1</a> 
+				<a href="#" class="bt next">다음 페이지</a> 
+				<a href="#" class="bt last">마지막 페이지</a> 
+				<a href="board/addboard.do" class="writing_box">글쓰기</a>
 			</div>
 		</section>
 
