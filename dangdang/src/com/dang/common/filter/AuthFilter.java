@@ -129,6 +129,11 @@ public class AuthFilter implements Filter {
 							throw new ToAlertException(ErrorCode.AUTH06);
 						}
 						break;
+					case "calendar.do":
+						if (session.getAttribute("schoolMember") == null) {
+							throw new ToAlertException(ErrorCode.AUTH07);
+						}
+						break;
 					}
 					break;
 			}
