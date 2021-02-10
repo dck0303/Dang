@@ -47,10 +47,12 @@ public class MailSender {
 	private Session getSession() {
 		// 1. 네이버 smtp 서버를 사용하기 위해 인증정보를 넣어야 한다.
 		// 네이버 id, pw
+
 		// PasswordAuthentication => 사용자 정보를 담기 위해서 사용한다.(세션을 만들 때)
 		// PasswordAuthentication pa = new PasswordAuthentication("suny10312@naver.com", "park100312*");
 		PasswordAuthentication pa  = new PasswordAuthentication("qkraldud5020@naver.com","1*qkrayddl");
 		 
+
 
 		// 2. 사용할 smtp 서버 정보를 작성
 		// smtp 서버이름, 포트, tls 통신 가능여부, 사용자 인증 여부
