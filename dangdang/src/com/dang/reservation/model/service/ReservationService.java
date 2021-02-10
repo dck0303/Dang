@@ -88,7 +88,7 @@ public class ReservationService {
 		Map<String, String> headers = new HashMap<String, String>();
 
 		// 우리서버의 url
-		String url = ConfigCode.DOMAIN + "/mail";
+		String url = ConfigCode.DOMAIN + "/mail.do";
 
 		// header 저장
 		headers.put("Content-Type", "application/x-www-form-urlencoded");
