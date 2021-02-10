@@ -50,7 +50,7 @@
 									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/userpage.do">마이페이지</a></li></c:when>
 								</c:choose>
 								<li><a href="/map/map.do">유치원 찾기</a></li>
-								<li><a href="#">캘린더</a></li>
+								<li><a href="/reservation/calendar.do">캘린더</a></li>
 								<c:choose>
 									<c:when test ="${sessionScope.schoolMember != null}"><li><a href="/school/logout.do">로그아웃</a></li></c:when>
 									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/logout.do">로그아웃</a></li></c:when>
@@ -142,7 +142,7 @@
 						<td>비희망</td>
 						<%} %> 
 				<%}else{ %>
-					<td>서비스 전</td>
+					
 					<%} %> 
 					<td class = "date"><%=reservation.getRegDate()%></td>
 					<td><%=reservation.getRequirements()%></td>
