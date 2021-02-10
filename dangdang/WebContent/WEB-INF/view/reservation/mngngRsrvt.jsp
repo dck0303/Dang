@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="/resources/css/main.css" />
 <link rel="stylesheet" href="/resources/css/mngngRsrvt.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<!-- <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> -->
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
 	rel="stylesheet">
 <noscript>
@@ -50,7 +50,7 @@
 									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/userpage.do">마이페이지</a></li></c:when>
 								</c:choose>
 								<li><a href="/map/map.do">유치원 찾기</a></li>
-								<li><a href="#">캘린더</a></li>
+								<li><a href="/reservation/calendar.do">캘린더</a></li>
 								<c:choose>
 									<c:when test ="${sessionScope.schoolMember != null}"><li><a href="/school/logout.do">로그아웃</a></li></c:when>
 									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/logout.do">로그아웃</a></li></c:when>
@@ -95,6 +95,7 @@
 	if (count > 0) {
 		// getList()메서드 호출 / 해당 레코드 반환
 		list = reservationService.selectReservationPage(startRow, endRow, kgName.getKgName());
+		System.out.println(list);
 
 	}  
 %>
@@ -111,13 +112,14 @@
 				<td class = "infrm" width="7%">이름</td>
 				<td class = "infrm" width="10%">휴대폰번호</td>
 				<td class = "infrm" width="10%">강아지 종</td>
-				<td class = "infrm" width="10%">강아지 나이</td>
+				<td class = "infrm" width="7%">강아지 나이</td>
 					<c:if test = "${service.getIsPickup() == 0}">
-						<td class = "infrm" width="10%">픽업 여부</td>
+						<td class = "infrm" width="7%">픽업 여부</td>
 					</c:if>
 				<td class = "infrm" width="10%">신청일</td>				
 				<td class = "infrm" width="20%">요구사항</td>
 				<td class = "infrm" width="10%">승인여부</td>
+				<td class = "infrm" width="5%">삭제</td>
 				
 			</tr>
 			<%
@@ -139,7 +141,9 @@
 						<%}else {%>
 						<td>비희망</td>
 						<%} %> 
-				<%} %> 
+				<%}else{ %>
+					
+					<%} %> 
 					<td class = "date"><%=reservation.getRegDate()%></td>
 					<td><%=reservation.getRequirements()%></td>
 					<%if (reservation.getIsApproved().equals("1")){ %>
@@ -147,6 +151,7 @@
 					<%}else {%>
 					<td><div class= "approvedBtn">승인완료</div></td>
 				<%} %>
+					<td><i class="fas fa-times del"></i></td>
 			</tr>
 			<%
 					}
@@ -160,7 +165,7 @@
 				%>
 				
 			<tr style="background-color: #f3f3f3;">
-				<td align="center" colspan="10" style="font-size: 0.7vw">
+				<td align="center" colspan="11" style="font-size: 0.7vw">
 					<%	// 페이징  처리
 						if(count > 0){
 							// 총 페이지의 수
@@ -227,6 +232,7 @@
 			let userId = userIdArr.item(i).innerText
 			let date = dateArr.item(i).innerText
 			let rsIdx = rsIdxArr.item(i).innerText
+			console.dir(rsIdx)
 
 			
 		      let headerObj = new Headers();
@@ -254,6 +260,57 @@
 		})
 	} 
 
+	</script>
+	
+	<script type="text/javascript">
+	let del = document.querySelectorAll(".del"); 
+	let dleArr = document.querySelectorAll(".rsIdx"); 
+
+	for(let i = 0; i < del.length; i++ ){
+		del[i].addEventListener('click',(e)=> {
+		let	result = confirm('정말 삭제하시겠습니까?')
+		
+		if (result) {
+		//삭제를 눌렀을때
+		let dleRsIdx = dleArr.item(i).innerText
+		console.dir(dleRsIdx)
+		
+				      let headerObj = new Headers();
+		      headerObj.append('content-type',"application/x-www-form-urlencoded");
+
+	          fetch("/reservation/delete.do",{	
+	              method : "post",
+	              headers : headerObj,
+	              body : "dleRsIdx="+dleRsIdx
+	              
+	           }).then(response => {
+	               if(response.ok){
+	                  return response.text();
+	               }
+	               throw new AsyncPageError(response.text());
+	            })
+	            .then((msg) => {
+	               if(msg == 'success'){
+						alert('삭제 성공하였습니다.')
+	               }
+	            }).catch(error=>{
+					alert('삭제 실패하였습니다.')
+	            })
+	          
+		}else{
+			//삭제 취소를 눌렀을때
+		}
+			}) 
+		
+		}
+	
+	
+	
+	
+	
+	
+	
+	
 	</script>
 	<!-- Scripts -->
 	<script src="/resources/js/jquery.min.js"></script>

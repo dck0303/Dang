@@ -1,6 +1,10 @@
 package com.dang.reservation.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,6 +54,9 @@ public class ReservationController extends HttpServlet {
 			break;
 		case "approved.do":
 			approved(request, response);
+			break;
+		case "delete.do":
+			delete(request, response);
 			break;
 		default:
 			throw new ToAlertException(ErrorCode.CD_404);
@@ -103,6 +110,7 @@ public class ReservationController extends HttpServlet {
 		reservation.setDogBreed(dogBreed);
 		reservation.setRequirements(requestedTerm);
 		reservation.setRegDate(regDate);
+		
 		if (pickup != null) {
 			reservation.setPickup(pickup);
 		}
@@ -136,21 +144,21 @@ public class ReservationController extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		SchoolMember schoolMember = (SchoolMember) session.getAttribute("schoolMember");
-		System.out.println(schoolMember);
+		System.out.println(schoolMember.getKgName());
+
+		ArrayList<Reservation> reservationList = reservationService.selectReservation(schoolMember.getKgName());
+
+		for (int i = 0; i < reservationList.size(); i++) {
+			System.out.println(reservationList.get(i));
+		}
 		
+		Date now = new Date();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		String today = f.format(now);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		request.setAttribute("reservationList", reservationList);
+		request.setAttribute("today",today);
+
 		request.getRequestDispatcher("/WEB-INF/view/reservation/calendar.jsp").forward(request, response);
 
 	}
@@ -166,11 +174,8 @@ public class ReservationController extends HttpServlet {
 
 		String rsIdx = request.getParameter("rsIdx");
 
-		System.out
-				.println("userId : " + userId + " / date : " + date + " / kgName : " + kgName + " / rsIdx : " + rsIdx);
+		System.out.println("userId : " + userId + " / date : " + date + " / kgName : " + kgName + " / rsIdx : " + rsIdx);
 		UserMember userMember = reservationService.selectUserMember(userId);
-
-		System.out.println("userMember : " + userMember);
 
 		reservationService.ReservationEmail(userMember, date, kgName);
 
@@ -178,6 +183,19 @@ public class ReservationController extends HttpServlet {
 
 		reservationService.updateReservation(rsIdx);
 
+	}
+	
+	private void delete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String dleRsIdx = request.getParameter("dleRsIdx");
+		System.out.println(dleRsIdx);
+		
+		int res = reservationService.deleteReservation(dleRsIdx);
+		System.out.println(res);
+		if (res > 0) {
+			response.getWriter().print("success");
+		}
 	}
 
 }
