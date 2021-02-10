@@ -64,10 +64,10 @@
 						<div class="profile_name_board">
 							<c:choose>
 								<c:when test ="${sessionScope.schoolMember != null}">
-									<a class="profile_name">${sessionScope.schoolMember.kgName}</a><i class="fas fa-cog" onclick="location.href='/school/schoolprofile.do'"></i>
+									<a class="profile_name">${sessionScope.schoolMember.kgName}</a><i class="fas fa-cog profilebtn" onclick="location.href='/school/schoolprofile.do'"></i>
 								</c:when>
 								<c:when test ="${sessionScope.userMember != null}" >
-									<a class="profile_name">${sessionScope.userMember.nickname}</a><i class="fas fa-cog" onclick="location.href='/user/userprofile.do'"></i>
+									<a class="profile_name">${sessionScope.userMember.nickname}</a><i class="fas fa-cog profilebtn" onclick="location.href='/user/userprofile.do'"></i>
 								</c:when>
 							</c:choose>
 							

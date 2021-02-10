@@ -1,6 +1,7 @@
 package com.dang.member.school.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -8,12 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dang.common.code.ErrorCode;
 import com.dang.common.exception.ToAlertException;
+import com.dang.common.random.RandomString;
 import com.dang.map.model.vo.Service;
 import com.dang.member.school.model.service.SchoolService;
 import com.dang.member.school.model.vo.SchoolMember;
+import com.dang.member.user.model.vo.UserMember;
 import com.google.gson.Gson;
 
 /**
@@ -38,27 +42,29 @@ public class SchoolController extends HttpServlet {
 		String[] uriArr = uri.split("/");
 		
 		switch(uriArr[uriArr.length-1]){
-		case "login.do" : login(request, response);
+		case "login.do" : login(request, response); //로그인 페이지 이동
 			break;
-		case "loginimpl.do" : loginImpl(request, response);
+		case "loginimpl.do" : loginImpl(request, response); //로그인 실행
 			break;
-		case "logout.do" : logout(request, response);
+		case "logout.do" : logout(request, response); //로그아웃 실행
 			break;
-		case "schoolpage.do" : viewSchoolPage(request, response);
+		case "schoolpage.do" : viewSchoolPage(request, response); //마이 페이지로 이동
 			break;
-		case "schoolprofile.do" : viewSchoolProfile(request, response);
+		case "schoolprofile.do" : viewSchoolProfile(request, response); //프로필 페이지 이동
 			break;
-		case "findschoolinfo.do" : findSchoolInfo(request, response);
+		case "findschoolinfo.do" : findSchoolInfo(request, response); //아이디,비번찾기 페이지 이동
 			break;
-		case "findschoolid.do" : findSchoolIdImpl(request, response);
+		case "findschoolid.do" : findSchoolIdImpl(request, response); //아이디 찾기 실행
 			break;
-		case "findschoolpw.do" : findSchoolPwImpl(request, response);
+		case "findschoolpw.do" : findSchoolPwImpl(request, response); //비번 찾기 실행
 			break;
-		case "modifyinfo.do" : modifySchoolInfo(request, response);
+		case "modifyinfo.do" : modifySchoolInfo(request, response); //기본정보 수정 실행
 			break;
-		case "modifyservice.do" : modifySchoolService(request, response);
+		case "modifyservice.do" : modifySchoolService(request, response); //서비스정보 수정 실행
 			break;
-		case "modifyphoto.do" : modifySchoolPhoto(request, response);
+		case "uploadphoto.do" : uploadSchoolPhoto(request, response); //사진정보 업로드 및 수정 실행
+			break;
+		case "serviceModify.do" : serviceModify(request, response); //2021.02.09 현재 사용X
 			break;
 		}
 		
@@ -104,14 +110,15 @@ public class SchoolController extends HttpServlet {
 				request.getSession().setAttribute("schoolMember", schoolMember);
 				request.getSession().setAttribute("schoolService", schoolProService);
 				response.getWriter().print("success");// 클라이언트에 응답하기 위한 출력 스트림을 반환햔다.
-				request.setAttribute("alertMsg", "'댕댕아 놀면 뭐하니?'에 오신걸 환영합니다.");
+			
 			}else if(schoolProService == null){
-				request.setAttribute("alertMsg", "유치원 서비스 조회 중 문제가 발생하였습니다.");
+				response.getWriter().print("servicefail");
+				
 			}
 			
 		} else {
 			response.getWriter().print("fail");
-			request.setAttribute("alertMsg", "유치원 로그인에 실패하였습니다.");
+			
 		}
 		
 	}
@@ -133,8 +140,6 @@ public class SchoolController extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/view/mypage/mypage.jsp").forward(request, response);
 	
 	}
-	
-	
 	
 	
 	
@@ -162,7 +167,7 @@ public class SchoolController extends HttpServlet {
 		String schoolName = (String)findIdMap.get("username");
 		String schoolTell = (String)findIdMap.get("phone");
 		
-		SchoolMember schoolMember = schoolService.selectSchoolByName(schoolName, schoolTell);
+		SchoolMember schoolMember = schoolService.findSchoolId(schoolName, schoolTell);
 		
 		if(schoolMember != null) {
 			response.getWriter().print(schoolMember.getKgId());
@@ -171,11 +176,73 @@ public class SchoolController extends HttpServlet {
 		}
 	}
 	
+	
+	
+	
 	protected void findSchoolPwImpl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		//해당정보에 맞는 회원이 있다면(findUserPw 메소드 사용)
+				String id = request.getParameter("id");
+				String userEmail = request.getParameter("email");
+				int res = 0;
+				//객체가 리턴된다.
+				SchoolMember schoolMember = schoolService.findSchoolPw(id, userEmail);
+				
+				if(schoolMember != null) {
+					
+					//그 값을 다시 가져와서 비밀번호만 다시 세팅한 후 다시 업데이트 문으로 modify 해주기(modifyInfo 메소드 사용);
+					
+					//새로운 비밀번호 발급해주기
+					String newPw = RandomString.randomStr(3);
+					
+					//새로운 비밀번호로 password 다시 세팅
+					schoolMember.setKgPw(newPw);
+					
+					//세팅된 비밀번호 포함 userMember정보 다시 가져오기
+					String kgName = schoolMember.getKgName();
+					String kgIdx = schoolMember.getKgIdx();
+					String kgId = schoolMember.getKgId();
+					String kgPw = schoolMember.getKgPw();
+					String kgAddress = schoolMember.getKgAddress();
+					String kgTell = schoolMember.getKgTell();
+					String kgOperateTime = schoolMember.getKgOperateTime();
+					String kgNotice = schoolMember.getKgNotice();
+					String kgGrade = schoolMember.getKgGrade();
+					String kgEmail = schoolMember.getKgEmail();
+					
+					//해당값으로 다시 update문 돌려주기
+					res = schoolService.modifySchoolInfo(kgId, kgName, kgAddress, kgTell, kgOperateTime, kgNotice, kgEmail);
+					
+					//비밀번호 세팅이 잘 끝난 경우
+					if(res > 0) {
+						
+						request.getSession().setAttribute("validUserMember", schoolMember);
+						//해당 비밀번호를 포함한 이메일보내기
+						schoolService.finSchoolPwEmail(schoolMember);
+					
+						//세션이 더이상 필요하지 않으니 세션 삭제해주기
+						request.removeAttribute("validUserMember");
+						request.setAttribute("alertMsg", "임시 비밀번호가 발급되었습니다.");
+						request.setAttribute("url", "/school/login.do");
+						request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
+					
+					}else {
+						//이메일 발송이 실패한 경우
+						new ToAlertException(ErrorCode.SM01);
+					}
+					//비밀번호 세팅중 오류가 생긴 경우
+				}else {
+					request.setAttribute("alertMsg", "해당정보가 존재하지 않습니다.");
+					request.setAttribute("url", "/school/findschoolinfo.do");
+					request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
+				}
+				
+				
+				
 	
 	}
+	
+	
 	
 	protected void modifySchoolInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -189,10 +256,10 @@ public class SchoolController extends HttpServlet {
 		String kgOperateTime = (String) modifyInfoMap.get("kgOperateTime");
 		String kgNotice = (String) modifyInfoMap.get("kgNotice");
 		String kgEmail = (String) modifyInfoMap.get("kgEmail");
-
+		
 		
 		res = schoolService.modifySchoolInfo(kgId, kgName, kgAddress, kgTell, kgOperateTime, kgNotice, kgEmail);
-	
+		
 		if(res > 0) {
 			
 			SchoolMember schoolMember = new SchoolMember();
@@ -215,11 +282,14 @@ public class SchoolController extends HttpServlet {
 	
 	
 	protected void modifySchoolService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		/*
 		int res = 0;
 		String modifyService = request.getParameter("schoolModifyService");
 		Map modifyServiceMap = gson.fromJson(modifyService, Map.class);
-		String kgName = (String) modifyServiceMap.get("kgName");
+		//String kgName = (String) modifyServiceMap.get("kgName");
+		
+	
+		String kgName = request.getParameter("kgName");
 		System.out.println(kgName);
 		int isKg = Integer.parseInt((String)modifyServiceMap.get("isKg"));
 		int isCafe = Integer.parseInt((String)modifyServiceMap.get("isCafe"));
@@ -231,7 +301,7 @@ public class SchoolController extends HttpServlet {
 		System.out.print(isKg +"," + isCafe +"," + isHotel +"," +isPickup +"," +isMedic +"," + isAcademy +"," + isSpa);
 		
 		res = schoolService.modifySchoolService(kgName, isKg, isCafe, isHotel, isPickup, isMedic, isAcademy, isSpa);
-		System.out.println("Controlle " + res);
+		System.out.println("Controller " + res);
 		if(res > 0) {
 			
 			Service schoolService = new Service();
@@ -244,20 +314,41 @@ public class SchoolController extends HttpServlet {
 			schoolService.setIsAcademy(isAcademy);
 			schoolService.setIsSpa(isSpa);			
 			System.out.println("schoolservice = " + schoolService);
-			request.getSession().setAttribute("schoolService", schoolService);
+			request.setAttribute("schoolService", schoolService);
 			response.getWriter().print("success");
 			
 			
-		}
+		}  */
 		
+	
 		
 	}
 	
-	protected void modifySchoolPhoto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+	protected void uploadSchoolPhoto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+				int res = 0;
+				//업로드한 user, 첨부파일
+				//파일테이블 : 원본파일명, 리네임파일명, 게시글번호(?), 저장경로 
+				SchoolMember schoolMember = (SchoolMember)request.getSession().getAttribute("schoolMember");
+				System.out.println(schoolMember.getKgIdx());
+				res = schoolService.uploadSchoolPhoto(request);
+				
+				if(res > 0) {
+					request.setAttribute("alertMsg", "사진 등록이 완료되었습니다.");
+					request.setAttribute("url", "/school/schoolprofile.do");
+					request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
+				}
+				
 			
 			
 		}
+	
+	
+	//2021.02.09 현재 사용X
+	protected void serviceModify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.getRequestDispatcher("/WEB-INF/view/member/school/schoolservicepop.jsp").forward(request, response);
+	
+	}
 		
 	
 	
