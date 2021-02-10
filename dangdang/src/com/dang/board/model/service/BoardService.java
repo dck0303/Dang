@@ -14,30 +14,49 @@ public class BoardService {
 	JDBCTemplate jdt = JDBCTemplate.getInstance();
 	private BoardDao boardDao = new BoardDao();
 	
-	public void BoardService() {
+	public BoardService() {
 		
 	}
 	
-	public ArrayList<Board> addBoard(Board board) {
+	public String getDate() {
+		return boardDao.getDate();
+	}
+	
+	public int getNext() {
 		Connection conn = jdt.getConnection();
-		ArrayList<Board> boardList = boardDao.listBoard(conn);
+		int res = 0;
 		try {
-			boardList = boardDao.addBoard(conn, board);
+			res = boardDao.getNext();
+		} finally {
+			jdt.close(conn);
+		}
+		return res;
+	}
+	
+	public int addBoard(String title, String kgName, String content) {
+		Connection conn = jdt.getConnection();
+		int res = 0;
+		try {
+			res = boardDao.addBoard(title, kgName, content);
 		}finally {
 			jdt.close(conn);
 		}
-		return boardList;
+		return res;
 	}
 	
-	public ArrayList<Board> listBoard(){
+	public ArrayList<Board> listBoard(int pageNumber){
 		Connection conn = jdt.getConnection();
 		ArrayList<Board> boardList = new ArrayList<>();
 		try {
-			boardList = boardDao.listBoard(conn);
+			boardList = boardDao.listBoard(pageNumber);
 		} finally {
 			jdt.close(conn);
 		}
 		return boardList;
+	}
+	
+	public boolean nextPage(int pageNumber) {
+		return boardDao.nextPage(pageNumber);
 	}
 	
 	public int modifyBoard(String bdIdx) throws SQLException{
@@ -52,10 +71,14 @@ public class BoardService {
 		return res;
 	}
 	
-	public Board viewBoard(String bdIdx){
+	public Board viewBoard(int bdIdx){
 		Connection conn = jdt.getConnection();
-		Board board = boardDao.viewBoard(conn, bdIdx);
-		return board;
+		try {
+			Board board = boardDao.viewBoard(bdIdx);
+		} finally {
+			jdt.close(conn);
+		}
+		return null;
 	}
 
 }

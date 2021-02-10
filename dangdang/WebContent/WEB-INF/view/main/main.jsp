@@ -38,7 +38,7 @@
 									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/userpage.do">마이페이지</a></li></c:when>
 								</c:choose>
 								<li><a href="/map/map.do">유치원찾기</a></li>
-								<li><a href="#">캘린더</a></li>
+								<li><a href="/reservation/calendar.do">캘린더</a></li>
 								<c:choose>
 									<c:when test ="${sessionScope.schoolMember != null}"><li><a href="/school/logout.do">로그아웃</a></li></c:when>
 									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/logout.do">로그아웃</a></li></c:when>
@@ -135,7 +135,7 @@
 	<script src="../../../../resources/js/breakpoints.min.js"></script>
 	<script src="../../../../resources/js/util.js"></script>
 	<script src="../../../../resources/js/main.js"></script>
-	<script src="../../../../resources/js/login.js"></script>
+	<script src="../../../../resources/js/member.js"></script>
 	
 	
 	

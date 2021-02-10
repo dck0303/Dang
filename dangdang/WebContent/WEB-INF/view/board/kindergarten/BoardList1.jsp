@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="com.dang.board.model.service.BoardService" %>
+<%@ page import="com.dang.board.model.vo.Board" %>
+<%@ page import="com.dang.member.school.model.vo.SchoolMember" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +28,16 @@
 </noscript>
 </head>
 <body class="is-preload">
+	<%
+		String kgId = null;
+		if(session.getAttribute("kgId") != null){
+			kgId = (String)session.getAttribute("kgId");
+		}
+		int pageNumber = 1;
+		if(request.getParameter("pageNumber") != null){
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		}
+	%>
 
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
@@ -43,7 +58,8 @@
 								<li><a href="/map.do">유치원 찾기</a></li>
 								<li><a href="#">캘린더</a></li>
 							</ul>
-						</div></li>
+						</div>
+					</li>
 				</ul>
 			</nav>
 		</header>
@@ -63,24 +79,53 @@
 							</tr>
 						</thead>
 						<tbody class="boardList-body">
+							<!-- boardlist 에 추가할 내용을 for 문으로 꺼내오기 -->
+							<%
+								BoardService boardService = new BoardService();
+								ArrayList<Board> boardList = boardService.listBoard(pageNumber);
+								for(int i = 0; i < boardList.size(); i++){
+							%>
 							<tr>
-								<td>1</td>
-								<td class="title"><a href="#">댕스쿨 알림장</a></td>
-								<td>업주</td>
-								<td>2021-02-08</td>
+								<!-- 게시물 번호 -->
+								<td><%= boardList.get(i).getBdIdx() %></td>
+								<!-- 제목 제목 클릭시 해당 게시물 번호를 보여줄 BoardView 로 연결 -->
+								<td><a href = "BoardView.jsp?BdIdx=<%=boardList.get(i).getBdIdx() %>"><%= boardList.get(i).getTitle() %></a></td>
+								<!-- 게시물을 작성한 유치원 이름 kgId 로 구분해야 할 듯 -->
+								<td><%= boardList.get(i).getKgName() %></td>
+								<!-- 게시물 작성일자, subString 으로 구역별로 잘라서 시 분 으로 보이게끔함 -->
+								<td><%= boardList.get(i).getRegDate().substring(0, 11) + boardList.get(i).getRegDate().substring(11,13) + "시" + boardList.get(i).getRegDate().substring(14, 16) + "분" %></td>
 							</tr>
+							<%
+								}
+							%>
 						</tbody>
 				</table>
+				<!-- 게시판의 페이지 번호가 1번이 아닐 경우 이전 페이지 버튼을 만들어줌 -->
+				<%
+					if(pageNumber != 1){
+				%>
+					<a href="BoardList1.jsp?pageNumber=<%= pageNumber -1 %>" class="bt prev">이전 페이지</a>
+					
+				<!-- 다음페이지가 존재할 시 다음 페이지로 가는 버튼을 만들어준다. -->
+				<%
+					}if(boardService.nextPage(pageNumber)){
+				%>
+				<!-- 다음 페이지로 넘어 갔을 때 이전페이지를 만들어 주기 위해 페이지 넘버에 1을 더해준다. -->
+					<a href="BoardList1.jsp?pageNumber=<%= pageNumber +1 %>" class="bt next">다음 페이지</a>
+				<%		
+					}
+				%>
+				<a href="addboard.do" class="writing_box">글쓰기</a>
 			</div>
 
-			<div class="paging">
+			<!-- <div class="paging">
 				<a href="#" class="bt first">처음페이지</a> 
 				<a href="#" class="bt prev">이전 페이지</a> 
 				<a href="#" class="num on">1</a> 
 				<a href="#" class="bt next">다음 페이지</a> 
 				<a href="#" class="bt last">마지막 페이지</a> 
-				<a href="board/addboard.do" class="writing_box">글쓰기</a>
-			</div>
+				<a href="addboard.do" class="writing_box">글쓰기</a>
+			</div>  -->
 		</section>
 
 

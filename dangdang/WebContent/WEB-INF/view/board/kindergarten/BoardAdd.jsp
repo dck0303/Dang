@@ -1,18 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/include/header.jsp"%>
+<%@ page import="com.dang.board.model.service.BoardService" %>
+<%@ page import="com.dang.member.school.model.vo.SchoolMember" %>
+<jsp:useBean id="board" class="com.dang.board.model.vo.Board" scope="page" />
+<jsp:setProperty name="board" property="title" />
+<jsp:setProperty name="board" property="content" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>알림 게시판 글쓰기 페이지 (업주)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="${context}/resources/css/main.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <!-- <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> -->
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+	rel="stylesheet">
 <link rel="stylesheet" href="${context}/resources/css/board.css" />
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+	rel="stylesheet">
 <noscript>
 	<link rel="stylesheet" href="assets/css/noscript.css" />
 </noscript>
@@ -42,45 +53,63 @@
 				</ul>
 			</nav>
 		</header>
+		
 
 
 
 
 
-
+		<%
+			// BoardService 호출
+			BoardService boardService = new BoardService();
+		%>
 
 
 		<!-- Main -->
 		<section class="board">
 			<div class="content">
-				<h2 id="tit" class="mainfont">알림장</h2><br>
-				<div id="desc_board">
-					<form action="${context}/board/addboard.do" method="post" enctype="multipart/form-data">
-						<div>
-							<div id="tit_board" class="mainfont">
-								제목 : <input type="text" class="title-box" name="title" required="required" /><br>
-								파일 첨부 : <input type="file" name="files" id="contract_file" multiple/>
-								<!-- multiple : 여러개 파일 선택을 허용하는 속성 -->
-								<select id="select_class" class="mainfont">
-									<option>반 이름</option>
-									<option>깜식 반</option>
-									<option>아롱 반</option>
-									<option>희망 반</option>
-								</select>
-								<!-- 파일 : <input type="file" name="files" id="contract_file" multiple /> -->
-							</div>
-							<textarea id="board-content" class="noticefont" name="content" style="width: 99%; height: 600px;" required="required">
-						</textarea>
-							
-							<div class = "WMC_box">
-								<button class="mainfont">닫기</button>
-							</div>
-							<div class = "WMC_box">
-								<button class="mainfont">글쓰기</button>
-							</div>
-						</div>
-					</form>
-				</div>
+				<h2 id="tit" class="mainfont">알림장</h2>
+				<br>
+				<form action="listboard1.do" method="post" enctype="multipart/form-data">
+					<div class="addBoard-wrap">
+						<table class="addBoard">
+							<thead class="addBoard-head">
+								<tr>
+									<th colspan="2" class="addBoard-top">알림장 작성</th>
+								</tr>
+							</thead>
+							<tbody class="addBoard-body">
+								<tr>
+									<td><input type="text" class="addBoard-title"
+										placeholder="제목을 적어주세요." name="boardTitle" maxlength="50" required="required"></td>
+								</tr>
+								<tr>
+									<td><textarea class="addBoard-content"
+											placeholder="내용을 적어주세요." name="boardContent" maxlength="2000" required="required"></textarea>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<input type="submit" class="btn-addBoard" value="작성 완료">
+					<%		
+							int result = boardService.addBoard(board.getTitle(), board.getKgName(), board.getContent());
+							if(result == -1){
+					%>
+								<script>
+									alert('글쓰기에 실패했습니다.')
+									history.back();
+								</script>
+						<%
+							}else{
+						%>
+								<script>
+									location.href = BoardLsit1.jsp
+								</script>
+						<%
+							}
+						%>
+					
+				</form> 
 			</div>
 
 		</section>

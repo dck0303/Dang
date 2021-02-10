@@ -36,7 +36,7 @@ public class JDBCTemplate {
 	//Connection 객체를 만들 메서드
 	public Connection getConnection() {
 	    String url = "jdbc:oracle:thin:@psuny1031_medium?TNS_ADMIN=C:/CODE/wallet/Wallet_psuny1031";
-				//String url = "jdbc:oracle:thin:@psuny1031_medium?TNS_ADMIN=/Users/miyoung/07_semi_wallet/Wallet_psuny1031";								
+//				String url = "jdbc:oracle:thin:@psuny1031_medium?TNS_ADMIN=/Users/miyoung/07_semi_wallet/Wallet_psuny1031";								
 		String user = "ADMIN";
 		String password = "Park10031212*";
 		
@@ -52,20 +52,18 @@ public class JDBCTemplate {
 		    ods.setURL(url);    
 		    ods.setConnectionProperties(info);
 			conn = ods.getConnection();
-			// Transaction 개발자가 관리하기 위해 AutoCommit 생성
+	         //Transaction 관리를 개발자가 하기 위해 AutoCommit 설정 끄기
 			conn.setAutoCommit(false);
-			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
+		
 		return conn;
 		
 
 		
 	}
-
-
 	// commit 수행
 	public void commit(Connection conn) {
 		try {

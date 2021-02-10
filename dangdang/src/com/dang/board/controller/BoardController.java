@@ -41,6 +41,8 @@ public class BoardController extends HttpServlet {
 			break;
 		case "listboard2.do": listBoard2(request, response);
 			break;
+		case "board.do": boardAction(request, response);
+			break;
 		default:
 			throw new ToAlertException(ErrorCode.CD_404);
 		}
@@ -74,4 +76,9 @@ public class BoardController extends HttpServlet {
 	private void viewBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/view/board/student/BoardView.jsp").forward(request, response);
 	}	
+	
+	private void boardAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.getRequestDispatcher("/WEB-INF/view/board/kindergarten/board.jsp").forward(request, response);
+	}
+	
 }

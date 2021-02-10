@@ -10,6 +10,8 @@
 #tit {
   text-align: left;
   font-size: 2vw;
+  color: #8B4513;
+  
 }
 
 .list_board {
@@ -287,4 +289,39 @@ table {
 
 .boardList .title:hover {
 	text-decoration: underline;
+}
+
+/* addBoard */
+.addBoard-wrap{
+	width: 100%;
+	height: 700px;
+}
+
+.addBoard {
+	width: 100%;
+}
+
+.addBoard-top {
+	text-align: center;
+	width: 100%;
+	background-color: #FFF8DC; 
+	margin: 2px 0 2px 0;
+	height: 50px;
+	border: 1px solid;
+}
+
+.addBoard-title {
+	width: 100%;
+	margin-bottom: 2px;
+}
+
+.addBoard-content{
+	width: 100%;
+	height: 600px;
+	margin-bottom: 2px;
+}
+
+.btn-addBoard {
+	background-color: #FFF8DC; 
+	float: right;
 }
