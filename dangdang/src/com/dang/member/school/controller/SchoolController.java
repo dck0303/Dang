@@ -1,7 +1,8 @@
 package com.dang.member.school.controller;
 
+import java.io.File;
 import java.io.IOException;
-
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 
 import java.util.ArrayList;
@@ -15,9 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.dang.common.code.ErrorCode;
-import com.dang.common.exception.ToAlertException;
-import com.dang.common.random.RandomString;
+
+
+import com.dang.common.code.ConfigCode;
+
+
+
 import com.dang.map.model.vo.Service;
 import com.dang.member.school.model.service.SchoolService;
 import com.dang.member.school.model.vo.SchoolMember;
@@ -27,6 +31,9 @@ import com.dang.reservation.model.service.ReservationService;
 import com.dang.reservation.model.vo.Reservation;
 
 import com.google.gson.Gson;
+import com.oreilly.servlet.multipart.FilePart;
+import com.oreilly.servlet.multipart.MultipartParser;
+import com.oreilly.servlet.multipart.Part;
 
 /**
  * Servlet implementation class SchoolController
@@ -69,16 +76,13 @@ public class SchoolController extends HttpServlet {
 			break;
 		case "findschoolid.do" : findSchoolIdImpl(request, response); //아이디 찾기 실행
 			break;
-		case "findschoolpw.do" : findSchoolPwImpl(request, response); //비번 찾기 실행
-			break;
 		case "modifyinfo.do" : modifySchoolInfo(request, response); //기본정보 수정 실행
 			break;
 		case "modifyservice.do" : modifySchoolService(request, response); //서비스정보 수정 실행
 			break;
 		case "uploadphoto.do" : uploadSchoolPhoto(request, response); //사진정보 업로드 및 수정 실행
 			break;
-		case "serviceModify.do" : serviceModify(request, response); //2021.02.09 현재 사용X
-			break;
+
 		}
 
 	}
@@ -89,11 +93,9 @@ public class SchoolController extends HttpServlet {
 		doGet(request, response);
 	}
 
-	protected void login(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.getRequestDispatcher("/WEB-INF/view/member/school/schoollogin.jsp").forward(request, response);
-		;
 
 	}
 
@@ -126,7 +128,6 @@ public class SchoolController extends HttpServlet {
 				
 			} else {
 				response.getWriter().print("fail");
-			
 			}
 
 		}
@@ -136,7 +137,7 @@ public class SchoolController extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.getSession().removeAttribute("schoolMember"); // session에 저장된 정보 삭제 후 메인으로 이동
-		request.getRequestDispatcher("/WEB-INF/view/main/main.jsp").forward(request, response);
+		request.getRequestDispatcher("/main.do").forward(request, response);
 
 	}
 
@@ -194,73 +195,6 @@ public class SchoolController extends HttpServlet {
 
 	
 	
-	
-	
-	protected void findSchoolPwImpl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//해당정보에 맞는 회원이 있다면(findUserPw 메소드 사용)
-				String id = request.getParameter("id");
-				String userEmail = request.getParameter("email");
-				int res = 0;
-				//객체가 리턴된다.
-				SchoolMember schoolMember = schoolService.findSchoolPw(id, userEmail);
-				
-				if(schoolMember != null) {
-					
-					//그 값을 다시 가져와서 비밀번호만 다시 세팅한 후 다시 업데이트 문으로 modify 해주기(modifyInfo 메소드 사용);
-					
-					//새로운 비밀번호 발급해주기
-					String newPw = RandomString.randomStr(3);
-					
-					//새로운 비밀번호로 password 다시 세팅
-					schoolMember.setKgPw(newPw);
-					
-					//세팅된 비밀번호 포함 userMember정보 다시 가져오기
-					String kgName = schoolMember.getKgName();
-					String kgIdx = schoolMember.getKgIdx();
-					String kgId = schoolMember.getKgId();
-					String kgPw = schoolMember.getKgPw();
-					String kgAddress = schoolMember.getKgAddress();
-					String kgTell = schoolMember.getKgTell();
-					String kgOperateTime = schoolMember.getKgOperateTime();
-					String kgNotice = schoolMember.getKgNotice();
-					String kgGrade = schoolMember.getKgGrade();
-					String kgEmail = schoolMember.getKgEmail();
-					
-					//해당값으로 다시 update문 돌려주기
-					res = schoolService.modifySchoolInfo(kgId, kgName, kgAddress, kgTell, kgOperateTime, kgNotice, kgEmail);
-					
-					//비밀번호 세팅이 잘 끝난 경우
-					if(res > 0) {
-						
-						request.getSession().setAttribute("validUserMember", schoolMember);
-						//해당 비밀번호를 포함한 이메일보내기
-						schoolService.finSchoolPwEmail(schoolMember);
-					
-						//세션이 더이상 필요하지 않으니 세션 삭제해주기
-						request.removeAttribute("validUserMember");
-						request.setAttribute("alertMsg", "임시 비밀번호가 발급되었습니다.");
-						request.setAttribute("url", "/school/login.do");
-						request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
-					
-					}else {
-						//이메일 발송이 실패한 경우
-						new ToAlertException(ErrorCode.SM01);
-					}
-					//비밀번호 세팅중 오류가 생긴 경우
-				}else {
-					request.setAttribute("alertMsg", "해당정보가 존재하지 않습니다.");
-					request.setAttribute("url", "/school/findschoolinfo.do");
-					request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
-				}
-				
-				
-				
-	
-	}
-	
-	
-
 
 	protected void modifySchoolInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -304,29 +238,24 @@ public class SchoolController extends HttpServlet {
 	
 	
 	protected void modifySchoolService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-
-		int res = 0;
-		String modifyService = request.getParameter("schoolModifyService");
-		Map modifyServiceMap = gson.fromJson(modifyService, Map.class);
-		//String kgName = (String) modifyServiceMap.get("kgName");
 		
-	
-		String kgName = request.getParameter("kgName");
-		System.out.println(kgName);
-		int isKg = Integer.parseInt((String) modifyServiceMap.get("isKg"));
-		int isCafe = Integer.parseInt((String) modifyServiceMap.get("isCafe"));
-		int isHotel = Integer.parseInt((String) modifyServiceMap.get("isHotel"));
-		int isPickup = Integer.parseInt((String) modifyServiceMap.get("isPickup"));
-		int isMedic = Integer.parseInt((String) modifyServiceMap.get("isMedic"));
-		int isAcademy = Integer.parseInt((String) modifyServiceMap.get("isAcademy"));
-		int isSpa = Integer.parseInt((String) modifyServiceMap.get("isSpa"));
-		System.out.print(
-				isKg + "," + isCafe + "," + isHotel + "," + isPickup + "," + isMedic + "," + isAcademy + "," + isSpa);
+		int res = 0;
+		HttpSession session = request.getSession();
+		SchoolMember schoolMember = (SchoolMember) session.getAttribute("schoolMember");
+		String kgName = schoolMember.getKgName();
+
+		
+		//getParameter로 받아오는 value 값은 String을 return 하기 때문에 int로 parse진행
+		int isKg = Integer.parseInt(request.getParameter("isKg"));
+		int isCafe = Integer.parseInt(request.getParameter("isCafe"));
+		int isHotel = Integer.parseInt(request.getParameter("isHotel"));
+		int isPickup = Integer.parseInt(request.getParameter("isPickup"));
+		int isMedic = Integer.parseInt(request.getParameter("isMedic"));
+		int isAcademy = Integer.parseInt(request.getParameter("isAcademy"));
+		int isSpa = Integer.parseInt(request.getParameter("isSpa"));
 
 		res = schoolService.modifySchoolService(kgName, isKg, isCafe, isHotel, isPickup, isMedic, isAcademy, isSpa);
 
-		System.out.println("Controller " + res);
 		if(res > 0) {
 			
 			Service schoolService = new Service();
@@ -338,43 +267,50 @@ public class SchoolController extends HttpServlet {
 			schoolService.setIsMedic(isMedic);
 			schoolService.setIsAcademy(isAcademy);
 			schoolService.setIsSpa(isSpa);
-			System.out.println("schoolservice = " + schoolService);
-			request.setAttribute("schoolService", schoolService);
-			response.getWriter().print("success");
-
 			
+			//수정된 값을 다시 받아서 다시 세션에 저장해주기
+			request.getSession().setAttribute("schoolService", schoolService);
+			request.setAttribute("alertMsg", "서비스를 성공적으로 수정하였습니다.");
+			request.setAttribute("url", "/school/schoolprofile.do");
+			request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
 			
-		}  */
+		} else {
+			request.setAttribute("alertMsg", "서비스 수정이 실패하였습니다.");
+			request.setAttribute("url", "/school/schoolprofile.do");
+			request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
+		}
 		
 	
 		
 	}
+	
+	
+	
 	
 	protected void uploadSchoolPhoto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				int res = 0;
-				//업로드한 user, 첨부파일
-				//파일테이블 : 원본파일명, 리네임파일명, 게시글번호(?), 저장경로 
-				SchoolMember schoolMember = (SchoolMember)request.getSession().getAttribute("schoolMember");
-				System.out.println(schoolMember.getKgIdx());
-				res = schoolService.uploadSchoolPhoto(request);
 				
-				if(res > 0) {
-					request.setAttribute("alertMsg", "사진 등록이 완료되었습니다.");
-					request.setAttribute("url", "/school/schoolprofile.do");
-					request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
-				}
-				
-			
-			
-		}
-	
-	
-	//2021.02.09 현재 사용X
-	protected void serviceModify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+				//파일테이블 : 원본파일명, rename 파일명, 게시글번호
+				//F_IDX, TYPE_IDX, ORIGIN_FILE_NAME, RENAME_FILE_NAME, SAVE_PATH
+				//F_IDX -> nextval로 설정
 		
-		request.getRequestDispatcher("/WEB-INF/view/member/school/schoolservicepop.jsp").forward(request, response);
+		HttpSession session = request.getSession();
+		SchoolMember schoolMember = (SchoolMember)session.getAttribute("schoolMember");
+
+		schoolService.uploadSchoolPhoto(schoolMember, request);
+		
+		request.setAttribute("alertMsg", "사진 등록이 완료되었습니다.");
+		request.setAttribute("url", "/school/schoolprofile.do");
+		request.getRequestDispatcher("/WEB-INF/view/common/result.jsp")
+		.forward(request, response);
+		
+		
+		
+				
+		}
+
 	
-	}
+	
+	
 		
 	
 	

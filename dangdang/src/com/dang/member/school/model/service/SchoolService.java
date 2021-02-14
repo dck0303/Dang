@@ -96,7 +96,7 @@ public class SchoolService {
 	}
 	
 	
-	
+	/*
 
 	public SchoolMember findSchoolPw(String kgId, String kgEmail) {
 		
@@ -111,7 +111,7 @@ public class SchoolService {
 		}
 		return schoolMember;
 		
-	}
+	} */
 	
 	
 	
@@ -159,7 +159,7 @@ public class SchoolService {
 	public int modifySchoolService(String kgName, int isKg, int isCafe, int isHotel, int isPickup, int isMedic, int isAcademy, int isSpa) {
 		Connection conn = jdt.getConnection();
 		int res = 0;
-		
+
 		
 		try {
 			res = schoolDao.modifySchoolService(conn, kgName, isKg, isCafe, isHotel, isPickup, isMedic, isAcademy, isSpa);
@@ -169,7 +169,6 @@ public class SchoolService {
 		}finally {
 			jdt.close(conn);
 		}
-		System.out.println("schoolServcie" + res);
 		return res ;
 		
 	}
@@ -178,17 +177,17 @@ public class SchoolService {
 
 
 
-	public int uploadSchoolPhoto(HttpServletRequest request) {
+	public int uploadSchoolPhoto(SchoolMember schoolMember , HttpServletRequest request) {
 		Connection conn = jdt.getConnection();
 		int res = 0;
-		
+		String kgIdx = schoolMember.getKgIdx();
 		//게시글 저장
 		Map<String,List> PhotoData = new FileUtil().fileUpload(request);
 		
 		try {
 			
-			for(FileVo fileData : (List<FileVo>)PhotoData.get("fileData")) {
-				schoolDao.uploadSchoolPhoto(conn, fileData);
+			for(FileVo schoolPhotoData : (List<FileVo>)PhotoData.get("fileData")) {
+				schoolDao.uploadSchoolPhoto(conn, schoolPhotoData, kgIdx);
 			}
 			jdt.commit(conn);
 		}catch(DataAccessException e) {

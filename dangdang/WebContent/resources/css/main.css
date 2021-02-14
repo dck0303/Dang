@@ -297,45 +297,95 @@ ul.actions.special li:first-child {
 }
 
 @media screen and (max-width: 480px) {
-	ul.actions:not (.fixed ) {
-		-moz-flex-direction: column;
-		-webkit-flex-direction: column;
-		-ms-flex-direction: column;
-		flex-direction: column;
-		margin-left: 0;
-		width: 100% !important;
-	}
-	ul.actions:not (.fixed ) li {
-		-moz-flex-grow: 1;
-		-webkit-flex-grow: 1;
-		-ms-flex-grow: 1;
-		flex-grow: 1;
-		-moz-flex-shrink: 1;
-		-webkit-flex-shrink: 1;
-		-ms-flex-shrink: 1;
-		flex-shrink: 1;
-		padding: 1em 0 0 0;
-		text-align: center;
-		width: 100%;
-	}
-	ul.actions:not (.fixed ) li>* {
-		width: 100%;
-	}
-	ul.actions:not (.fixed ) li:first-child {
-		padding-top: 0;
-	}
-	ul.actions:not (.fixed ) li input[type="submit"], ul.actions:not (.fixed
-		) li input[type="reset"], ul.actions:not (.fixed ) li input[type="button"],
-		ul.actions:not (.fixed ) li button, ul.actions:not (.fixed ) li .button
-		{
-		width: 100%;
-	}
-	ul.actions:not (.fixed ) li input[type="submit"].icon:before, ul.actions:not
-		(.fixed ) li input[type="reset"].icon:before, ul.actions:not (.fixed ) li input[type="button"].icon:before,
-		ul.actions:not (.fixed ) li button.icon:before, ul.actions:not (.fixed
-		) li .button.icon:before {
-		margin-left: -0.5em;
-	}
+	ul
+	.actions
+	:not
+	 
+	(
+	.fixed
+	 
+	)
+	{
+	-moz-flex-direction
+	:
+	 
+	column
+	;
+	
+		
+	-webkit-flex-direction
+	:
+	 
+	column
+	;
+	
+		
+	-ms-flex-direction
+	:
+	 
+	column
+	;
+	
+		
+	flex-direction
+	:
+	 
+	column
+	;
+	
+		
+	margin-left
+	:
+	 
+	0;
+	width
+	:
+	 
+	100%
+	!
+	important
+	;
+	
+	
+}
+
+ul.actions:not (.fixed ) li {
+	-moz-flex-grow: 1;
+	-webkit-flex-grow: 1;
+	-ms-flex-grow: 1;
+	flex-grow: 1;
+	-moz-flex-shrink: 1;
+	-webkit-flex-shrink: 1;
+	-ms-flex-shrink: 1;
+	flex-shrink: 1;
+	padding: 1em 0 0 0;
+	text-align: center;
+	width: 100%;
+}
+
+ul.actions:not (.fixed ) li>* {
+	width: 100%;
+}
+
+ul.actions:not (.fixed ) li:first-child {
+	padding-top: 0;
+}
+
+ul.actions:not (.fixed ) li input[type="submit"], ul.actions:not (.fixed
+		 ) li input[type="reset"], ul.actions:not (.fixed ) li input[type="button"],
+	ul.actions:not (.fixed ) li button, ul.actions:not (.fixed ) li .button
+	{
+	width: 100%;
+}
+
+ul.actions:not (.fixed ) li input[type="submit"].icon:before, ul.actions:not
+		 (.fixed ) li input[type="reset"].icon:before, ul.actions:not (.fixed 
+	) li input[type="button"].icon:before, ul.actions:not (.fixed ) li button.icon:before,
+	ul.actions:not (.fixed
+		 ) li .button.icon:before {
+	margin-left: -0.5em;
+}
+
 }
 
 /* Page Wrapper + Menu */
@@ -764,20 +814,6 @@ body.is-preload #banner:after {
 	justify-content: center;
 }
 
-.main_login {
-	width: 15vh;
-	height: 15vh;
-	min-width: 100px;
-	background-color: #8B4513;
-	border: solid;
-	border-color: black;
-	border-radius: 15%;
-	margin: 5px;
-	display: flex;
-	justify-content: center;
-	cursor: pointer;
-}
-
 .main_login a {
 	color: white;
 	font-size: 1.3vw;
@@ -927,7 +963,7 @@ body.is-mobile.landing .user_profile {
 .myprofile_board {
 	background-color: white;
 	color: black;
-	height: 165vh;
+	height: 160vh;
 	display: flex;
 	justify-content: center;
 	margin-top: 80px;
@@ -970,6 +1006,20 @@ body.is-mobile.landing .user_profile {
 	cursor: pointer;
 	font-family: 'Gamja Flower', cursive;
 	font-size: 1.2vw;
+}
+
+.login_btn {
+	width: 15vh;
+	height: 15vh;
+	min-width: 100px;
+	background-color: #8B4513;
+	color: white;
+	border: solid;
+	border-color: black;
+	border-radius: 15%;
+	margin: 5px;
+	cursor: pointer;
+	font-family: 'Gamja Flower', cursive;
 }
 
 .member_mypage {
@@ -1124,7 +1174,7 @@ body.is-mobile.landing .user_profile {
 .profile_info {
 	border: solid 1px;
 	width: 70vw;
-	min-height: 95vh;
+	min-height: 110vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -1140,7 +1190,7 @@ body.is-mobile.landing .user_profile {
 
 .info_form {
 	width: 60vh;
-	height: 80vh;
+	height: 100vh;
 	border: solid 1px;
 	border-radius: 3%;
 	display: flex;
@@ -1161,8 +1211,21 @@ body.is-mobile.landing .user_profile {
 }
 
 #personal_info {
-	width: 80%;
+	width: 90%;
 	margin: auto;
+}
+
+@media screen and (max-width: 736px) {
+	#modify_form {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		width: 100%;
+	}
+	.info_form {
+		width: 70vw;
+		height: 60vh;
+	}
 }
 
 @media screen and (max-width: 736px) {
@@ -1251,6 +1314,7 @@ body.is-mobile.landing .user_profile {
 	height: 3.5vh;
 	justify-content: center;
 	margin-top: 10px;
+	margin-bottom: 10px;
 	background-color: #8B4513;
 	color: white;
 	border: solid 1px grey;
@@ -1289,7 +1353,6 @@ body.is-mobile.landing .user_profile {
 
 #separate_part {
 	width: 50%;
-	min-height: 85%;
 	margin: auto 20px auto 20px;
 	display: flex;
 	flex-direction: column;
@@ -1516,4 +1579,17 @@ body.is-mobile.landing .user_profile {
 
 .profilebtn {
 	color: grey;
+}
+
+.kg_form h4 {
+	font-weight: 200;
+}
+
+.kg_pro {
+	margin-left: 30px;
+}
+
+.kg_service_list {
+	width: 15vw;
+	font-weight: bold;
 }

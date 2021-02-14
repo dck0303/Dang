@@ -25,10 +25,9 @@ public class UserDao {
 		UserMember userMember = null;
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		
+		String query = "select * from member where user_id =? and password = ?";
 		
 		try {
-			String query = "select * from member where user_id =? and password = ?";
 			
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, userId);

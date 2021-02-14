@@ -57,7 +57,7 @@
 
 		<!-- Main -->
 		<section class="user_board">
-			<div class="user_login_form">
+			<form action="${context}/user/login.do" method="post" class="user_login_form">
 				<input type="text" name="id" id="id" placeholder="아이디를 입력하세요." required>
 				<input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요." required>
 				<button onclick="login()" id="login_btn">로그인</button>
@@ -65,7 +65,7 @@
 					<a href ="/user/join.do" id="join_btn"> 회원가입하기</a>
 					<a href ="/user/finduserinfo.do" id="find_info">아이디/비밀번호 찾기</a>
 				</span>
-			</div>
+			</form>
 		</section>
 
 
@@ -86,8 +86,7 @@
 
 			</ul>
 			<ul class="copyright">
-				<li>&copy; Untitled</li>
-				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				<li>&copy;댕댕아놀면뭐하니?</li>
 			</ul>
 		</footer>
 
@@ -103,9 +102,8 @@
 	<script src="../../../../resources/js/breakpoints.min.js"></script>
 	<script src="../../../../resources/js/util.js"></script>
 	<script src="../../../../resources/js/main.js"></script>
-	<script src="../../../../resources/js/member.js"></script>
 	<script src="${context}resources/js/commmon/asyncPageError.js"></script>
-	
+	<script src="../../../../resources/js/member.js"></script>
 
 </body>
 </html>
