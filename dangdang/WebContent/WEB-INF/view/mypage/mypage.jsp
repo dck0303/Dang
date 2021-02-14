@@ -80,11 +80,11 @@
 				    <div class="detail_board">
 				      <c:choose>
 				        <c:when test="${sessionScope.schoolMember != null}">
-				          <a href="/board/listboard1.do" class="user_photo">앨범</a>
+				          <a href="/board/listboard1.do" class="school_photo">앨범</a>
 				        </c:when>
-				        <c:when test="${sessionScope.userMember != null}">
-				          <a href="/board/listboard2.do" class="school_photo">앨범</a>
-				        </c:when>
+				        <c:otherwise><!-- userMember일 때 -->
+				          <a href="/board/listboard2.do" class="user_photo">앨범</a>
+				        </c:otherwise>
 				      </c:choose>
 				    </div>
 				    <div class="detail_board">
@@ -136,8 +136,7 @@
 
 			</ul>
 			<ul class="copyright">
-				<li>&copy; Untitled</li>
-				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				<li>&copy;댕댕아놀면뭐하니?</li>
 			</ul>
 		</footer>
 

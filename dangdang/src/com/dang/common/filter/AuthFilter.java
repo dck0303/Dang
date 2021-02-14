@@ -56,7 +56,11 @@ public class AuthFilter implements Filter {
 					if (session.getAttribute("persistUser") == null) {
 						throw new ToAlertException(ErrorCode.AUTH02);
 					}break; 
-				
+					
+				case "login.do":
+					if(session.getAttribute("userMember") != null) {
+						throw new ToAlertException(ErrorCode.AUTH01);
+					}break;
 				
 				}
 				break;
@@ -79,12 +83,10 @@ public class AuthFilter implements Filter {
 					if(session.getAttribute("schoolMember") != null) {
 						throw new ToAlertException(ErrorCode.AUTH01);
 					}break;
-					
-					
-					
-					
+
 				}
 				break;
+				
 			//mypage에 로그인 안한 계정들의 접근 막아주기
 			case "mypage":
 				if(session.getAttribute("userMember") == null) {

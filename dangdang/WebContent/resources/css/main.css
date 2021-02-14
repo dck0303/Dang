@@ -805,21 +805,7 @@ body.is-preload #banner:after {
 }
 
 
-.main_login {
 
-	width: 15vh;
-    height: 15vh;
-    min-width: 100px;
-	background-color : #8B4513;
-	border: solid;
-	border-color: black;
-	border-radius: 15%;
-	margin : 5px;
-	display: flex;
-	justify-content: center;
-	cursor: pointer;
-	
-}
 
 .main_login a{
 	color : white;
@@ -983,7 +969,7 @@ body.is-mobile.landing .user_profile{
 .myprofile_board {
 	background-color: white;
 	color: black;
-	height: 165vh;
+	height: 160vh;
 	display: flex;
 	justify-content:center;
 	margin-top: 80px;
@@ -1032,6 +1018,21 @@ body.is-mobile.landing .user_profile{
 	font-family: 'Gamja Flower', cursive;
 	font-size: 1.2vw;
 }
+
+.login_btn{
+	width: 15vh;
+    height: 15vh;
+    min-width: 100px;
+	background-color : #8B4513;
+	color : white;
+	border: solid;
+	border-color: black;
+	border-radius: 15%;
+	margin : 5px;
+	cursor: pointer;
+	font-family: 'Gamja Flower', cursive;
+}
+
 
 .member_mypage{
 	margin: auto;
@@ -1083,8 +1084,7 @@ body.is-mobile.landing .user_profile{
 #mypage_board>div{
 	width: 100%;
 	height: 50%;
-	background-color: pink;
-
+	
 	
 }
 
@@ -1218,7 +1218,7 @@ body.is-mobile.landing .user_profile{
 .profile_info {
 	border: solid 1px;
 	width: 70vw;
-    min-height: 95vh;
+    min-height: 110vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -1236,7 +1236,7 @@ body.is-mobile.landing .user_profile{
 
 .info_form{
 	width: 60vh;
-    height: 80vh;
+    height: 100vh;
     border: solid 1px;
     border-radius: 3%;
     display: flex;
@@ -1249,16 +1249,22 @@ body.is-mobile.landing .user_profile{
     justify-content: center;
     width: 100%;
 }
-
-#kg_form{
+@media screen and (max-width: 736px) {
+	#modify_form {
 	display: flex;
     justify-content: center;
-   	width: 35%;
-   	margin:auto;
+    flex-direction: column;
+    width: 100%;
+ 	}
+ 	
+ 	.info_form{
+ 	width: 70vw;
+ 	height: 60vh;
+ 	}
 }
 
 #personal_info {
-	width: 80%;
+	width: 90%;
 	margin:auto;
 
 }
@@ -1360,6 +1366,7 @@ body.is-mobile.landing .user_profile{
 	height: 3.5vh;
 	justify-content: center;
 	margin-top: 10px;
+	margin-bottom: 10px;
     background-color: #8B4513;
     color: white;
     border: solid 1px grey;
@@ -1405,7 +1412,6 @@ body.is-mobile.landing .user_profile{
 
 #separate_part{
 	width: 50%;
-	min-height: 85%;
 	margin: auto 20px auto 20px;
 	display:flex;
 	flex-direction: column;
@@ -1665,3 +1671,31 @@ body.is-mobile.landing .user_profile{
 	color: grey;
 	
 }
+
+
+.kg_form h4{
+	font-weight: 200;
+	
+}
+
+.kg_pro {
+    margin-left: 30px;
+}
+
+.kg_service_list{
+	width: 15vw;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
