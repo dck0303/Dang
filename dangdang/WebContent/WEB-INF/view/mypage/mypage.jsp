@@ -80,10 +80,10 @@
 				    <div class="detail_board">
 				      <c:choose>
 				        <c:when test="${sessionScope.schoolMember != null}">
-				          <a href="/board/listboard1.do" class="school_photo">앨범</a>
+				          <a class="school_photo">앨범</a>
 				        </c:when>
 				        <c:otherwise><!-- userMember일 때 -->
-				          <a href="/board/listboard2.do" class="user_photo">앨범</a>
+				          <a class="user_photo">앨범</a>
 				        </c:otherwise>
 				      </c:choose>
 				    </div>
@@ -121,8 +121,62 @@
 				  </div>
 				  <div class="mypage_detail">
 				    <div class="detail_board">
-				      <a>공지사항</a>
-				    </div>
+				    <c:if test="${sessionScope.schoolMember != null}">
+				      <a href="/board/listboard1.do">공지사항</a>
+				      <div id="reservationBox">
+				        <div>
+				          
+				            <table>
+				              <tr style="width: 100%">
+				                <td width="15%">번호</td>
+				                <td width="30%">제목</td>
+				                <td width="35%">날짜</td>
+				                <td width="35%">내용</td>
+				              </tr>
+				              <c:forEach var="board" items="${NoticePreview}" varStatus="status">
+				                <tr>
+				                  <td>${status.count}</td>
+				                  <td>${board.title}</td>
+				                  <td>${board.regDate}</td>
+				                  <td>${board.content}</td>
+				                </tr>
+				              </c:forEach>
+				            </table>
+				        </div>
+				      </div>
+			       </c:if>
+			       
+			       <c:if test="${sessionScope.userMember != null}">
+				      <a href="/board/listboard2.do">공지사항</a>
+				      <div id="reservationBox">
+				        <div>
+				          
+				            <table>
+				              <tr style="width: 100%">
+				                <td width="15%">번호</td>
+				                <td width="30%">제목</td>
+				                <td width="35%">날짜</td>
+				                <td width="35%">내용</td>
+				              </tr>
+				              <c:forEach var="board" items="${NoticePreview}" varStatus="status">
+				                <tr>
+				                  <td>${status.count}</td>
+				                  <td>${board.title}</td>
+				                  <td>${board.regDate}</td>
+				                  <td>${board.content}</td>
+				                </tr>
+				              </c:forEach>
+				            </table>
+				        </div>
+				      </div>
+			       </c:if>
+			    </div>
+				    
+				    
+				    
+				    
+				    
+				    
 				    <div class="detail_board">
 				      <a>알림장</a>
 				    </div>

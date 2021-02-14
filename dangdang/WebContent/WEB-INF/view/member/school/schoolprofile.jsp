@@ -105,7 +105,7 @@
 									<tr class = "kg_pro">
 									<td class="kg_service_list">유치원</td>
 										<c:choose>
-											<c:when test ="${sessionScope.schoolService.isKg == 0}">
+											<c:when test ="${schoolService.isKg == 0}">
 												<td>제공<input type = "radio" name ="isKg" value="0"  checked="checked"></td>
 												<td>비제공<input type = "radio" name ="isKg" value="1"></td>
 											</c:when>
@@ -122,7 +122,7 @@
 									<tr class = "kg_pro">
 									<td class="kg_service_list">카페</td>
 										<c:choose>
-											<c:when test ="${sessionScope.schoolService.isCafe == 0}">
+											<c:when test ="${schoolService.isCafe == 0}">
 												<td>제공<input type = "radio" name ="isCafe" value="0"  checked="checked"></td>
 												<td>비제공<input type = "radio" name ="isCafe" value="1"></td>
 											</c:when>
@@ -139,7 +139,7 @@
 									<tr class = "kg_pro">
 									<td class="kg_service_list">호텔</td>
 										<c:choose>
-											<c:when test ="${sessionScope.schoolService.isHotel == 0}">
+											<c:when test ="${schoolService.isHotel == 0}">
 												<td>제공<input type = "radio" name ="isHotel" value="0"  checked="checked"></td>
 												<td>비제공<input type = "radio" name ="isHotel" value="1"></td>
 											</c:when>
@@ -156,7 +156,7 @@
 									<tr class = "kg_pro">
 									<td class ="kg_service_list">픽업서비스</td>
 										<c:choose>
-											<c:when test ="${sessionScope.schoolService.isPickup == 0}">
+											<c:when test ="${schoolService.isPickup == 0}">
 												<td>제공<input type = "radio" name ="isPickup" value="0"  checked="checked"></td>
 												<td>비제공<input type = "radio" name ="isPickup" value="1"></td>
 											</c:when>
@@ -173,7 +173,7 @@
 									<tr class = "kg_pro">
 									<td class ="kg_service_list">메디컬 센터</td>
 										<c:choose>
-											<c:when test ="${sessionScope.schoolService.isMedic == 0}">
+											<c:when test ="${schoolService.isMedic == 0}">
 												<td>제공<input type = "radio" name ="isMedic" value="0"  checked="checked"></td>
 												<td>비제공<input type = "radio" name ="isMedic" value="1"></td>
 											</c:when>
@@ -190,7 +190,7 @@
 									<tr class = "kg_pro">
 									<td class="kg_service_list">아카데미</td>
 										<c:choose>
-											<c:when test ="${sessionScope.schoolService.isAcademy == 0}">
+											<c:when test ="${schoolService.isAcademy == 0}">
 												<td>제공<input type = "radio" name ="isAcademy" value="0"  checked="checked"></td>
 												<td>비제공<input type = "radio" name ="isAcademy" value="1"></td>
 											</c:when>
@@ -207,7 +207,7 @@
 									<tr class = "kg_pro">
 									<td class="kg_service_list">스파</td>
 									<c:choose>
-										<c:when test ="${sessionScope.schoolService.isSpa == 0}">
+										<c:when test ="${schoolService.isSpa == 0}">
 											<td>제공<input type = "radio"  name ="isSpa" value="0"  checked="checked"></td>
 											<td>비제공<input type = "radio" name ="isSpa" value="1"></td>
 										</c:when>
@@ -235,7 +235,13 @@
 							<input type ="file" name ="files" id="kg_photo" multiple/><!-- 여러개 파일 선택 속성 -->
 						</div>
 						<div id="photo_border">
-							사진 첨부
+							<c:if test="${!empty photoList}">
+								<c:forEach var ="i" begin="0" end ="${photoList.size()-1}" step="1">
+									<div>
+										<img class = "schoolPhoto${i}" src = "/file${photoList[i].savePath}${photoList[i].renameFileName}" onclick="deletephoto()">
+									</div>
+								</c:forEach>
+							</c:if>
 						</div>
 						<button id="file_upload_btn">파일 업로드</button>
 					</form>

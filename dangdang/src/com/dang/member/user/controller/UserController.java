@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dang.board.model.vo.Board;
 import com.dang.common.code.ErrorCode;
 import com.dang.common.exception.ToAlertException;
 import com.dang.common.random.RandomString;
@@ -113,6 +114,8 @@ public class UserController extends HttpServlet {
 		UserMember userMember = userService.memberAuthenticate(userId, userPw);
 
 		if(userMember != null) {
+		
+			
 			System.out.println(userMember.getIsleave());
 			if(userMember.getIsleave() == 0) {
 				request.getSession().setAttribute("userMember" , userMember); //회원정보가 있을 경우 해당 내용을 session에 저장.

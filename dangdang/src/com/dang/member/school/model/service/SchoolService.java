@@ -1,11 +1,13 @@
 package com.dang.member.school.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.dang.board.model.vo.Board;
 import com.dang.common.code.ConfigCode;
 import com.dang.common.exception.DataAccessException;
 import com.dang.common.exception.ToAlertException;
@@ -57,21 +59,19 @@ public class SchoolService {
 	
 	
 	
-	public Service SchoolproService(String kgName) {
+	public Service schoolProService(String kgName) {
 		Connection conn = jdt.getConnection();
 		Service schoolProService = null;
 		
 		
 		try {
-			schoolProService = schoolDao.SchoolproService(conn, kgName);
+			schoolProService = schoolDao.schoolProService(conn, kgName);
 		}finally {
 			jdt.close(conn);
 		}
 		
 		return schoolProService;
 	}
-	
-	
 	
 	
 	
@@ -201,6 +201,32 @@ public class SchoolService {
 		
 	}
 	
+	
+	public ArrayList<FileVo> selectSchoolPhoto(String kgIdx){
+		Connection conn = jdt.getConnection();
+		ArrayList<FileVo> photoList;
+		
+		try {
+			photoList = schoolDao.selectSchoolPhoto(conn, kgIdx);
+		}finally {
+			jdt.close(conn);
+		}
+		return photoList;
+	}
+	
+	
+	
+	public ArrayList<Board> selectNoticePreview(String kgName){
+	Connection conn = jdt.getConnection();
+	ArrayList<Board> noticeList;
+	
+		try {
+			noticeList = schoolDao.selectNoticePreview(conn, kgName);
+		}finally {
+			jdt.close(conn);
+		}
+		return noticeList;
+	}
 	
 	
 	

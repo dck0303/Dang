@@ -99,7 +99,6 @@
 		}).then(response => { /* 200번대 코드가 넘어오면 ok => true */
 			
 			if(response.ok){
-				
 				return response.text(); /*controller 의 loginimpl에서 text값을 getwriter() */	
 			}
 			throw new AsyncPageError(response.text()); /* 200번코드가 아니면 catch 문으로 ! */
@@ -109,14 +108,10 @@
 			if(text == 'fail'){
 				alert('아이디나 비밀번호를 확인하세요');
 				
-			}else if(text == 'withdraw'){
-				alert('탈퇴한 회원입니다.');
-				location.href = '/user/login.do' //브라우저에서 요청해줘야 url이 바뀐다.
 			}else if(text == 'success'){
 				alert('로그인 되었습니다.');
-				location.href = urlToMyPage;	 
-			}else if(text == 'servicefail'){
-				alert('해당유치원 서비스 조회 중 문제 발생');
+				location.href = urlToMyPage;	
+				
 			}
 		}).catch(error =>{
 			error.alertMsg();

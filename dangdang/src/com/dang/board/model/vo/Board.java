@@ -1,11 +1,13 @@
 package com.dang.board.model.vo;
 
+import java.sql.Date;
+
 public class Board {
 	
 	private int bdIdx;
 	private String kgName;
 	private String title;
-	private String regDate;
+	private Date regDate;
 	private String content;
 	
 	public int getBdIdx() {
@@ -32,11 +34,11 @@ public class Board {
 		this.title = title;
 	}
 	
-	public String getRegDate() {
+	public Date getRegDate() {
 		return regDate;
 	}
 	
-	public void setRegDate(String regDate) {
+	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
 	
