@@ -27,11 +27,6 @@
 </noscript>
 </head>
 <body class="is-preload">
-
-	<%
-		Board board = new Board();
-	%>
-
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
 
@@ -59,28 +54,18 @@
 								</c:choose>
 								
 							</ul>
-						</div></li>
+						</div>
+					</li>
 				</ul>
 			</nav>
 		</header>
-		
-
-
-
-
-
-		<%
-			// BoardService 호출
-			BoardService boardService = new BoardService();
-		%>
-
 
 		<!-- Main -->
 		<section class="board">
 			<div class="content">
 				<h2 id="tit" class="mainfont">알림장</h2>
 				<br>
-				<form action="/board/modify.do" method="post" enctype="multipart/form-data">
+				<form action="/board/modifyboardimpl.do" method="post" enctype="multipart/form-data">
 					<div class="addBoard-wrap">
 						<table class="addBoard">
 							<thead class="addBoard-head">
@@ -92,13 +77,13 @@
 								<tr>
 									<td>
 										<input type="text" class="addBoard-title"
-										placeholder="제목을 적어주세요." name="boardTitle" maxlength="50">${res.title }
+										placeholder="제목을 적어주세요." name="boardTitle" maxlength="50">
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<textarea class="addBoard-content"
-											placeholder="내용을 적어주세요." name="boardContent" maxlength="2000">${res.content }</textarea>
+											placeholder="내용을 적어주세요." name="boardContent" maxlength="2000"></textarea>
 									</td>
 								</tr>
 							</tbody>

@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.dang.board.model.dao.BoardDao;
 import com.dang.board.model.vo.Board;
+import com.dang.common.code.ErrorCode;
+import com.dang.common.exception.DataAccessException;
 import com.dang.common.jdbc.JDBCTemplate;
 
 public class BoardService {
@@ -69,6 +71,10 @@ public class BoardService {
 		int res = 0;
 		try {
 			res = boardDao.modifyBoard(conn, bdIdx, title, content);
+			jdt.commit(conn);
+		}catch (Exception e) {
+			jdt.rollback(conn);
+			throw new DataAccessException(ErrorCode.BM01, e);
 		} finally {
 			jdt.close(conn);
 		}
@@ -81,6 +87,9 @@ public class BoardService {
 		try {
 			res = boardDao.deleteBoard(conn, bdIdx);
 			jdt.commit(conn);
+		}catch (Exception e) {
+			jdt.rollback(conn);
+			throw new DataAccessException(ErrorCode.BM02, e);
 		} finally {
 			jdt.close(conn);
 		}

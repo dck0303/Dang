@@ -34,12 +34,14 @@ public class BoardController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] uriArr = request.getRequestURI().split("/");
 		switch (uriArr[uriArr.length-1]) {
-		case "addboardimpl.do": addBoardImpl(request,response); // 글 작성 추가 메서드
+		case "addboardimpl.do": addBoardImpl(request,response); // 글 작성 추가 메서드 (오류)
 			break;
-		case "addboard.do": addBoard(request, response); // 글 작성 view 페이지
+		case "addboard.do": addBoard(request, response); // 글 작성 view 페이지 (오류)
 			break;
 		case "modifyboard.do": modifyBoard(request,response); // 글 수정 페이지 (오류)
-			break;	
+			break;
+		case "modifyboardimpl.do": modifyBoardImpl(request,response); // 글 수정 페이지 (오류)
+		break;	
 		case "viewboard1.do": viewBoard1(request,response); // 업주용 글 상세 페이지
 			break;
 		case "viewboard2.do": viewBoard2(request, response); // 견주용 글 상세 페이지
@@ -82,7 +84,6 @@ public class BoardController extends HttpServlet {
 		String boardTitle = request.getParameter("boardTitle");
 		String boardContent = request.getParameter("boardContent");
 		boardService.addBoard(boardTitle, kgName, boardContent);
-		System.out.println(boardTitle);
 		
 		request.setAttribute("alertMsg", "게시글 등록이 완료되었습니다");
 		request.setAttribute("url", "/board/listboard1.do");
@@ -90,14 +91,21 @@ public class BoardController extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
 	}
 	
-	private void modifyBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void modifyBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		
+		request.getRequestDispatcher("/WEB-INF/view/board/kindergarten/BoardModify.jsp").forward(request, response);
+	}
+	
+	private void modifyBoardImpl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bdIdx = Integer.parseInt(request.getParameter("bdIdx"));
 		String boardTitle = request.getParameter("boardTitle");
 		String boardContent = request.getParameter("boardContent");
-		String res = Integer.toString(boardService.modifyBoard(bdIdx, boardTitle, boardContent));
-		request.setAttribute("res", res);
+		int res = boardService.modifyBoard(bdIdx, boardTitle, boardContent);
 		
-		request.getRequestDispatcher("/WEB-INF/view/board/kindergarten/BoardModify.jsp").forward(request, response);
+		request.setAttribute("alertMsg", "게시글 수정이 완료되었습니다");
+		request.setAttribute("url", "/board/listboard1.do");
+		
+		request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
 	}
 	
 	private void viewBoard1(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

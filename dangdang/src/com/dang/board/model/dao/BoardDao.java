@@ -186,14 +186,13 @@ public class BoardDao {
 	public int modifyBoard(Connection conn, int bdIdx, String title, String content) {
 		
 		PreparedStatement pstm = null;
-		Board board = new Board();
 		
 		try {
 			String query = "update BD_NOTICE set TITLE = ?, CONTENT = ? where BD_NO_IDX = ?";
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, board.getTitle());
-			pstm.setString(2, board.getContent());
-			pstm.setInt(3, board.getBdIdx());
+			pstm.setString(1, title);
+			pstm.setString(2, content);
+			pstm.setInt(3, bdIdx);
 			
 			return pstm.executeUpdate();
 			

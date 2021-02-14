@@ -4,21 +4,25 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.UUID;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dang.common.code.ErrorCode;
 import com.dang.common.exception.ToAlertException;
 import com.dang.common.random.RandomString;
+import com.dang.member.school.model.vo.SchoolMember;
 import com.dang.member.user.model.service.UserService;
 import com.dang.member.user.model.vo.UserMember;
+import com.dang.reservation.model.service.ReservationService;
+import com.dang.reservation.model.vo.Reservation;
 import com.google.gson.Gson;
 
 /**
@@ -28,18 +32,25 @@ import com.google.gson.Gson;
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private UserService userService = new UserService();
+	private ReservationService reservationService = new ReservationService();
+	
     Gson gson = new Gson();
    
     public UserController() {
         super();
        
     }
-
+    /**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String uri = request.getRequestURI();
 		String[] uriArr = uri.split("/");
+		
+		
 		switch(uriArr[uriArr.length-1]){
 		case "login.do" : login(request, response); //로그인 페이지 이동
 			break;
@@ -68,8 +79,7 @@ public class UserController extends HttpServlet {
 		case "withdraw.do" : withdrawUser(request, response); //회원탈퇴 실행
 			break;
 		case "modifyinfo.do" : modifyUserInfo(request, response); 
-		
-		
+			break;		
 		
 		
 		}
@@ -103,17 +113,16 @@ public class UserController extends HttpServlet {
 		
 		
 		String userId = (String) parsedLoginData.get("id"); //map객체의 id라는 key 값의 value 불러오기
-		String userPw = (String) parsedLoginData.get("pw");	//map객체의 pw라는 key 값의 value 불러오기
-	
+		String userPw = (String) parsedLoginData.get("pw");	//map객체의 pw라는 key 값의 value 불러오기 
+
 		//schoolDao -> schoolService을 거치며 schoolMember의 객체가 반환된다.
 		UserMember userMember = userService.memberAuthenticate(userId, userPw);
 
-		
 		if(userMember != null) {
-			if(userMember.getIsleave() != 1) {
+			System.out.println(userMember.getIsleave());
+			if(userMember.getIsleave() == 0) {
 				request.getSession().setAttribute("userMember" , userMember); //회원정보가 있을 경우 해당 내용을 session에 저장.
-				request.setAttribute("alertMsg", "'댕댕아 놀면 뭐하니?'에 오신걸 환영합니다.");
-				response.getWriter().print("success"); 
+				response.getWriter().print("success");
 					
 			}else if(userMember.getIsleave() == 1){
 				response.getWriter().print("withdraw");
@@ -195,11 +204,7 @@ public class UserController extends HttpServlet {
 		//persistUser로 저장해두었던 session값 가져와서 userMember에 넣어주기
 		UserMember userMember = (UserMember) request.getSession().getAttribute("persistUser");
 		
-		//persistUser가 없거나, 브라우저를 종료했거나, 재요청없이 30분이 지났을 경우 혹은 회원가입이 완료된 경우에는 회원가입 진행 X
-		if(userMember == null) {
-			throw new ToAlertException(ErrorCode.AUTH02);
-		}
-		
+
 		int res = userService.insertUserMembers(userMember);
 		
 		if(res > 0) {
@@ -210,11 +215,7 @@ public class UserController extends HttpServlet {
 			request.setAttribute("alertMsg", "회원가입을 축하합니다."); //alertMsg 설정
 			request.setAttribute("url", "/user/login.do"); // url 설정
 			request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);
-		} else {
-			request.setAttribute("alertMsg", "회원가입에 실패하였습니다.");
-			request.setAttribute("url", "/main/main.do");
-			
-		}
+		} 
 	}
 	
 	
@@ -244,6 +245,17 @@ public class UserController extends HttpServlet {
 	
 	protected void viewUserPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession();
+		UserMember userMember = (UserMember) session.getAttribute("userMember");
+		String userId = userMember.getUserId();
+		
+		ArrayList<Reservation> reservationPreview = reservationService.selectUserPreview(userId);
+		
+		System.out.println(reservationPreview);
+		
+		request.setAttribute("reservationPreview", reservationPreview);
+		
+
 		request.getRequestDispatcher("/WEB-INF/view/mypage/mypage.jsp").forward(request, response);
 		
 		
@@ -374,6 +386,9 @@ public class UserController extends HttpServlet {
 		}
 		
 	}
+	
+	
+	
 	
 	
 	protected void modifyUserInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
