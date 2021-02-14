@@ -9,6 +9,7 @@ public class Board {
 	private String title;
 	private Date regDate;
 	private String content;
+	private int post;
 	
 	public int getBdIdx() {
 		return bdIdx;
@@ -38,10 +39,11 @@ public class Board {
 		return regDate;
 	}
 	
+
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-	
+
 	public String getContent() {
 		return content;
 	}
@@ -49,13 +51,20 @@ public class Board {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
+	
+	public int getPost() {
+		return post;
+	}
+	
+	public void setPost(int post) {
+		this.post = post;
+	}
+	
 	@Override
 	public String toString() {
 		return "Board [bdIdx=" + bdIdx + ", kgName=" + kgName + ", title=" + title + ", regDate=" + regDate
-				+ ", content=" + content + "]";
+				+ ", content=" + content + ", post=" + post + "]";
 	}
-	
-	
 
+	
 }

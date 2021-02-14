@@ -828,6 +828,14 @@ body.is-preload #banner:after {
 	text-align: center;
 }
 
+#footerMark{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* #footer .icons {
 	font-size: 1.25em;
 }
@@ -1090,6 +1098,7 @@ body.is-mobile.landing .user_profile{
 
 .mypage_detail{
 	display: flex;
+	background-color: #E7E7E7;
 	
 
 }
@@ -1686,6 +1695,7 @@ body.is-mobile.landing .user_profile{
     font-weight: bold;
 }
 
+
 #photo_border{
 	display: flex;
 	
@@ -1703,13 +1713,6 @@ body.is-mobile.landing .user_profile{
 	width: 100%;
 	height: 100%;
 }
-
-
-
-
-
-
-
 
 
 

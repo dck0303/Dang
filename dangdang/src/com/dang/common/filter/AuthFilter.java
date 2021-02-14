@@ -99,13 +99,28 @@ public class AuthFilter implements Filter {
 				
 			case "board":
 				switch (uriArr[2]) {
-				case "write.do":
-					if (session.getAttribute("user") == null) {
+				case "addboard.do":
+					if (session.getAttribute("schoolMember") == null) {
+						throw new ToAlertException(ErrorCode.AUTH08);
+					}
+					break;
+				case "modifyboard.do":
+					if (session.getAttribute("schoolMember") == null) {
+						throw new ToAlertException(ErrorCode.AUTH08);
+					}
+					break;
+				case "listboard1.do":
+					if(session.getAttribute("schoolMember") == null) {
+						throw new ToAlertException(ErrorCode.AUTH08);
+					}
+					break;
+				case "listboard2.do":
+					if(session.getAttribute("userMember") == null) {
 						throw new ToAlertException(ErrorCode.AUTH03);
 					}
 					break;
-				case "upload.do":
-					if (session.getAttribute("user") == null) {
+				case "viewboard2.do":
+					if(session.getAttribute("userMember") == null) {
 						throw new ToAlertException(ErrorCode.AUTH03);
 					}
 					break;

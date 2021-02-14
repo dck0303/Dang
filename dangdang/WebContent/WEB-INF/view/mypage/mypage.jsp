@@ -87,40 +87,67 @@
 				        </c:otherwise>
 				      </c:choose>
 				    </div>
+				    
+				    
+				    
+				    
 				    <div class="detail_board">
 				      <c:choose>
 				        <c:when test="${sessionScope.schoolMember != null}">
 				          <a href="/reservation/mngngRsrvt.do" class="school_photo">예약</a>
 				        </c:when>
 				        <c:otherwise>
+				        	<a href="/reservation/mngngRsrvt2.do" class="school_photo">예약</a>
 				        </c:otherwise>
 				      </c:choose>
 				      <div id="reservationBox">
-				        <div>
-				          <c:if test="${sessionScope.schoolMember != null}">
-				            <table>
-				              <tr>
-				                <td width="15%">번호</td>
-				                <td width="30%">예약번호</td>
-				                <td width="30%">ID</td>
-				                <td width="35%">신청일</td>
-				              </tr>
-				              <c:forEach var="reservation" items="${reservationPreview}" varStatus="status">
-				                <tr>
-				                  <td>${status.count}</td>
-				                  <td>${reservation.rsIdx}</td>
-				                  <td>${reservation.userId}</td>
-				                  <td>${reservation.regDate}</td>
-				                </tr>
-				              </c:forEach>
-				            </table>
-				          </c:if>
+				        <div id = "reservationWrap">
+							<c:if test="${sessionScope.schoolMember != null}">
+							  <c:forEach var="reservation" items="${reservationPreview}" varStatus="status">
+							    <div class="preview">
+							      <div>${status.count}</div>
+							      <div>${reservation.rsIdx}</div>
+							      <div>${reservation.userId}</div>
+							      <div>${reservation.regDate}</div>
+							    </div>
+							    <c:if test="${status.count >= 5}">
+							      <div id="dot">
+							        <p>.</p>
+							        <p>.</p>
+							        <p>.</p>
+							      </div>
+							    </c:if>
+							  </c:forEach>
+							</c:if>
+							
+							
+							<c:if test="${sessionScope.userMember != null}">
+							  <c:forEach var="reservation" items="${reservationPreview}" varStatus="status">
+							    <div class="preview">
+							      <div>${status.count}</div>
+							      <div>${reservation.rsIdx}</div>
+							      <div>${reservation.userId}</div>
+							      <div>${reservation.regDate}</div>
+							    </div>
+							    <c:if test="${status.count >= 5}">
+							      <div id="dot">
+							        <p>.</p>
+							        <p>.</p>
+							        <p>.</p>
+							      </div>
+							    </c:if>
+							  </c:forEach>
+							</c:if>
 				        </div>
 				      </div>
 				    </div>
 				  </div>
+				  
+				  
+				  
 				  <div class="mypage_detail">
 				    <div class="detail_board">
+
 				    <c:if test="${sessionScope.schoolMember != null}">
 				      <a href="/board/listboard1.do">공지사항</a>
 				      <div id="reservationBox">
@@ -171,12 +198,8 @@
 				      </div>
 			       </c:if>
 			    </div>
-				    
-				    
-				    
-				    
-				    
-				    
+
+
 				    <div class="detail_board">
 				      <a>알림장</a>
 				    </div>

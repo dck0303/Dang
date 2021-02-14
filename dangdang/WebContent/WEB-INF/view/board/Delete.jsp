@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.dang.board.model.service.BoardService"%>
+<%@ page import="com.dang.board.model.vo.Board" %>
+<%@ page import="com.dang.member.school.model.vo.SchoolMember" %>
 <%@ page import="java.io.PrintWriter"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
-<jsp:useBean id="board" class="com.dang.board.model.vo.Board"
-	scope="page" />
-<jsp:setProperty name="board" property="title" />
-<jsp:setProperty name="board" property="content" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,21 +26,35 @@
 			location.href = "userlogin.jsp"
 		</script>
 	<%
+	} 
+	
+	int bdIdx = 0;
+	if(request.getParameter("bdIdx") != null){
+		bdIdx = Integer.parseInt(request.getParameter("bdIdx"));
+	}
+	if(bdIdx == 0){
+%>
+		<script>
+			alert('등록되지 않은 글입니다.')
+			location.href = "BoardList1.jsp"
+		</script>
+<%
+	}
+	Board board = new BoardService().viewBoard(bdIdx);
+	if(!kgId.equals(board.getKgName())){
+%>
+		<script>
+			alert('글을 수정할 권한이 없습니다.')
+			location.href = "BoardList1.jsp"
+		</script>
+<% 
 	} else {
-		if (board.getTitle() == null || board.getContent() == null) {
-	%>
-			<script>
-				alert('입력이 안된 사항이 있습니다.')
-				history.back()
-			</script>	
-	<%
-		} else {
 			BoardService boardService = new BoardService();
-			int result = boardService.addBoard(board.getTitle(), board.getKgName(), board.getContent());
+			int result = boardService.deleteBoard(bdIdx);
 			if (result == -1) {
 	%>
 				<script>
-					alert('글쓰기에 실패했습니다.')
+					alert('글 삭제에 실패했습니다.')
 					history.back()
 				</script>
 	<%
@@ -53,8 +65,6 @@
 				</script>
 	<%
 			}
-		}
-
 	}
 	%>
 
