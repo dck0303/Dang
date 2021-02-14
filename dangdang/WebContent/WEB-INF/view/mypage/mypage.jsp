@@ -121,7 +121,14 @@
 				  </div>
 				  <div class="mypage_detail">
 				    <div class="detail_board">
-				      <a>공지사항</a>
+				    <c:choose>
+				    	<c:when test="${sessionScope.schoolMember != null}">
+				      		<a href="/board/listboard1.do">공지사항</a>
+				      	</c:when>
+				      	<c:when test="${sessionScope.userMember != null}">
+				      		<a href="/board/listboard2.do">공지사항</a>
+				      	</c:when>
+				    </c:choose>
 				    </div>
 				    <div class="detail_board">
 				      <a>알림장</a>

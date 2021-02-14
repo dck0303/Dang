@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/include/header.jsp"%>
+<%@ page import="com.dang.board.model.service.BoardService" %>
+<%@ page import="com.dang.member.school.model.vo.SchoolMember" %>
+<jsp:useBean id="board" class="com.dang.board.model.vo.Board" scope="page" />
+<jsp:setProperty name="board" property="title" />
+<jsp:setProperty name="board" property="content" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>알림 게시판 (견주)</title>
+<title>알림 게시판 글쓰기 페이지 (업주)</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="${context}/resources/css/main.css" />
@@ -23,6 +29,29 @@
 </noscript>
 </head>
 <body class="is-preload">
+
+	<%
+		String userId = null;
+		if(session.getAttribute("userId") != null){
+			userId = (String)session.getAttribute("userId");
+		}
+		int bdIdx = 0;
+		if(request.getParameter("bdIdx") != null){
+			bdIdx = Integer.parseInt(request.getParameter("bdIdx"));
+		}
+		if(bdIdx == 0){
+	%>
+		<script>
+			alert('등록되지 않은 글입니다.')
+			location.href = "BoardList2.jsp"
+		</script>
+	<%
+		}
+	%>
+	<%
+		// BoardService 호출
+		BoardService boardService = new BoardService();
+	%>
 
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
@@ -48,48 +77,43 @@
 			</nav>
 		</header>
 
-
-
-
-
-
-
-
 		<!-- Main -->
 		<section class="board">
 			<div class="content">
 				<h2 id="tit" class="mainfont">알림장</h2>
 				<br>
-				<div id="desc_board">
-					<form action="${context}/board/viewboard.do" method="post"
-						enctype="multipart/form-data">
-						<div>
-							<div id="tit_board" class="mainfont">
-								제목 : <input type="text" class="title-box" name="title"
-									required="required" />
-								<!-- multiple : 여러개 파일 선택을 허용하는 속성 -->
-								<select id="select_class" class="mainfont">
-									<option>반 이름</option>
-									<option>깜식 반</option>
-									<option>아롱 반</option>
-									<option>희망 반</option>
-								</select>
-								<!-- 파일 : <input type="file" name="files" id="contract_file" multiple /> -->
-							</div>
-							<textarea id="board-content" class="noticefont" name="content"
-								style="width: 99%; height: 600px;" required="required">
-						</textarea>
-							<div class="alim-low">
-								<div class="before-next">
-									다음글 : <br> 이전글 :
-								</div>
-								<div>
-									<button id="list_box" class="mainfont">목록으로</button>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
+					<div class="addBoard-wrap">
+						<table class="addBoard">
+							<thead class="addBoard-head">
+								<tr>
+									<th colspan="3" class="addBoard-top">알림장 상세 페이지</th>
+								</tr>
+							</thead>
+							<tbody class="addBoard-body">
+								<tr>
+									<td style ="width: 20%;">제목</td>
+									<td colspan="2"><%= board.getTitle() %></td>
+								</tr>
+								<tr>
+									<td>유치원</td>
+									<td colspan="2"><%= board.getKgName() %></td>
+								</tr>
+								<tr>
+									<td>작성 일자</td>
+									<td colspan="2"><%= board.getRegDate().substring(0, 11) + board.getRegDate().substring(11,13) + "시" + board.getRegDate().substring(14, 16) + "분" %></td>
+								</tr>
+								<tr>
+									<td>내용</td>
+									<td colspan="2" style="mit-height: 200px; text-align: left;"><%= board.getContent() %></td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+					<a href = "BoardList2.jsp">목록</a>
+					<%
+						if(userId != null && userId.equals(board.getKgName()))
+					%>
 			</div>
 
 		</section>
