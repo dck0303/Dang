@@ -112,6 +112,9 @@
 				alert('로그인 되었습니다.');
 				location.href = urlToMyPage;	
 				
+			}else if(text == 'withdraw'){
+				alert('탈퇴한 회원입니다.');
+			
 			}
 		}).catch(error =>{
 			error.alertMsg();

@@ -251,6 +251,7 @@ public class UserController extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserMember userMember = (UserMember) session.getAttribute("userMember");
 		String userId = userMember.getUserId();
+		String kgName = userMember.getKgName();
 		
 		ArrayList<Reservation> reservationPreview = reservationService.selectUserPreview(userId);
 		
@@ -259,6 +260,12 @@ public class UserController extends HttpServlet {
 		request.setAttribute("reservationPreview", reservationPreview);
 		
 
+		//notice 데이터 request에 저장
+				ArrayList<Board> NoticePreview = userService.selectNoticePreview(kgName);
+				request.setAttribute("NoticePreview", NoticePreview);
+		
+		
+		
 		request.getRequestDispatcher("/WEB-INF/view/mypage/mypage.jsp").forward(request, response);
 		
 		
