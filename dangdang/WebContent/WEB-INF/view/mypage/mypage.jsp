@@ -94,14 +94,14 @@
 				    
 				    
 				    <div class="detail_board">
-				      <c:choose>
-				        <c:when test="${sessionScope.schoolMember != null}">
+				        <c:if test="${sessionScope.schoolMember != null}">
 				          <a href="/reservation/mngngRsrvt.do" class="school_photo">예약</a>
-				        </c:when>
-				        <c:otherwise>
+				        </c:if>
+				        
+				        <c:if test="${sessionScope.userMember != null}">
 				        	<a href="/reservation/mngngRsrvt2.do" class="school_photo">예약</a>
-				        </c:otherwise>
-				      </c:choose>
+				        </c:if>
+				        
 				      <div id="reservationBox">
 				        <div id = "reservationWrap">
 							<c:if test="${sessionScope.schoolMember != null}">
@@ -219,6 +219,47 @@
 				      	<c:if test="${sessionScope.userMember != null}">
 				      		<a href="/diary/userview.do">알림장</a>
 				      	</c:if>
+				   <div id="reservationBox">
+				        <div id = "reservationWrap">
+							<c:if test="${sessionScope.schoolMember != null}">
+							  <c:forEach var="diary" items="${diaryList}" varStatus="status">
+							    <div class="preview">
+							      <div style="width: 5%">${status.count}</div>
+							      <div style="width: 10%">${diary.bdDiaryIdx}</div>
+							      <div style="width: 30%">${diary.title}</div>
+							      <div style="width: 20%">${diary.regDate}</div>
+							    </div>
+							    <c:if test="${status.count >= 5}">
+							      <div id="dot">
+							        <p>.</p>
+							        <p>.</p>
+							        <p>.</p>
+							      </div>
+							    </c:if>
+							  </c:forEach>
+							</c:if>
+							
+							
+							<c:if test="${sessionScope.userMember != null}">
+							  <c:forEach var="diary" items="${diaryList}" varStatus="status">
+							    <div class="preview">
+							      <div style="width: 5%">${status.count}</div>
+							      <div style="width: 10%">${diary.bdDiaryIdx}</div>
+							      <div style="width: 30%">${diary.title}</div>
+							      <div style="width: 20%">${diary.regDate}</div>
+							    </div>
+							    <c:if test="${status.count >= 5}">
+							      <div id="dot">
+							        <p>.</p>
+							        <p>.</p>
+							        <p>.</p>
+							      </div>
+							    </c:if>
+							  </c:forEach>
+							</c:if>
+				        </div>
+				      </div>
+				      	
 				    </div>
 				    
 				  </div>

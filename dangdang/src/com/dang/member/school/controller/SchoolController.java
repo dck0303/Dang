@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import com.dang.board.model.vo.Board;
 import com.dang.common.code.ConfigCode;
 import com.dang.common.util.file.FileVo;
+import com.dang.diary.model.service.DiaryService;
+import com.dang.diary.model.vo.Diary;
 import com.dang.map.model.vo.Service;
 import com.dang.member.school.model.service.SchoolService;
 import com.dang.member.school.model.vo.SchoolMember;
@@ -39,6 +41,7 @@ public class SchoolController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private SchoolService schoolService = new SchoolService();
 	private ReservationService reservationService = new ReservationService();
+	private DiaryService diaryService = new DiaryService();
 
 	Gson gson = new Gson();
 
@@ -154,7 +157,9 @@ public class SchoolController extends HttpServlet {
 		ArrayList<UserMember> classMemberList = schoolService.selectClassMember(kgName);
 		request.setAttribute("classMemberList", classMemberList);
 		
-		
+		//diary 데이터 request에 저장
+		ArrayList<Diary> diaryList = diaryService.selectDiaryPreview(kgName);
+		request.setAttribute("diaryList", diaryList);
 
 		request.getRequestDispatcher("/WEB-INF/view/mypage/mypage.jsp").forward(request, response);
 		
