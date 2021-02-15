@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/include/header.jsp"%>
-<%@ page import="com.dang.board.model.service.BoardService" %>
-<%@ page import="com.dang.member.school.model.vo.SchoolMember" %>
-<jsp:useBean id="board" class="com.dang.board.model.vo.Board" scope="page" />
-<jsp:setProperty name="board" property="title" />
-<jsp:setProperty name="board" property="content" />
+<%@ page import="com.dang.board.model.service.BoardService"%>
+<%@ page import="com.dang.member.school.model.vo.SchoolMember"%>
+<%@ page import="com.dang.board.model.vo.Board"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,28 +28,7 @@
 </head>
 <body class="is-preload">
 
-	<%
-		String userId = null;
-		if(session.getAttribute("userId") != null){
-			userId = (String)session.getAttribute("userId");
-		}
-		int bdIdx = 0;
-		if(request.getParameter("bdIdx") != null){
-			bdIdx = Integer.parseInt(request.getParameter("bdIdx"));
-		}
-		if(bdIdx == 0){
-	%>
-		<script>
-			alert('등록되지 않은 글입니다.')
-			location.href = "BoardList2.jsp"
-		</script>
-	<%
-		}
-	%>
-	<%
-		// BoardService 호출
-		BoardService boardService = new BoardService();
-	%>
+
 
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
@@ -68,9 +45,25 @@
 						<div id="menu">
 							<ul>
 								<li><a href="/main.do">Home</a></li>
-								<li><a href="generic.html">마이페이지</a></li>
-								<li><a href="/map.do">유치원 찾기</a></li>
-								<li><a href="#">캘린더</a></li>
+								<c:choose>
+									<c:when test="${sessionScope.schoolMember != null}">
+										<li><a href="/school/schoolpage.do">마이페이지</a></li>
+									</c:when>
+									<c:when test="${sessionScope.userMember != null}">
+										<li><a href="/user/userpage.do">마이페이지</a></li>
+									</c:when>
+								</c:choose>
+								<li><a href="/map/map.do">유치원 찾기</a></li>
+								<li><a href="/reservation/calendar.do">캘린더</a></li>
+								<c:choose>
+									<c:when test="${sessionScope.schoolMember != null}">
+										<li><a href="/school/logout.do">로그아웃</a></li>
+									</c:when>
+									<c:when test="${sessionScope.userMember != null}">
+										<li><a href="/user/logout.do">로그아웃</a></li>
+									</c:when>
+								</c:choose>
+
 							</ul>
 						</div></li>
 				</ul>
@@ -81,39 +74,31 @@
 		<section class="board">
 			<div class="content">
 				<h2 id="tit" class="mainfont">알림장</h2>
-				<br>
-					<div class="addBoard-wrap">
-						<table class="addBoard">
-							<thead class="addBoard-head">
-								<tr>
-									<th colspan="3" class="addBoard-top">알림장 상세 페이지</th>
-								</tr>
-							</thead>
-							<tbody class="addBoard-body">
-								<tr>
-									<td style ="width: 20%;">제목</td>
-									<td colspan="2"><%= board.getTitle() %></td>
-								</tr>
-								<tr>
-									<td>유치원</td>
-									<td colspan="2"><%= board.getKgName() %></td>
-								</tr>
-								<tr>
-									<td>작성 일자</td>
-									<td colspan="2"><%= board.getRegDate().substring(0, 11) + board.getRegDate().substring(11,13) + "시" + board.getRegDate().substring(14, 16) + "분" %></td>
-								</tr>
-								<tr>
-									<td>내용</td>
-									<td colspan="2" style="mit-height: 200px; text-align: left;"><%= board.getContent() %></td>
-								</tr>
-								
-							</tbody>
-						</table>
-					</div>
-					<a href = "BoardList2.jsp">목록</a>
-					<%
-						if(userId != null && userId.equals(board.getKgName()))
-					%>
+				<table class="boardView-table">
+					<thead class="boardView-thead">
+							<th colspan="2" class="boardView-th">알림장 상세 페이지</th>
+					</thead>
+					<tbody class="boardView-tbody">
+						<tr>
+							<td class="boardView-title">제목</td>
+							<td class="boardView-title-content">${board.title }</td>
+						</tr>
+						<tr>
+							<td class="boardView-writer">유치원</td>
+							<td class="boardView-writer-content">${board.kgName }</td>
+						</tr>
+						<tr>
+							<td class="boardView-date">작성 일자</td>
+							<td class="boardView-date-content">${board.regDate }</td>
+						</tr>
+						<tr>
+							<td class="boardView-content">내용</td>
+							<td class="boardView-content-content">${board.content }</td>
+						</tr>
+
+					</tbody>
+				</table>
+				<a href="/board/listboard1.do" class="bt-list">목록</a> 
 			</div>
 
 		</section>
