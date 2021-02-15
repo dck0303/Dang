@@ -140,21 +140,17 @@ public class AuthFilter implements Filter {
 						break;
 					}
 					break;
-				case "reservation":
+
+				case "diary":
 					switch (uriArr[2]) {
-					case "reservation.do":
+					case "kindergardenview.do":
+						if (session.getAttribute("schoolMember") == null) {
+							throw new ToAlertException(ErrorCode.AUTH09);
+						}
+						break;
+					case "userview.do":
 						if (session.getAttribute("userMember") == null) {
-							throw new ToAlertException(ErrorCode.AUTH05);
-						}
-						break;
-					case "mngngRsrvt.do":
-						if (session.getAttribute("schoolMember") == null) {
-							throw new ToAlertException(ErrorCode.AUTH06);
-						}
-						break;
-					case "calendar.do":
-						if (session.getAttribute("schoolMember") == null) {
-							throw new ToAlertException(ErrorCode.AUTH07);
+							throw new ToAlertException(ErrorCode.AUTH09);
 						}
 						break;
 					}
