@@ -97,11 +97,14 @@ public class BoardController extends HttpServlet {
 	}
 	
 	private void modifyBoardImpl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		int bdIdx = Integer.parseInt(request.getParameter("bdIdx"));
 		String modifyboardTitle = request.getParameter("modifyboardTitle");
 		String modifyboardContent = request.getParameter("modifyboardContent");
-		int res = boardService.modifyBoard(bdIdx, modifyboardTitle, modifyboardContent);
 		
+		boardService.modifyBoard(bdIdx, modifyboardTitle, modifyboardContent);
+
+
 		request.setAttribute("alertMsg", "게시글 수정이 완료되었습니다");
 		request.setAttribute("url", "/board/listboard1.do");
 		
