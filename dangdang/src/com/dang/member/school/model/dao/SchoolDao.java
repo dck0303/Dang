@@ -4,7 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import javax.naming.spi.DirStateFactory.Result;
+
+import com.dang.board.model.vo.Board;
 import com.dang.common.code.ErrorCode;
 import com.dang.common.exception.DataAccessException;
 import com.dang.common.jdbc.JDBCTemplate;
@@ -26,7 +30,7 @@ public class SchoolDao {
 		SchoolMember schoolMember = null;
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		String query = "select * from kindergarden where kg_id =? and kg_pw = ?";
+		String query = "select * from kindergarden where kg_id =? and kg_pw = ? ";
 		
 		try{
 
@@ -65,7 +69,7 @@ public class SchoolDao {
 	}
 	
 	
-	public Service SchoolproService(Connection conn, String kgName) {
+	public Service schoolProService(Connection conn, String kgName) {
 		Service schoolProService = null;
 		PreparedStatement  pstm = null;
 		ResultSet rset = null;
@@ -139,54 +143,7 @@ public class SchoolDao {
 	
 	
 	
-	/*
-	
-	//해당 정보에 맞는 회원검색
-		public SchoolMember findSchoolPw(Connection conn, String kgId, String kgEmail) {
-			
-			SchoolMember schoolMember = null;
-			PreparedStatement pstm = null;
-			ResultSet rset = null;
-			
-			String query = "select * from kindergarden where kg_id = ? and kg_email = ?";
-			
-			try {
-				pstm = conn.prepareStatement(query);
-				pstm.setString(1, kgId);
-				pstm.setString(2, kgEmail);
-				
-				rset = pstm.executeQuery();
-				
-				//결과값이 있다면
-				if(rset.next()) {
-					schoolMember = new SchoolMember();
-					schoolMember.setKgName(rset.getString("kgName"));
-					schoolMember.setKgIdx(rset.getString("kgIdx"));
-					schoolMember.setKgId(rset.getString("kgId"));
-					schoolMember.setKgPw(rset.getString("kgPw"));
-					schoolMember.setKgAddress(rset.getString("kgAddress"));
-					schoolMember.setKgTell(rset.getString("kgTell"));
-					schoolMember.setKgOperateTime(rset.getString("kgOperateTime"));
-					schoolMember.setKgNotice(rset.getString("kgNotice"));
-					schoolMember.setKgGrade(rset.getString("kgGrade"));
-					schoolMember.setKgEmail(rset.getString("kgEmail"));
-				}
-				
-			} catch (SQLException e) {
-				throw new DataAccessException(ErrorCode.SM01, e);
-				
-			} finally {
-				jdt.close(rset, pstm);
-			}
-			System.out.println(schoolMember);
-			return schoolMember;	
-		
-		}
-		
-	
-	*/
-	
-	
+
 	
 	
 	
@@ -289,6 +246,82 @@ public int modifySchoolService(Connection conn, String kgName, int isKg, int isC
 		return res;
 	}
 		
+	
+	
+	
+	public ArrayList<FileVo> selectSchoolPhoto(Connection conn, String kgIdx){
+		ArrayList<FileVo> photoList = new ArrayList<>();
+		PreparedStatement pstm = null;
+		
+		ResultSet rset = null;
+		String findkgIdx = "k" + kgIdx;
+		
+		String query = "select * from d_file where type_idx = ? ";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			
+			pstm.setString(1,findkgIdx);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()){
+				FileVo photoFile = new FileVo();
+				photoFile.setFidx(rset.getInt(1));
+				photoFile.setTypeIdx(rset.getString(2));
+				photoFile.setOriginFileName(rset.getString(3));
+				photoFile.setRenameFileName(rset.getString(4));
+				photoFile.setSavePath(rset.getString(5));
+				photoFile.setRegDate(rset.getDate(6));
+				photoFile.setIsDel(rset.getInt(7));
+				photoList.add(photoFile);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(ErrorCode.FILE02, e);
+			
+		}finally {
+			jdt.close(rset, pstm);
+		}
+		
+		return photoList;
+		
+		
+	}
+	
+	
+	
+	public ArrayList<Board> selectNoticePreview(Connection conn, String kgName){
+		
+		ArrayList<Board> noticeList = new ArrayList<>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		
+		String query = "select * from bd_notice where kg_name = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, kgName);
+			rset =  pstm.executeQuery();
+			
+			while(rset.next()) {
+				Board board = new Board();
+				board.setBdIdx(rset.getInt("bd_no_idx"));
+				board.setTitle(rset.getString("title"));
+				board.setContent(rset.getString("content"));
+				board.setRegDate(rset.getDate("reg_date"));
+				board.setKgName(rset.getString("kg_name"));
+				
+				noticeList.add(board);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(ErrorCode.BL01, e);
+		}finally {
+			jdt.close(rset, pstm);
+		}
+		
+		return noticeList;
+		
+	}
+	
 	
 	
 	

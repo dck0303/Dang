@@ -2,9 +2,11 @@ package com.dang.member.user.model.service;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.dang.board.model.vo.Board;
 import com.dang.common.code.ConfigCode;
 import com.dang.common.exception.DataAccessException;
 import com.dang.common.jdbc.JDBCTemplate;
@@ -221,6 +223,22 @@ public class UserService {
 			return res;
 			
 		}
+		
+		
+		
+		
+		
+		public ArrayList<Board> selectNoticePreview(String kgName){
+			Connection conn = jdt.getConnection();
+			ArrayList<Board> noticeList;
+			
+				try {
+					noticeList = userDao.selectNoticePreview(conn, kgName);
+				}finally {
+					jdt.close(conn);
+				}
+				return noticeList;
+			}
 	
 	
 	

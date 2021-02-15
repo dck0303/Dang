@@ -57,7 +57,7 @@
 
 		<!-- Main -->
 		<section class="user_board">
-			<div  class="user_login_form">
+			<div class="user_login_form">
 				<input type="text" name="id" id="id" placeholder="아이디를 입력하세요." required>
 				<input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요." required>
 				<button onclick="login()" id="login_btn">로그인</button>
