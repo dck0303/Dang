@@ -83,6 +83,11 @@ public class AuthFilter implements Filter {
 					if(session.getAttribute("schoolMember") != null) {
 						throw new ToAlertException(ErrorCode.AUTH01);
 					}break;
+					
+				case "kinderclass.do":
+					if(session.getAttribute("schoolMember") == null) {
+						throw new ToAlertException(ErrorCode.AUTH01);
+					}break;
 
 				}
 				break;
