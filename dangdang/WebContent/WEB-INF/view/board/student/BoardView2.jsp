@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/include/header.jsp"%>
+<%@ page import="com.dang.board.model.service.BoardService"%>
+<%@ page import="com.dang.member.school.model.vo.SchoolMember"%>
+<%@ page import="com.dang.board.model.vo.Board"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +27,9 @@
 </noscript>
 </head>
 <body class="is-preload">
+
+
+
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
 
@@ -40,54 +46,59 @@
 							<ul>
 								<li><a href="/main.do">Home</a></li>
 								<c:choose>
-									<c:when test ="${sessionScope.schoolMember != null}"><li><a href="/school/schoolpage.do">마이페이지</a></li></c:when>
-									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/userpage.do">마이페이지</a></li></c:when>
+									<c:when test="${sessionScope.schoolMember != null}">
+										<li><a href="/school/schoolpage.do">마이페이지</a></li>
+									</c:when>
+									<c:when test="${sessionScope.userMember != null}">
+										<li><a href="/user/userpage.do">마이페이지</a></li>
+									</c:when>
 								</c:choose>
 								<li><a href="/map/map.do">유치원 찾기</a></li>
 								<li><a href="/reservation/calendar.do">캘린더</a></li>
 								<c:choose>
-									<c:when test ="${sessionScope.schoolMember != null}"><li><a href="/school/logout.do">로그아웃</a></li></c:when>
-									<c:when test ="${sessionScope.userMember != null}"><li><a href="/user/logout.do">로그아웃</a></li></c:when>
+									<c:when test="${sessionScope.schoolMember != null}">
+										<li><a href="/school/logout.do">로그아웃</a></li>
+									</c:when>
+									<c:when test="${sessionScope.userMember != null}">
+										<li><a href="/user/logout.do">로그아웃</a></li>
+									</c:when>
 								</c:choose>
-								
+
 							</ul>
-						</div>
-					</li>
+						</div></li>
 				</ul>
 			</nav>
 		</header>
-		
+
 		<!-- Main -->
 		<section class="board">
 			<div class="content">
 				<h2 id="tit" class="mainfont">알림장</h2>
-				<br>
-				<form action="/board/addboardimpl.do" method="post" enctype="multipart/form-data">
-					<div class="addBoard-wrap">
-						<table class="addBoard-table">
-							<thead>
-								<tr>
-									<th class="addBoard-th">알림장 작성</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="addBoard_title">
-										<input type="text" class="addBoard-title"
-										placeholder="제목을 적어주세요." name="boardTitle" maxlength="50" required="required">
-									</td>
-								</tr>
-								<tr>
-									<td class="addBoard_content">
-										<textarea class="addBoard-content"
-										placeholder="내용을 적어주세요." name="boardContent" maxlength="2000" required="required"></textarea>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<input type="submit" class="bt-addBoard" value="작성 완료">
-				</form> 
+				<table class="boardView-table">
+					<thead class="boardView-thead">
+							<th colspan="2" class="boardView-th">알림장 상세 페이지</th>
+					</thead>
+					<tbody class="boardView-tbody">
+						<tr>
+							<td class="boardView-title">제목</td>
+							<td class="boardView-title-content">${board.title }</td>
+						</tr>
+						<tr>
+							<td class="boardView-writer">유치원</td>
+							<td class="boardView-writer-content">${board.kgName }</td>
+						</tr>
+						<tr>
+							<td class="boardView-date">작성 일자</td>
+							<td class="boardView-date-content">${board.regDate }</td>
+						</tr>
+						<tr>
+							<td class="boardView-content">내용</td>
+							<td class="boardView-content-content">${board.content }</td>
+						</tr>
+
+					</tbody>
+				</table>
+				<a href="/board/listboard1.do" class="bt-list">목록</a> 
 			</div>
 
 		</section>

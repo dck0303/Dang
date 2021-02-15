@@ -82,10 +82,10 @@
 				    <div class="detail_board">
 				      <c:choose>
 				        <c:when test="${sessionScope.schoolMember != null}">
-				          <a class="school_photo">앨범</a>
+				          <a href="/album/view.do" class="school_photo">앨범</a>
 				        </c:when>
 				        <c:otherwise><!-- userMember일 때 -->
-				          <a class="user_photo">앨범</a>
+				          <a  href="/album/view.do" class="user_photo">앨범</a>
 				        </c:otherwise>
 				      </c:choose>
 				    </div>
@@ -213,8 +213,14 @@
 
 
 				    <div class="detail_board">
-				    
+				    	<c:if test="${sessionScope.schoolMember != null}">
+				     		 <a href="/diary/kindergardenview.do">알림장</a>
+				      	</c:if>
+				      	<c:if test="${sessionScope.userMember != null}">
+				      		<a href="/diary/userview.do">알림장</a>
+				      	</c:if>
 				    </div>
+				    
 				  </div>
 				</div>
 			</div>

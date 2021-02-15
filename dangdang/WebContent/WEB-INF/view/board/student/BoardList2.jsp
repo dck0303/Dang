@@ -95,10 +95,10 @@
 								<!-- 제목 제목 클릭시 해당 게시물 번호를 보여줄 BoardView 로 연결 -->
 								<c:choose>
 							    	<c:when test="${sessionScope.schoolMember != null}">
-							      		<td class="boardList-title"><a href = "/board/viewboard1.do?bdIdx=<%=boardList.get(i).getBdIdx() %>"><%= boardList.get(i).getTitle() %></a></td>
+							      		<td><a href = "/board/viewboard1.do?bdIdx=<%=boardList.get(i).getBdIdx() %>"><%= boardList.get(i).getTitle() %></a></td>
 							      	</c:when>
 							      	<c:when test="${sessionScope.userMember != null}">
-							      		<td class="boardList-title"><a href = "/board/viewboard2.do?bdIdx=<%=boardList.get(i).getBdIdx() %>"><%= boardList.get(i).getTitle() %></a></td>
+							      		<td><a href = "BoardView2.jsp?bdIdx=<%=boardList.get(i).getBdIdx() %>"><%= boardList.get(i).getTitle() %></a></td>
 							      	</c:when>
 							    </c:choose>
 								<!-- 게시물을 작성한 유치원 이름 kgId 로 구분해야 할 듯 -->
@@ -126,7 +126,6 @@
 				<%		
 					}
 				%> --%>
-				<a href="/board/addboard.do" class="writing_box">글쓰기</a>
 			</div>
 
 			<!-- <div class="paging">
