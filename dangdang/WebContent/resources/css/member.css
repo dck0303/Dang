@@ -940,9 +940,21 @@
 	
 }
 
-#class_btn, #add_class_member{
+#class_modify_btn, #add_class_member{
 	margin-top: 30px;
 	
+}
+
+#class_btn{
+	height: 26px;
+    background-color: #8B4513;
+    color: white;
+    border: 1.2px solid black;
+    cursor: pointer;
+    font-family: 'Gamja Flower', cursive;
+    font-size: 0.8vw;
+    margin-top: 10px;
+    border-radius: 10%	
 }
 
 

@@ -91,7 +91,7 @@
 					<input type=text id ="userId" name="userId" size="20">
 					<button class="classBtn" onclick= "userIdCheck()">추가할 회원 검색</button>
 				</div>
-				<div id="class_btn">
+				<div id="class_modify_btn">
 					<button class="classBtn" onclick= "success()">수정 완료</button>
 				</div>
 			</div>
