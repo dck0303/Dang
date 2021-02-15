@@ -119,40 +119,69 @@
 	<script type="text/javascript">
 		let userIdCheck = () => {
 				
-				let headerObj = new Headers();
-				headerObj.append('content-type', "application/x-www-form-urlencoded");
-				
-				
-				// 사용자가 입력한 아이디값을 받아서
-				let userId = userId.value; //id가 id인 데이터의 value값
-				let idCheck = document.querySelector('#idCheck');
-				let url = "/school/classmembercheck.do"
-				
-				if(userId){ // true일때
-					fetch(url,{
-						method: "post",
-						headers: headerObj,
-						body: "userId=" + userId
-						
-					}).then(response => response.text()) // then해주면 응답(response)이 넘어옴, 바로 return
-					  .then((message)=>{ // message가 넘어올 것
-						if(message == 'available'){
-							idCheckFlg = true;
-							idCheck.innerHTML = '사용 가능한 아이디 입니다.';
-						} else {
-							idCheckFlg = false;
-							idCheck.innerHTML = '사용 불가능한 아이디 입니다.';
-						}				
-					  }).catch(error => {
-						 
-						  error.alertMessage();
-					  })
-				} else {
-					alert('아이디를 입력하지 않았습니다.');	
-				}
-			}
+			let classMemberObj = new Object();
+			classMemberObj.userId = userId.value;
 		
 			
+			let headerObj = new Headers();
+			headerObj.append("content-type", "application/x-www-form-urlencoded");
+			
+			let url = "/school/kinderclassimpl.do"
+			
+			//비동기 처리해서 화면이 새로고침 되지않고 element에서만 바뀌도록 설정
+			fetch(url, { //해당 url로 객체정보 포함하여 통신요청
+				method: "post",
+				headers: headerObj,
+				body:"userinfo=" + JSON.stringify(classMemberObj)
+				
+			}).then(response => {
+				
+				return response.text();
+				
+			}).then((text) => {
+				
+				if(text == 'fail'){
+					alert('찾는 아이디의 회원이 없습니다.');
+				}else{
+					
+					let result = confirm("검색된 아이디는 <a>" + text + "</a> 입니다. 등록하시겠습니까 ?");
+					
+					if(result){
+						let regUserObj = new Object();
+						console.dir(userId.value);
+						regUserObj.userId = userId.value;
+						let url ="/school/withdraw.do";
+						
+						let headerObj = new Headers();
+						headerObj.append("content-type", "application/x-www-form-urlencoded");
+						
+						fetch(url, {
+							method:"post",
+							headers:headerObj,
+							body:"deleteUser="+JSON.stringify(deleteUserObj)
+							
+						}).then(response => {
+							console.dir(response);
+							if(response.ok){
+								return response.text();
+							}
+							throw new AsyncPageError(response.text());
+						}).then((text) => {
+							if(text == 'success'){
+								alert('회원탈퇴가 완료되었습니다.');
+								location.href = "/main.do";
+							
+							}else{
+								alert('회원탈퇴 중 오류가 발생하였습니다. 다시 시도해주세요.');
+							}
+						})
+
+					}
+					
+				}
+			});
+		};	
+		
 			
 	
 	

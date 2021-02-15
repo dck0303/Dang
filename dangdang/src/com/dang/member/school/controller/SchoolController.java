@@ -80,7 +80,7 @@ public class SchoolController extends HttpServlet {
 			break;
 		case "kinderclass.do" : kinderClassReg(request, response); //사진정보 업로드 및 수정 실행
 			break;
-		case "kinderclassimol.do" : kinderClassRegImpl(request, response); //사진정보 업로드 및 수정 실행
+		case "kinderclassimpl.do" : kinderClassRegImpl(request, response); //사진정보 업로드 및 수정 실행
 			break;
 		
 		}
