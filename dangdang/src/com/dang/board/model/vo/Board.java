@@ -34,10 +34,11 @@ public class Board {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	
 	public Date getRegDate() {
 		return regDate;
 	}
+	
 
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.dang.board.model.vo.Board;
 import com.dang.common.code.ErrorCode;
 import com.dang.common.exception.ToAlertException;
 import com.dang.common.random.RandomString;
@@ -119,6 +120,8 @@ public class UserController extends HttpServlet {
 		UserMember userMember = userService.memberAuthenticate(userId, userPw);
 
 		if(userMember != null) {
+		
+			
 			System.out.println(userMember.getIsleave());
 			if(userMember.getIsleave() == 0) {
 				request.getSession().setAttribute("userMember" , userMember); //회원정보가 있을 경우 해당 내용을 session에 저장.
@@ -248,6 +251,7 @@ public class UserController extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserMember userMember = (UserMember) session.getAttribute("userMember");
 		String userId = userMember.getUserId();
+		String kgName = userMember.getKgName();
 		
 		ArrayList<Reservation> reservationPreview = reservationService.selectUserPreview(userId);
 		
@@ -256,6 +260,12 @@ public class UserController extends HttpServlet {
 		request.setAttribute("reservationPreview", reservationPreview);
 		
 
+		//notice 데이터 request에 저장
+				ArrayList<Board> NoticePreview = userService.selectNoticePreview(kgName);
+				request.setAttribute("NoticePreview", NoticePreview);
+		
+		
+		
 		request.getRequestDispatcher("/WEB-INF/view/mypage/mypage.jsp").forward(request, response);
 		
 		

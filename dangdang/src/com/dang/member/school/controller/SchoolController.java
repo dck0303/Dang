@@ -16,17 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-
+import com.dang.board.model.vo.Board;
 import com.dang.common.code.ConfigCode;
-
-
-
+import com.dang.common.util.file.FileVo;
 import com.dang.map.model.vo.Service;
 import com.dang.member.school.model.service.SchoolService;
 import com.dang.member.school.model.vo.SchoolMember;
-
-
+import com.dang.member.user.model.vo.UserMember;
 import com.dang.reservation.model.service.ReservationService;
 import com.dang.reservation.model.vo.Reservation;
 
@@ -82,7 +78,11 @@ public class SchoolController extends HttpServlet {
 			break;
 		case "uploadphoto.do" : uploadSchoolPhoto(request, response); //사진정보 업로드 및 수정 실행
 			break;
-
+		case "kinderclass.do" : kinderClassReg(request, response); //사진정보 업로드 및 수정 실행
+			break;
+		case "kinderclassimol.do" : kinderClassRegImpl(request, response); //사진정보 업로드 및 수정 실행
+			break;
+		
 		}
 
 	}
@@ -115,21 +115,14 @@ public class SchoolController extends HttpServlet {
 
 		// schoolDao -> schoolService을 거치며 schoolMember의 객체가 반환된다.
 		if (schoolMember != null) {
-			Service schoolProService = schoolService.SchoolproService(schoolMember.getKgName());
-
-			if (schoolProService != null) {
-				// 회원정보와 서비스내역 있을 경우 해당 내용을 session에 저장.
-				request.getSession().setAttribute("schoolMember", schoolMember);
-				request.getSession().setAttribute("schoolService", schoolProService);
-				response.getWriter().print("success");// 클라이언트에 응답하기 위한 출력 스트림을 반환햔다.
 			
-			}else if(schoolProService == null){
-				response.getWriter().print("servicefail");
-				
-			} else {
-				response.getWriter().print("fail");
-			}
+				// 회원정보 있을 경우 해당 내용을 session에 저장.
+				request.getSession().setAttribute("schoolMember", schoolMember);
+				response.getWriter().print("success");// 클라이언트에 응답하기 위한 출력 스트림을 반환햔다.
 
+
+		} else {
+			response.getWriter().print("fail");
 		}
 	}
 
@@ -148,18 +141,40 @@ public class SchoolController extends HttpServlet {
 		SchoolMember schoolMember = (SchoolMember) session.getAttribute("schoolMember");
 		String kgName = schoolMember.getKgName();
 		
+		//reservation 데이터 request에 저장
 		ArrayList<Reservation> reservationPreview = reservationService.selectReservationPreview(kgName);
 		System.out.println(reservationPreview);
-		
 		request.setAttribute("reservationPreview", reservationPreview);
 		
+		//notice 데이터 request에 저장
+		ArrayList<Board> NoticePreview = schoolService.selectNoticePreview(kgName);
+		request.setAttribute("NoticePreview", NoticePreview);
+		
+		//class 데이터 request에 저장
+		ArrayList<UserMember> classMemberList = schoolService.selectClassMember(kgName);
+		request.setAttribute("classMemberList", classMemberList);
+		
+		
+
 		request.getRequestDispatcher("/WEB-INF/view/mypage/mypage.jsp").forward(request, response);
+		
+		
 	
 	}
 
 
 	protected void viewSchoolProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		HttpSession session = request.getSession();
+		SchoolMember schoolMember = (SchoolMember) session.getAttribute("schoolMember");
+		Service schoolProService = schoolService.schoolProService(schoolMember.getKgName());
+		request.setAttribute("schoolService", schoolProService);
+		
+		ArrayList<FileVo> photoList = schoolService.selectSchoolPhoto(schoolMember.getKgIdx());
+		if(photoList != null) {
+			request.setAttribute("photoList", photoList);
+		}
+		
+		
 		request.getRequestDispatcher("/WEB-INF/view/member/school/schoolprofile.jsp").forward(request, response);
 	}
 	
@@ -307,6 +322,33 @@ public class SchoolController extends HttpServlet {
 		
 				
 		}
+	
+	
+	
+	protected void kinderClassReg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		SchoolMember schoolMember = (SchoolMember) session.getAttribute("schoolMember");
+		String kgName = schoolMember.getKgName();
+		ArrayList<UserMember> classMemberList = schoolService.selectClassMember(kgName);
+		
+		if(classMemberList != null) {
+			request.setAttribute("classMemberList", classMemberList);
+		}
+		
+		request.getRequestDispatcher("/WEB-INF/view/member/school/classmember.jsp").forward(request, response);
+		
+		
+	}
+	
+	
+	protected void kinderClassRegImpl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
+		
+	}
+
 
 	
 	

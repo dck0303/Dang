@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="../../../../resources/css/main.css" />
+<link rel="stylesheet" href="../../../../resources/css/member.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
@@ -57,7 +58,7 @@
 
 		<!-- Main -->
 		<section class="user_board">
-			<form action="${context}/user/login.do" method="post" class="user_login_form">
+			<div class="user_login_form">
 				<input type="text" name="id" id="id" placeholder="아이디를 입력하세요." required>
 				<input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요." required>
 				<button onclick="login()" id="login_btn">로그인</button>
@@ -65,7 +66,7 @@
 					<a href ="/user/join.do" id="join_btn"> 회원가입하기</a>
 					<a href ="/user/finduserinfo.do" id="find_info">아이디/비밀번호 찾기</a>
 				</span>
-			</form>
+			</div>
 		</section>
 
 

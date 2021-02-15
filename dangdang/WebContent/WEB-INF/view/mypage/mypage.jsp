@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="../../../../resources/css/main.css" />
+<link rel="stylesheet" href="../../../../resources/css/member.css" />
 <link rel="stylesheet" href="/resources/css/myPage.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
@@ -71,8 +72,9 @@
 									<a class="profile_name">${sessionScope.userMember.nickname}</a><i class="fas fa-cog profilebtn" onclick="location.href='/user/userprofile.do'"></i>
 								</c:when>
 							</c:choose>
-							
+							<br>
 						</div>
+						<button id="class_btn" onclick="location.href='/school/kinderclass.do'">학급관리</button>
 					</div>
 				</div>
 				<div id="mypage_board">
@@ -80,13 +82,17 @@
 				    <div class="detail_board">
 				      <c:choose>
 				        <c:when test="${sessionScope.schoolMember != null}">
-				          <a href="/board/listboard1.do" class="school_photo">앨범</a>
+				          <a class="school_photo">앨범</a>
 				        </c:when>
 				        <c:otherwise><!-- userMember일 때 -->
-				          <a href="/board/listboard2.do" class="user_photo">앨범</a>
+				          <a class="user_photo">앨범</a>
 				        </c:otherwise>
 				      </c:choose>
 				    </div>
+				    
+				    
+				    
+				    
 				    <div class="detail_board">
 				      <c:choose>
 				        <c:when test="${sessionScope.schoolMember != null}">
@@ -138,19 +144,76 @@
 				      </div>
 				    </div>
 				  </div>
+				  
+				  
+				  
 				  <div class="mypage_detail">
+				    <div class="notice_detail_board">
+
+				     <c:if test="${sessionScope.schoolMember != null}">
+			      	 <div id="noticeBox">
+			      		 <div>
+					      	<a href="/board/listboard1.do">공지사항</a>
+					     </div>
+					     
+					      <div>
+					        <div class="notice_list">
+					            <table>
+					              <tr style="width: 100%; background-color: lightgrey; " >
+					                <td width="10%">번호</td>
+					                <td width="20%">제목</td>
+					                <td width="25%">날짜</td>
+					                <td width="45%">내용</td>
+					              </tr>
+					              <c:forEach var="board" items="${NoticePreview}" varStatus="status">
+					                <tr>
+					                  <td>${status.count}</td>
+					                  <td>${board.title}</td>
+					                  <td>${board.regDate}</td>
+					                  <td>${board.content}</td>
+					                </tr>
+					              </c:forEach>
+					            </table>
+					        </div>
+					      </div>
+					      
+				     </div>
+			       </c:if>
+			       
+			       <c:if test="${sessionScope.userMember != null}">
+			      	 <div id="noticeBox">
+			      		 <div>
+					      	<a href="/board/listboard2.do">공지사항</a>
+					     </div>
+					     
+					      <div>
+					        <div class="notice_list">
+					            <table>
+					              <tr style="width: 100%; background-color: lightgrey; " >
+					                <td width="10%">번호</td>
+					                <td width="20%">제목</td>
+					                <td width="25%">날짜</td>
+					                <td width="45%">내용</td>
+					              </tr>
+					              <c:forEach var="board" items="${NoticePreview}" varStatus="status">
+					                <tr>
+					                  <td>${status.count}</td>
+					                  <td>${board.title}</td>
+					                  <td>${board.regDate}</td>
+					                  <td>${board.content}</td>
+					                </tr>
+					              </c:forEach>
+					            </table>
+					        </div>
+					      </div>
+					      
+				     </div>
+			       </c:if>
+			    </div>
+
+
 				    <div class="detail_board">
-				    <c:choose>
-				    	<c:when test="${sessionScope.schoolMember != null}">
-				      		<a href="/board/listboard1.do">공지사항</a>
-				      	</c:when>
-				      	<c:when test="${sessionScope.userMember != null}">
-				      		<a href="/board/listboard2.do">공지사항</a>
-				      	</c:when>
-				    </c:choose>
-				    </div>
-				    <div class="detail_board">
-				      <a>알림장</a>
+				    
 				    </div>
 				  </div>
 				</div>
