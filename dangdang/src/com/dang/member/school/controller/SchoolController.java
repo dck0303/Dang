@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import com.dang.board.model.vo.Board;
 import com.dang.common.code.ConfigCode;
 import com.dang.common.util.file.FileVo;
+import com.dang.diary.model.service.DiaryService;
+import com.dang.diary.model.vo.Diary;
 import com.dang.map.model.vo.Service;
 import com.dang.member.school.model.service.SchoolService;
 import com.dang.member.school.model.vo.SchoolMember;
@@ -39,6 +41,7 @@ public class SchoolController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private SchoolService schoolService = new SchoolService();
 	private ReservationService reservationService = new ReservationService();
+	private DiaryService diaryService = new DiaryService();
 
 	Gson gson = new Gson();
 
@@ -78,9 +81,13 @@ public class SchoolController extends HttpServlet {
 			break;
 		case "uploadphoto.do" : uploadSchoolPhoto(request, response); //사진정보 업로드 및 수정 실행
 			break;
-		case "kinderclass.do" : kinderClassReg(request, response); //사진정보 업로드 및 수정 실행
+		case "kinderclass.do" : kinderClassReg(request, response); // 학급관리 페이지 이동
 			break;
-		case "kinderclassimol.do" : kinderClassRegImpl(request, response); //사진정보 업로드 및 수정 실행
+		case "findkindermember.do": findKinderMember(request, response); // 학급 추가 멤버 조회
+			break;
+		case "kinderclassimpl.do" : kinderClassRegImpl(request, response); // 학급멤버 추가 실행
+			break;
+		case "deleteclassmember.do" : deleteClassMember(request, response); // 학급멤버 삭제 실행
 			break;
 		
 		}
@@ -154,7 +161,9 @@ public class SchoolController extends HttpServlet {
 		ArrayList<UserMember> classMemberList = schoolService.selectClassMember(kgName);
 		request.setAttribute("classMemberList", classMemberList);
 		
-		
+		//diary 데이터 request에 저장
+		ArrayList<Diary> diaryList = diaryService.selectDiaryPreview(kgName);
+		request.setAttribute("diaryList", diaryList);
 
 		request.getRequestDispatcher("/WEB-INF/view/mypage/mypage.jsp").forward(request, response);
 		
@@ -332,6 +341,7 @@ public class SchoolController extends HttpServlet {
 		String kgName = schoolMember.getKgName();
 		ArrayList<UserMember> classMemberList = schoolService.selectClassMember(kgName);
 		
+		
 		if(classMemberList != null) {
 			request.setAttribute("classMemberList", classMemberList);
 		}
@@ -342,13 +352,76 @@ public class SchoolController extends HttpServlet {
 	}
 	
 	
+	protected void findKinderMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String userInfo = request.getParameter("classmemberinfo");
+		
+		Map findIdMap = gson.fromJson(userInfo, Map.class);
+		
+		String userId = (String)findIdMap.get("userId");
+		
+		UserMember userMember = schoolService.findClassMemberById(userId);
+		
+		if(userMember != null) {
+			response.getWriter().print(userMember.getUserId());
+			request.setAttribute("userMember", userMember);
+			
+		}else {
+			response.getWriter().print("fail");
+		}
+	}
+	
+	
+	
 	protected void kinderClassRegImpl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		HttpSession session = request.getSession();
+		SchoolMember schoolMember = (SchoolMember) session.getAttribute("schoolMember");
+		String kgName = schoolMember.getKgName();
+		int res = 0;
+		
+		String regMember = request.getParameter("regUser");
+		Map regUserMap = gson.fromJson(regMember, Map.class);
+			String userId = (String) regUserMap.get("userId");
+		
+		System.out.println(kgName+","+ userId);
+		res = schoolService.regUserMember(kgName, userId);
+		System.out.println(res);
+		if(res > 0) {
+			response.getWriter().print("success");
+		}else {
+			response.getWriter().print("fail");
+		}
 		
 		
 		
 		
 	}
 
+	
+	protected void deleteClassMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userId = request.getParameter("userId");
+		System.out.println(userId);
+		int res = 0;
+		
+		res = schoolService.deleteClassMember(userId);
+		
+		if(res > 0) {
+			request.setAttribute("alertMsg", "학급멤버가 삭제되었습니다.");
+			request.setAttribute("url", "/school/kinderclass.do");
+			request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);;
+		} else {
+			request.setAttribute("alertMsg", "학급멤버 삭제에 실패하였습니다.");
+			request.setAttribute("url", "/school/kinderclass.do");
+			request.getRequestDispatcher("/WEB-INF/view/common/result.jsp").forward(request, response);;
+			
+			
+		}
+		
+		
+		
+	}
 
 	
 	

@@ -66,6 +66,7 @@
 				<h2 id="tit" class="mainfont">알림장</h2>
 				<br>
 				<form action="/board/modifyboardimpl.do?bdIdx=${board.bdIdx }" method="post">
+
 					<div class="modifyBoard-wrap">
 						<table class="modifyBoard-table">
 							<thead>
