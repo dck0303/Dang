@@ -164,6 +164,11 @@ public class AuthFilter implements Filter {
 							throw new ToAlertException(ErrorCode.AUTH07);
 						}
 						break;
+					case "reservation.do":
+						if (session.getAttribute("userMember") == null) {
+							throw new ToAlertException(ErrorCode.AUTH05);
+						}
+						break;
 					}
 					break;
 			}
